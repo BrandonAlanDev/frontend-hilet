@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import Baja from './Baja';
+import Final from './Final';
 
 const Indice = () => {
     const [nombre, setNombre] = useState('');
@@ -96,9 +97,18 @@ const Indice = () => {
                     </div>
                 </div>
             </div>
-            {/*}
+            {/* ACA ES DONDE PRUEBO COMO SE VEN LOS COMPONENTES */}
+            {/* ALT + FLECHITAS PARA IR MOVIENDO LOS COMENTARIOS */}
+            {/* CIERRE SUPERIOR}
             <Baja final={final}/>
-            {*/}
+            {CIERRE INFERIOR*/}
+            <table>
+                <Final carrera="Analista de Sistemas" materia="Algoritmos 1" horarios={["13/12/2024 8:00","20/12/2024 10:20"]} estadoInicial="Inscribirse"/>
+                <Final carrera="Analista de Sistemas" materia="Algoritmos 2" horarios={["13/12/2024 8:00","20/12/2024 10:20"]} estadoInicial="Inscribirse"/>
+                <Final carrera="Analista de Sistemas" materia="Algoritmos 3" horarios={["13/12/2024 8:00","20/12/2024 10:20"]} estadoInicial="Inscribirse"/>
+                <Final carrera="Analista de Sistemas" materia="Ingenieria de Software 1" horarios={["13/12/2024 8:00","20/12/2024 10:20"]} estadoInicial="Inscribirse"/>
+                <Final carrera="Analista de Sistemas" materia="Ingenieria de Software 2" horarios={["13/12/2024 8:00","20/12/2024 10:20"]} estadoInicial="Inscribirse"/>
+            </table>
         </div>
     );
 };
