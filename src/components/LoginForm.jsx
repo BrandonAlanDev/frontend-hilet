@@ -65,7 +65,8 @@ const LoginForm = () => {
         const users = {
             rama2024: 'rama2024',
             sandra2024: 'sandra2024',
-            juanperez: 'juanperez'
+            juanperez: 'juanperez',
+            luchito: 'luchito'
         };
 
         if (users[userInput]) {

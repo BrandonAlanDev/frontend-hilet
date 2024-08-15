@@ -32,6 +32,8 @@ const Indice = () => {
             setCarrera("Publicidad");
         } else if (nombre === "sandra2024") {
             setCarrera("Administración");
+        } else {
+            setCarrera("Yoga de gluteos")
         }
     }, [nombre]);
 
@@ -43,12 +45,19 @@ const Indice = () => {
             setFondoDegradado("bg-hilet-publicidad");
             setBoton("publicidad-button");
             setColorBorde("border-publicidad");
-        } else {
+        } else if (carrera === "Analista de Sistemas"||carrera==="Administración") {
             setColorText("text-analista");
             setFondoOpaco("bg-analista");
             setFondoDegradado("bg-hilet");
             setBoton("analista-button");
             setColorBorde("border-analista");
+        }
+        else{
+            setColorText("text-otro");
+            setFondoOpaco("bg-otro");
+            setFondoDegradado("bg-hilet-otro");
+            setBoton("otro-button");
+            setColorBorde("border-otro");
         }
     }, [carrera]);
         
@@ -71,6 +80,7 @@ const Indice = () => {
                     <h1 className="text-2xl font-bold mb-6 text-center text-titular gap-5">¡Hola {nombre}!</h1>
                     <h1 className="text-2xl font-bold text-center text-subtitular gap-5">{carrera}</h1>
                 </div>
+                {(carrera==="Administración")? (<div></div>) : (
                 <div className={`mt-6 lg:mt-0 lg:h-[18vh] lg:min-h-[250px]`}>
                     <div className="flex flex-row flex-wrap gap-8 items-start justify-center">
                         <div className="bg-blanco p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black">
@@ -96,12 +106,12 @@ const Indice = () => {
                         </div>
                     </div>
                 </div>
+                )}
             </div>
             {/* ACA ES DONDE PRUEBO COMO SE VEN LOS COMPONENTES */}
             {/* ALT + FLECHITAS PARA IR MOVIENDO LOS COMENTARIOS */}
             {/* CIERRE SUPERIOR}
             <Baja final={final}/>
-            {CIERRE INFERIOR*/}
             <table>
                 <Final carrera="Analista de Sistemas" materia="Algoritmos 1" horarios={["13/12/2024 8:00","20/12/2024 10:20"]} estadoInicial="Inscribirse"/>
                 <Final carrera="Analista de Sistemas" materia="Algoritmos 2" horarios={["13/12/2024 8:00","20/12/2024 10:20"]} estadoInicial="Inscribirse"/>
@@ -109,6 +119,7 @@ const Indice = () => {
                 <Final carrera="Analista de Sistemas" materia="Ingenieria de Software 1" horarios={["13/12/2024 8:00","20/12/2024 10:20"]} estadoInicial="Inscribirse"/>
                 <Final carrera="Analista de Sistemas" materia="Ingenieria de Software 2" horarios={["13/12/2024 8:00","20/12/2024 10:20"]} estadoInicial="Inscribirse"/>
             </table>
+                {CIERRE INFERIOR*/}
         </div>
     );
 };

@@ -21,13 +21,13 @@ const Submenu = ({ carrera, titulo, open }) => {
         }
     } else {
         if (carrera === "Analista de Sistemas") {
-            estilo += "bg-analista text-white";
+            estilo += " bg-white text-analista select-none";
         } else if (carrera === "Publicidad") {
-            estilo += " bg-publicidad text-blanco";
+            estilo += " bg-white text-publicidad select-none";
         } else if (carrera === "Administración") {
-            estilo += " bg-analista text-blanco";
+            estilo += " bg-white text-analista select-none";
         } else {
-            estilo += " bg-otro text-blanco";
+            estilo += " bg-white text-otro select-none";
         }
     }
 
