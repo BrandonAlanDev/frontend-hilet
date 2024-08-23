@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { IndiceJSX, LoginFormJSX, RepassJSX } from './App.jsx';
+import { AddCarreraJSX, IndiceJSX, LoginFormJSX, RepassJSX } from './App.jsx';
 
 function Main() {
   return (
@@ -11,6 +11,7 @@ function Main() {
         <Route path="/" element={<LoginFormJSX />} />
         <Route path="/repass" element={<RepassJSX />} />
         <Route path="/inicio" element={<IndiceJSX/>} />
+        <Route path="/addcarrera" element={<AddCarreraJSX/>}/>
       </Routes>
     </Router>
   );

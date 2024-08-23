@@ -73,6 +73,8 @@ const LoginForm = () => {
             if (users[userInput] === passInput) {
                 setPassErrorMessage('');
                 sessionStorage.setItem('user', userInput); // Session de usuario
+                let carreras = ["Analista de Sistemas", "Publicidad"];
+                sessionStorage.setItem('carreras',JSON.stringify(carreras));
                 navigate('/inicio'); // Redirige a la página de índice
             } else {
                 setPassErrorMessage('Contraseña incorrecta');

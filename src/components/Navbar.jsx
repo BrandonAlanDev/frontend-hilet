@@ -9,7 +9,7 @@ const Navbar = ({ nombre, carrera}) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const [fondoOpaco, setFondoOpaco] = useState('');
-
+    const [direcciones,setDirecciones]=useState([]);
     const toggleMenu = () => {
         if (isUserMenuOpen) {
             setIsUserMenuOpen(false);
@@ -34,7 +34,27 @@ const Navbar = ({ nombre, carrera}) => {
         } else {
             setFondoOpaco("bg-otro");
         }
+        if(carrera !=="Administración"){
+            setDirecciones([
+                { titulo: "Inicio", path: "/inicio" },
+                { titulo: "Programa", path: "/programa" }
+            ]);
+        }else{
+            setDirecciones([
+                { titulo: "Inicio", path: "/inicio" },
+                { titulo: "Profesores", path: "/profesores" },
+                { titulo: "Finales", path: "/finales" },
+                { titulo: "Cargar notas", path: "/addnotas" },
+                { titulo: "Cargar alumno", path: "/addalumno" },
+                { titulo: "Cargar profesor", path: "/addprofesor" },
+                { titulo: "Cargar carrera", path: "/addcarrera" },
+                { titulo: "Cargar materias", path: "/addmaterias" }
+            ]);
+        }
+        
     }, [carrera]);
+
+
 
     return (
         <div className={`fixed top-0 left-0 w-full ${fondoOpaco} z-50 flex items-center justify-between p-4 shadow-lg border-b border-white`}>
@@ -46,23 +66,15 @@ const Navbar = ({ nombre, carrera}) => {
                 </button>
                 <div className={`side-menu ${fondoOpaco} ${isMenuOpen ? 'open' : ''}`}>
                     <div className="mt-20">
-                        {(carrera==="Administración") ? (
-                            <>
-                                <Submenu carrera={carrera} titulo="Inicio" open={location.pathname === "/inicio"} />
-                                <Submenu carrera={carrera} titulo="Profesores" open={location.pathname === "/profesores"} />
-                                <Submenu carrera={carrera} titulo="Finales" open={location.pathname === "/finales"} />
-                                <Submenu carrera={carrera} titulo="Cargar notas" open={location.pathname === "/newnotas"} />
-                                <Submenu carrera={carrera} titulo="Cargar alumno" open={location.pathname === "/newalumno"} />
-                                <Submenu carrera={carrera} titulo="Cargar profesor" open={location.pathname === "/newprofesor"} />
-                                <Submenu carrera={carrera} titulo="Cargar carrera" open={location.pathname === "/newcarrera"} />
-                                <Submenu carrera={carrera} titulo="Cargar materias" open={location.pathname === "/newmaterias"} />
-                            </>
-                        ) : (
-                            <>
-                                <Submenu carrera={carrera} titulo="Inicio" open={location.pathname === "/inicio"} />
-                                <Submenu carrera={carrera} titulo="Programa" open={location.pathname === "/programa"} />
-                            </>
-                        )}
+                    {direcciones.map((direccion) => (
+                        <Submenu
+                            key={direccion.titulo}
+                            carrera={carrera} 
+                            titulo={direccion.titulo}
+                            path={direccion.path}
+                            open={location.pathname === direccion.path} 
+                        />
+                    ))}
                     </div>
                 </div>
             </div>

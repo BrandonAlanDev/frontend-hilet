@@ -1,14 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Submenu = ({ carrera, titulo, open }) => {
+const Submenu = ({ carrera, titulo, open, path}) => {
     const navigate = useNavigate();
     const Logout=()=>{
         sessionStorage.clear();
         navigate("/");
     }
     let estilo = 'submenu';
-
+    const direcciones=[
+    ];
     if (!open) {
         if (carrera === "Analista de Sistemas") {
             estilo += " analista-button";
@@ -40,7 +41,7 @@ const Submenu = ({ carrera, titulo, open }) => {
             ) : (
                 <button 
                     className={estilo}
-                    onClick={titulo === "Cerrar sesion" ? () => Logout() : () => navigate(`/${titulo}`)}
+                    onClick={titulo === "Cerrar sesion" ? () => Logout() : () => {navigate(path)}}
                 >
                     {titulo}
                 </button>
