@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
-import agregar from "../resources/img/signomas.png";
+import Navbar from "../../Components/Navbar";
+import agregar from "../../Assets/Image/signomas.png";
 
 const AddCarrera = () => {
     const [nombre, setNombre] = useState('');

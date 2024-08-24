@@ -1,7 +1,7 @@
 import React from 'react';
-import logoHilet from '../resources/img/HiletWEBP.webp';
-import logoUsuario from '../resources/img/user.png';
-import logoPassword from '../resources/img/password.png';
+import logoHilet from '../Assets/Image/HiletWEBP.webp';
+import logoUsuario from '../Assets/Image/user.png';
+import logoPassword from '../Assets/Image/password.png';
 
 const Repass = () => {
     let urlAPI="";

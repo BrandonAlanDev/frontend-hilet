@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Submenu from './Submenu';
-import logoUsuario from '../resources/img/UserWhite.webp';
-import logoHilet from '../resources/img/HiletWEBP.webp';
+import logoUsuario from '../Assets/Image/UserWhite.webp';
+import logoHilet from '../Assets/Image/HiletWEBP.webp';
 
 const Navbar = ({ nombre, carrera}) => {
     const location = useLocation();

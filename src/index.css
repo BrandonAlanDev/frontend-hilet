@@ -19,7 +19,7 @@ code {
 
 .bg-hilet { background: linear-gradient(45deg,#061f3a,#a7bace); background-attachment: fixed;}
 .bg-figuras{
-  background-image: url("/src/resources/img/formas-colores.webp");
+  background-image: url("/src/Assets/Image/formas-colores.webp");
   background-size: cover;
 }
 .bg-analista { background-color: #213F60; }

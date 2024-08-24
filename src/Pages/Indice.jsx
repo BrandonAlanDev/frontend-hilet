@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from './Navbar';
-import Baja from './Baja';
-import Final from './Final';
+import Navbar from '../Components/Navbar';
+import Baja from '../Components/Baja';
+import Final from '../Components/Final';
 
 const Indice = () => {
     const [nombre, setNombre] = useState('');
@@ -18,7 +18,7 @@ const Indice = () => {
     useEffect(() => {
         const user = sessionStorage.getItem('user');
         if (!user) {
-            navigate('/'); // Redirige al login si no hay usuario en sessionStorage
+            navigate('/login'); // Redirige al login si no hay usuario en sessionStorage
         } else {
             setNombre(user); // Establece el nombre del usuario
         }

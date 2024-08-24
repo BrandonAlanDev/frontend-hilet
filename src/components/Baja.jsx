@@ -1,6 +1,6 @@
 import React from 'react';
-import dangerImage from '../resources/img/danger.webp';
-import waringImage from '../resources/img/warning.webp';
+import dangerImage from '../Assets/Image/danger.webp';
+import waringImage from '../Assets/Image/warning.webp';
 
 const Baja = ({ final }) => {
   const { nombreMateria, horario, profesor, vocal1, vocal2, horarios } = final;
