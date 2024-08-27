@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../Components/Navbar';
-import Baja from '../Components/Baja';
-import Final from '../Components/Final';
+import Navbar from '../components/Navbar';
+import Baja from '../components/Baja';
+import Final from '../components/Final';
+import Tabla from '../Layouts/TablaFinales';
 
 const Indice = () => {
     const [nombre, setNombre] = useState('');
@@ -108,7 +109,9 @@ const Indice = () => {
                 </div>
                 )}
             </div>
-            {/* ACA ES DONDE PRUEBO COMO SE VEN LOS COMPONENTES */}
+            {   
+            /*<Tabla/>   
+            /* ACA ES DONDE PRUEBO COMO SE VEN LOS COMPONENTES */}
             {/* ALT + FLECHITAS PARA IR MOVIENDO LOS COMENTARIOS */}
             {/* CIERRE SUPERIOR}
             <Baja final={final}/>
