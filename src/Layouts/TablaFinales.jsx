@@ -26,12 +26,12 @@ const Tabla = () => {
   return (
     <div className="flex flex-col items-center min-h-screen py-8 bg-gray-100">
       <table className="min-w-full bg-white border border-gray-300 shadow-lg rounded-lg">
-        <thead className="bg-white border border-black">
+        <thead className="bg-white border border-b-2 border-stone-300">
           <tr>
-            <th className="py-3 px-6 text-left">Materia</th>
-            <th className="py-3 px-6 text-left">Horarios</th>
-            <th className="py-3 px-6 text-left">Estado</th>
-            <th className="py-3 px-6 text-left">Capacidad</th>
+            <th className="py-3 px-5 text-center">Materia</th>
+            <th className="py-3 px-5 text-center">Horarios</th>
+            <th className="py-3 px-5 text-center">Estado</th>
+            <th className="py-3 px-5 text-center">Capacidad</th>
           </tr>
         </thead>
         <tbody>

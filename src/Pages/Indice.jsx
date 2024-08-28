@@ -110,7 +110,7 @@ const Indice = () => {
                 )}
             </div>
             {   
-            /*<Tabla/>   
+            <Tabla/>   
             /* ACA ES DONDE PRUEBO COMO SE VEN LOS COMPONENTES */}
             {/* ALT + FLECHITAS PARA IR MOVIENDO LOS COMENTARIOS */}
             {/* CIERRE SUPERIOR}

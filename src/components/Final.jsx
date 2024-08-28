@@ -47,7 +47,7 @@ const Final = ({ carrera, materia, horarios, estadoInicial }) => {
   }, [estado]);
 
   return (
-    <tr>
+    <tr className="text-center">
       <td>{materia}</td>
       <td>
         <select>
