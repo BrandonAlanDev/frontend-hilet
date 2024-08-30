@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { FaRegCircleXmark } from "react-icons/fa6";
 
 const Final = ({ carrera, materia, horarios, estadoInicial }) => {
   const [estado, setEstado] = useState(estadoInicial);
@@ -62,9 +63,10 @@ const Final = ({ carrera, materia, horarios, estadoInicial }) => {
         <button className={`${estilo} rounded-lg p-2 m-3`} onClick={inscribirse}>
           {estado}
         </button>
+        <button className="text-red-500 p-2"><FaRegCircleXmark /></button>
       </td>
       <td>
-        Capacidad: {capacidad.actual} / {capacidad.limite}
+        {capacidad.actual} / {capacidad.limite}
       </td>
     </tr>
   );
