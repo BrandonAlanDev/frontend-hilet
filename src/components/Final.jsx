@@ -59,7 +59,7 @@ const Final = ({ carrera, materia, horarios, estadoInicial }) => {
         </select>
       </td>
       <td>
-        <button className={estilo} onClick={inscribirse}>
+        <button className={`${estilo} rounded-lg p-2 m-3`} onClick={inscribirse}>
           {estado}
         </button>
       </td>

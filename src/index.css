@@ -51,8 +51,6 @@ code {
   background-color: #213F60;
   color: whitesmoke;
   transition: all 0.2s ease-in-out;
-  border-radius: 10px;
-  padding: 10px;
 }
 .analista-button:hover{
   background-color: whitesmoke;
