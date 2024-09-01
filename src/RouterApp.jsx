@@ -11,6 +11,7 @@ import AddCarrera from "./Pages/Administradores/AddCarrera.jsx";
 import Indice from "./Pages/Indice.jsx";
 import LoginForm from "./Pages/LoginForm.jsx";
 import Repass from "./Pages/Repass.jsx";
+import AddMateria from "./Pages/Administradores/AddMateria.jsx";
 
 const RouterApp = (props) => {
   const [user, setUser] = useState(null);
@@ -65,6 +66,7 @@ const RouterApp = (props) => {
             {baseFrontRoutes("/inicio",<Indice/>)}
             {baseFrontRoutes("/repass",<Repass/>)}
             {baseFrontRoutes("/addcarrera",<AddCarrera/>)}
+            {baseFrontRoutes("/addmaterias",<AddMateria/>)}
           </Routes>
       </BrowserRouter>
     </>

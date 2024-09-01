@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Final from "../components/Final";
+import Final from "../Components/Final";
 
 const Tabla = () => {
   const [finales, setFinal] = useState([

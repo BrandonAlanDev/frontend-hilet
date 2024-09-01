@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Baja from '../components/Baja';
-import Final from '../components/Final';
+import Navbar from '../Components/Navbar';
+import Baja from '../Components/Baja';
+import Final from '../Components/Final';
 import Tabla from '../Layouts/TablaFinales';
 
 const Indice = () => {

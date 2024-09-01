@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
 import agregar from "../../Assets/Image/signomas.png";
 
-const AddCarrera = () => {
+const AddMateria = () => {
     const [nombre, setNombre] = useState('');
     const [carrera, setCarrera] = useState('');
     const [carreras, setCarreras] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [newCarrera, setNewCarrera] = useState('');
+    const [newResolucion, setnewResolucion] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,15 +24,15 @@ const AddCarrera = () => {
     }, [navigate]);
 
     const addCarrera = () => {
-        if (newCarrera.trim() === '') return;
-        if (carreras.some(c => c.toLowerCase() === newCarrera.toLowerCase())) {
+        if (newResolucion.trim() === '') return;
+        if (carreras.some(c => c.toLowerCase() === newResolucion.toLowerCase())) {
             alert("La carrera ya existe.");
             return;
         }
-        const updatedCarreras = [...carreras, newCarrera];
+        const updatedCarreras = [...carreras, newResolucion];
         setCarreras(updatedCarreras);
         sessionStorage.setItem('carreras', JSON.stringify(updatedCarreras));
-        setNewCarrera('');
+        setnewResolucion('');
         setShowModal(false);
     };
 
@@ -42,26 +42,29 @@ const AddCarrera = () => {
                 <Navbar nombre={nombre} carrera={carrera} />
                 <div className={`min-h-screen flex flex-col items-center justify-evenly bg-hilet py-20 lg:py-32`}>
                     <div className='mt-5 gap-8 lg:mt-0'>
-                        <h1 className="text-2xl font-bold mb-6 text-center text-titular gap-5">Agregar carreras</h1>
+                        <h1 className="text-2xl font-bold mb-6 text-center text-titular gap-5">Cargar materias</h1>
                     </div>
                     {(carrera === "Administración") && (
                         <div className="flex flex-row flex-wrap gap-8 items-start justify-center lg:max-w-6xl">
                             {carreras.map((c, index) => (
-                                <div key={index} className="bg-blanco p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black">
-                                    <div className="flex-grow flex justify-center items-center bg-figuras activo aspect-square">
-                                    </div>
+                                <div key={index} className="bg-blanco p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black w-[300px] h-[360px]">
                                     <div className="text-mosaico">
                                         <h4 className={`text-2xl font-bold mt-4 text-center text-mosaico text-analista`}>{c}</h4>
+                                    </div>
+                                    <div className="flex-grow flex justify-center items-center bg-figuras activo aspect-square w-[100px] h-[100px]">
+                                    </div>
+                                    <div className="text-mosaico">
+                                        <h4 className={`text-2xl font-bold mt-4 text-center text-mosaico text-analista`}>{"6790/9"}</h4>
                                     </div>
                                 </div>
                             ))}
                             <div
-                                className="opacity-65 bg-green-300 p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black cursor-pointer"
+                                className="opacity-65 bg-green-300 p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black cursor-pointer w-[300px] h-[360px]"
                                 onClick={() => setShowModal(true)}
                             >
-                                <img className="flex-grow h-10 flex justify-center items-center activo aspect-square" src={agregar} alt="Signo de agregar" />
+                                <img className="flex-grow w-40 flex justify-center items-center activo" src={agregar} alt="Signo de agregar" />
                                 <div>
-                                    <h4 className={`text-2xl font-bold mt-4 text-center text-mosaico opacity-100`}>Agregar</h4>
+                                    <h4 className={`text-2xl font-bold mt-4 text-center text-mosaico opacity-100`}>Nueva resolucion</h4>
                                 </div>
                             </div>
                         </div>
@@ -78,8 +81,8 @@ const AddCarrera = () => {
                             type="text"
                             className="w-full p-2 border border-analista rounded mb-4"
                             placeholder="Nombre de la carrera"
-                            value={newCarrera}
-                            onChange={(e) => setNewCarrera(e.target.value)}
+                            value={newResolucion}
+                            onChange={(e) => setnewResolucion(e.target.value)}
                         />
                         <div className="flex justify-end space-x-4">
                             <button
@@ -102,4 +105,4 @@ const AddCarrera = () => {
     );
 };
 
-export default AddCarrera;
+export default AddMateria;
