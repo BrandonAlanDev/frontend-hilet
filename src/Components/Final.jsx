@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { FaRegCircleXmark } from "reanct-icons/fa6";
+import { FaRegCircleXmark } from "react-icons/fa6";
 
 const Final = ({ carrera, materia, horarios, estadoInicial }) => {
   const [estado, setEstado] = useState(estadoInicial);
