@@ -12,7 +12,7 @@ const Tabla = () => {
     {
       materia: "Ingles",
       carrera: "Analista de Sistemas",
-      horarios: ["8/12/23 10:00hs"],
+      horarios: ["8/12/23 10:00hs","16/12/23 10:00hs"],
       estadoInicial: "Inscribirse",
     },
     {
