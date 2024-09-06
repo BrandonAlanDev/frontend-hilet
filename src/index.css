@@ -286,3 +286,11 @@ code {
     transition: all 0.35s;
   }
 }
+
+.coloraprobado{
+  color:#16a92a;
+}
+
+.colordesaprobado{
+  color:#da0000;
+}

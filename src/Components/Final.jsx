@@ -1,6 +1,5 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { FaRegCircleXmark } from "react-icons/fa6";
+import React, { useEffect, useState } from "react";
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const Final = ({ carrera, materia, horarios, estadoInicial }) => {
   const [estado, setEstado] = useState(estadoInicial);
@@ -14,7 +13,11 @@ const Final = ({ carrera, materia, horarios, estadoInicial }) => {
         actual: precapacidad.actual + 1,
         limite: precapacidad.limite,
       }));
-    } else if (estado === "Inscripto") {
+    }
+  }
+
+  const cancelarInscripcion = () => {
+    if (estado === "Inscripto") {
       setEstado("Inscribirse");
       setCapacidad((precapacidad) => ({
         actual: precapacidad.actual - 1,
@@ -45,7 +48,7 @@ const Final = ({ carrera, materia, horarios, estadoInicial }) => {
         setEstilo("otro-button");
       }
     }
-  }, [estado]);
+  }, [estado, carrera]);
 
   return (
     <tr className="text-center">
@@ -60,10 +63,16 @@ const Final = ({ carrera, materia, horarios, estadoInicial }) => {
         </select>
       </td>
       <td>
-        <button className={`${estilo} rounded-lg p-2 m-3`} onClick={inscribirse}>
-          {estado}
-        </button>
-        <button className="text-red-500 p-2"><FaRegCircleXmark /></button>
+        <div className="flex justify-center items-center">
+          <button className={`${estilo} rounded-lg p-2 m-3`} onClick={inscribirse}>
+            {estado}
+          </button>
+          {estado === "Inscripto" && (
+            <button className="text-red-500 p-2" onClick={cancelarInscripcion}>
+              <h5>Cancelar<CancelIcon /></h5>
+            </button>
+          )}
+        </div>
       </td>
       <td>
         {capacidad.actual} / {capacidad.limite}
