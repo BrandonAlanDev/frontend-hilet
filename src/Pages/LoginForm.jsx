@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import logoHilet from '../Assets/Image/HiletWEBP.webp';
 import logoUsuario from '../Assets/Image/user.png';
 import logoPassword from '../Assets/Image/password.png';
+import InputField from '../Components/InputField';
 
 const LoginForm = () => {
     sessionStorage.clear();
@@ -136,23 +137,5 @@ const LoginForm = () => {
         </div>
     );
 };
-
-const InputField = ({ id, label, type, placeholder, value, onChange, errorMessage, icon }) => (
-    <>
-        <label htmlFor={id} className="mb-2 w-full rounded-full border-analista bg-white p-2 flex items-center input">
-            <img src={icon} alt={label} className="w-6 h-6 rounded-full mr-2" />
-            <input
-                id={id}
-                name={id}
-                type={type}
-                placeholder={placeholder}
-                value={value}
-                onChange={onChange}
-                className="flex-1 appearance-none border-none focus:outline-none focus:ring-0 bg-transparent text-gray-700 leading-tight placeholder-analista placeholder-opacity-100 negrita"
-            />
-        </label>
-        {errorMessage && <p className="text-red-500 text-xs italic mb-4 negrita">{errorMessage}</p>}
-    </>
-);
 
 export default LoginForm;

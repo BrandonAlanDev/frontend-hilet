@@ -59,12 +59,12 @@ const AddMateria = () => {
                                 </div>
                             ))}
                             <div
-                                className="opacity-65 bg-green-300 p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black cursor-pointer w-[300px] h-[360px]"
+                                className="opacity-85 bg-slate-100 p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black cursor-pointer w-[300px] h-[360px]"
                                 onClick={() => setShowModal(true)}
                             >
                                 <img className="flex-grow w-40 flex justify-center items-center activo" src={agregar} alt="Signo de agregar" />
                                 <div>
-                                    <h4 className={`text-2xl font-bold mt-4 text-center text-mosaico opacity-100`}>Nueva resolucion</h4>
+                                    <h4 className={`text-2xl font-bold mt-4 text-center text-mosaico opacity-100 text-analista`}>Nueva resolucion</h4>
                                 </div>
                             </div>
                         </div>

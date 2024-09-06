@@ -134,6 +134,15 @@ code {
 .text-mosaico{
   font-size: 15px;
 }
+.mosaicos-profe{
+  min-width: 220px;
+  height: 330px;
+  transition: all 0.3s;
+}
+
+.text-mosaico-profe{
+  font-size: 13px;
+}
 
 
 .hamburger {
@@ -278,6 +287,10 @@ code {
   }
   .text-mosaico{
     font-size: 20px;
+  }
+  
+  .text-mosaico-profe{
+    font-size: 15px;
   }
   .mosaicos:hover{
     width: 18vw;

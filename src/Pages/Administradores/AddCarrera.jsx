@@ -56,12 +56,12 @@ const AddCarrera = () => {
                                 </div>
                             ))}
                             <div
-                                className="opacity-65 bg-green-300 p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black cursor-pointer"
+                                className="opacity-85 bg-slate-100 p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black cursor-pointer"
                                 onClick={() => setShowModal(true)}
                             >
                                 <img className="flex-grow h-10 flex justify-center items-center activo aspect-square" src={agregar} alt="Signo de agregar" />
                                 <div>
-                                    <h4 className={`text-2xl font-bold mt-4 text-center text-mosaico opacity-100`}>Agregar</h4>
+                                    <h4 className={`text-2xl font-bold mt-4 text-center text-mosaico opacity-100 text-analista`}>Agregar</h4>
                                 </div>
                             </div>
                         </div>
