@@ -1,9 +1,9 @@
 
 const Tabla = ({ headers, children }) => {
     return (
-        <div className="lg:mt-0 lg:h-[18vh] lg:min-h-[250px] lg:w-[60vw] overflow-hidden rounded-3xl items-center">
+        <div className="lg:mt-0 lg:h-[18vh] lg:min-h-[40vh] lg:w-[75vw] overflow-hidden rounded-3xl items-center">
             <div className="flex flex-row items-start justify-center w-full h-full">
-                <table className="border border-slate-300 w-full h-full">
+                <table className="border border-slate-300 w-full h-full bg-white">
                     <thead className="bg-analista text-white border-b-2 border-stone-300">
                         <tr>
                             {headers.map((header, index) => (

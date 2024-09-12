@@ -13,6 +13,7 @@ import LoginForm from "./Pages/LoginForm.jsx";
 import Repass from "./Pages/Repass.jsx";
 import AddMateria from "./Pages/Administradores/AddMateria.jsx";
 import AddProfesor from "./Pages/Administradores/AddProfesor.jsx";
+import Programa from "./Pages/Programa.jsx";
 
 const RouterApp = (props) => {
   const [user, setUser] = useState(null);
@@ -69,6 +70,7 @@ const RouterApp = (props) => {
             {baseFrontRoutes("/addcarrera",<AddCarrera/>)}
             {baseFrontRoutes("/addmaterias",<AddMateria/>)}
             {baseFrontRoutes("/addprofesor",<AddProfesor/>)}
+            {baseFrontRoutes("/programa",<Programa/>)}
           </Routes>
       </BrowserRouter>
     </>
