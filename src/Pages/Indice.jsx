@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../Components/Navbar';
 import Baja from '../Components/Baja';
 import Final from '../Components/Final';
-import Tabla from '../Layouts/TablaFinales';
+import TablaFinales from '../Layouts/TablaFinales';
+import TablaHistorial from '../Layouts/TablaHistorial';
 
 const Indice = () => {
     const [nombre, setNombre] = useState('');
@@ -111,9 +112,9 @@ const Indice = () => {
             </div>
             {   
             <div className="flex w-full items-center justify-center">
-                <Tabla/>   
+                <TablaFinales/>
             </div>
-            /* ACA ES DONDE PRUEBO COMO SE VEN LOS COMPONENTES */}
+            /* ACA ES DONDE PRUEBO COMO SE VEN LOS COMPONENTES /*<TablaFinales/> */}
             {/* ALT + FLECHITAS PARA IR MOVIENDO LOS COMENTARIOS */}
             {/* CIERRE SUPERIOR}
             <Baja final={final}/>
