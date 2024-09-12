@@ -1,35 +1,47 @@
-import { useState, useEffect } from "react"
-import Tabla from "../Components/Tabla"
-import Historial from "../Components/Historial"
+import { useState, useEffect } from "react";
+import Tabla from "../Components/Tabla";
+import Historial from "../Components/Historial";
 
-const TablaHistorial = () => {
+const TablaHistorial = ({ busqueda, estadoFiltro }) => {
     const [historial, setHistorial] = useState([
         {
             Materia: "Algoritmos",
             Titular: "Rama",
-            Duracion: "2 años",
+            Duracion: "Anual",
             estadoinicial: "Aprobado",
             notainicial: "9"
         },
         {
             Materia: "Algoritmos 2",
             Titular: "Marcelo",
-            Duracion: "1 año",
+            Duracion: "Anual",
             estadoinicial: "Desaprobado",
             notainicial: "2"
         },
         {
             Materia: "Algoritmos 3",
             Titular: "Javier",
-            Duracion: "2 años",
+            Duracion: "Anual",
+            estadoinicial: "Pendiente",
+            notainicial: "-"
+        },
+        {
+            Materia: "Economia",
+            Titular: "Fabian",
+            Duracion: "Anual",
             estadoinicial: "Pendiente",
             notainicial: "-"
         }
-    ])
+    ]);
+
+    const historialFiltrado = historial.filter(item =>
+        item.Materia.toLowerCase().includes(busqueda.toLowerCase()) &&
+        (estadoFiltro === "" || item.estadoinicial === estadoFiltro)
+    );
 
     return (
         <Tabla headers={["Materia", "Titular", "Duracion", "Estado", "Nota"]}>
-            {historial.map((item, index) => (
+            {historialFiltrado.map((item, index) => (
                 <Historial
                     key={index}
                     materia={item.Materia}
@@ -41,7 +53,6 @@ const TablaHistorial = () => {
             ))}
         </Tabla>
     );
-
-}
+};
 
 export default TablaHistorial;

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Navbar from '../Components/Navbar';
 import TablaHistorial from '../Layouts/TablaHistorial'
 import { useNavigate } from 'react-router-dom';
+import Buscador from '../Components/Buscador'
 
 const Programa = () => {
     const [nombre, setNombre] = useState('');
@@ -11,6 +12,8 @@ const Programa = () => {
     const [fondoDegradado, setFondoDegradado] = useState('');
     const [boton, setBoton] = useState('');
     const [colorBorde, setColorBorde] = useState('');
+    const [busqueda,setBusqueda] = useState('');
+    const [estadoFiltro,setEstadoFiltro] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -62,8 +65,10 @@ const Programa = () => {
         <div>
             <Navbar nombre={nombre} carrera={carrera} />
             <div className={`min-h-screen flex flex-col items-center justify-evenly ${fondoDegradado} py-20 lg:py-32`}>
+                <h1 className='text-white font-bold text-3xl'>PROGRAMA DEL ALUMNO</h1>
+                <Buscador setBusqueda={setBusqueda} setEstadoFiltro={setEstadoFiltro}/>
                 <div className=''>
-                    <TablaHistorial />
+                    <TablaHistorial busqueda={busqueda} estadoFiltro={estadoFiltro}/>
                 </div>
             </div>
 

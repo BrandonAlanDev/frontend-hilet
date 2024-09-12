@@ -16,6 +16,12 @@ const Historial = ({ materia, titular, duracion, estadoInicial, notaInicial }) =
         }
     }, [estado]);
 
+    useEffect(() => {
+        setEstado(estadoInicial);
+        setNota(notaInicial);
+    }, [estadoInicial, notaInicial]);
+    
+
     return (
         <tr className="text-center">
             <td>{materia}</td>
