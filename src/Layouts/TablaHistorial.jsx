@@ -36,6 +36,8 @@ const materiasPorAno = [
   ],
 ];
 
+const resolucion_general = "6790/19";
+
 const TablaHistorial = ({ busqueda, estadoFiltro, buscador }) => {
   const [currentYear, setCurrentYear] = useState(0); // Año actual (0 = primer año)
   const [materias, setMaterias] = useState([]);
@@ -55,35 +57,40 @@ const TablaHistorial = ({ busqueda, estadoFiltro, buscador }) => {
       {/* Botones para navegar entre años */}
       <div className="flex flex-row w-full justify-between">
         <div className="flex flex-row gap-1 items-center">
-            <p className="text-white text-3xl select-none">Años :</p>
-        {materiasPorAno.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentYear(index)}
-            className={`px-4 py-2 m-2 rounded-full select-none ${
-              currentYear === index ? "bg-white text-analista" : "bg-analista text-white"
-            }`}
-          >
-            {index + 1}
-          </button>
-        ))}
+          <p className="text-white text-3xl select-none">Años :</p>
+          {materiasPorAno.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentYear(index)}
+              className={`px-4 py-2 m-2 rounded-full select-none ${currentYear === index ? "bg-white text-analista" : "bg-analista text-white"
+                }`}
+            >
+              {index + 1}
+            </button>
+          ))}
         </div>
         {buscador}
       </div>
 
+      <div className="mt-5 text-left">
+        <p className="text-xl font-bold text-white">
+          Resolución : {resolucion_general}
+        </p>
+      </div>
+
       {/* Tabla con las materias filtradas */}
-      <div className="mt-5">
+      <div className="mt-6">
         <Tabla headers={["Materia", "Titular", "Duracion", "Estado", "Nota"]}>
-            {historialFiltrado.map((item, index) => (
+          {historialFiltrado.map((item, index) => (
             <Historial
-                key={index}
-                materia={item.Materia}
-                titular={item.Titular}
-                duracion={item.Duracion}
-                estadoInicial={item.estadoinicial}
-                notaInicial={item.notainicial}
+              key={index}
+              materia={item.Materia}
+              titular={item.Titular}
+              duracion={item.Duracion}
+              estadoInicial={item.estadoinicial}
+              notaInicial={item.notainicial}
             />
-            ))}
+          ))}
         </Tabla>
       </div>
     </div>

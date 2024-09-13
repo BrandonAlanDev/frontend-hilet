@@ -70,7 +70,7 @@ const RouterApp = (props) => {
             {baseFrontRoutes("/addcarrera",<AddCarrera/>)}
             {baseFrontRoutes("/addmaterias",<AddMateria/>)}
             {baseFrontRoutes("/addprofesor",<AddProfesor/>)}
-            {baseFrontRoutes("/programa",<Programa/>)}
+            {baseFrontRoutes("/historialacademico",<Programa/>)}
           </Routes>
       </BrowserRouter>
     </>

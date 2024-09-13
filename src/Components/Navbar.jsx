@@ -37,7 +37,7 @@ const Navbar = ({ nombre, carrera}) => {
         if(carrera !=="Administración"){
             setDirecciones([
                 { titulo: "Inicio", path: "/inicio" },
-                { titulo: "Programa", path: "/programa" }
+                { titulo: "Historial Academico", path: "/historialacademico" }
             ]);
         }else{
             setDirecciones([
