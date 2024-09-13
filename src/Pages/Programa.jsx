@@ -65,10 +65,13 @@ const Programa = () => {
         <div>
             <Navbar nombre={nombre} carrera={carrera} />
             <div className={`min-h-screen flex flex-col items-center justify-evenly ${fondoDegradado} py-20 lg:py-32`}>
-                <h1 className='text-white font-bold text-3xl'>PROGRAMA DEL ALUMNO</h1>
-                <Buscador setBusqueda={setBusqueda} setEstadoFiltro={setEstadoFiltro}/>
+                <p className='text-white font-bold text-5xl select-none'>Programa de {carrera}</p>
                 <div className=''>
-                    <TablaHistorial busqueda={busqueda} estadoFiltro={estadoFiltro}/>
+                <TablaHistorial
+                    busqueda={busqueda}
+                    estadoFiltro={estadoFiltro}
+                    buscador={<Buscador setBusqueda={setBusqueda} setEstadoFiltro={setEstadoFiltro} />}
+                />
                 </div>
             </div>
 

@@ -16,25 +16,26 @@ const Buscador = ({ setBusqueda, setEstadoFiltro }) => {
 
   return (
     <>
-      <h1 className='text-white font-bold text-2xl mb-1'>Filtrar por ...</h1>
-      <input
-        type="text"
-        placeholder="Materia"
-        className="border border-none p-2 rounded-lg w-[20vw] text-lg"
-        value={busquedaTexto}
-        onChange={handleTextoChange}
-      />
-      <select
-        className="border border-none p-2 rounded-lg w-[20vw] text-lg mt-2"
-        value={estado}
-        onChange={handleEstadoChange}
-      >
-        <option value="" disabled selected>Estado</option>
-        <option value="">Todos</option>
-        <option value="Aprobado">Aprobado</option>
-        <option value="Pendiente">Pendiente</option>
-        <option value="Desaprobado">Desaprobado</option>
-      </select>
+      <div className='flex flex-row w-[50vw] justify-evenly'>
+        <input
+          type="text"
+          placeholder="Buscar ..."
+          className="border border-none p-2 rounded-lg w-[20vw] text-lg"
+          value={busquedaTexto}
+          onChange={handleTextoChange}
+        />
+        <select
+          className="border border-none p-2 rounded-lg w-[20vw] text-lg"
+          value={estado}
+          onChange={handleEstadoChange}
+        >
+          <option value="" disabled>Estado</option>
+          <option value="">Todos</option>
+          <option value="Aprobado">Aprobado</option>
+          <option value="Pendiente">Pendiente</option>
+          <option value="Desaprobado">Desaprobado</option>
+        </select>
+      </div>
     </>
   );
 };

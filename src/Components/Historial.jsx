@@ -23,7 +23,7 @@ const Historial = ({ materia, titular, duracion, estadoInicial, notaInicial }) =
     
 
     return (
-        <tr className="text-center">
+        <tr className="text-center h-10">
             <td>{materia}</td>
             <td>{titular}</td>
             <td>{duracion}</td>
