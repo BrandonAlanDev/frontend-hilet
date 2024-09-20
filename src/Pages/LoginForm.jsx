@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logoHilet from '../Assets/Image/HiletWEBP.webp';
 import logoUsuario from '../Assets/Image/user.png';
@@ -6,7 +6,6 @@ import logoPassword from '../Assets/Image/password.png';
 import InputField from '../Components/InputField';
 
 const LoginForm = () => {
-    sessionStorage.clear();
     const [userInput, setUserInput] = useState('');
     const [passInput, setPassInput] = useState('');
     const [userErrorMessage, setUserErrorMessage] = useState('');
@@ -15,6 +14,19 @@ const LoginForm = () => {
 
     const userRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9._@-]{1,20}$/;
     const passRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9._@-]{1,20}$/;
+
+    useEffect(() => {
+        const storedUsers = sessionStorage.getItem('users');
+        if (!storedUsers) {
+            const defaultUsers = {
+                rama2024: { password: 'rama2024', email: 'rama2024@gmail.com' },
+                sandra2024: { password: 'sandra2024', email: 'sandra2024@gmail.com' },
+                juanperez: { password: 'juanperez', email: 'juanperez@gmail.com' },
+                luchito: { password: 'luchito', email: 'luchito@gmail.com' }
+            };
+            sessionStorage.setItem('users', JSON.stringify(defaultUsers));
+        }
+    }, []);
 
     const validateInput = (value, regex, setErrorMessage, errorMessage) => {
         if (regex.test(value)) {
@@ -27,15 +39,23 @@ const LoginForm = () => {
     const handleInputChangeUsuario = (e) => {
         const value = e.target.value;
         setUserInput(value);
-        validateInput(value, userRegex, setUserErrorMessage,
-            'El usuario debe contener entre 6 y 20 caracteres permitidos (Letras, Números, - _ @ .)');
+        validateInput(
+            value, 
+            userRegex, 
+            setUserErrorMessage,
+            'El usuario debe contener entre 6 y 20 caracteres permitidos (Letras, Números, - _ @ .)'
+        );
     };
 
     const handleInputChangePassword = (e) => {
         const value = e.target.value;
         setPassInput(value);
-        validateInput(value, passRegex, setPassErrorMessage,
-            'La contraseña debe contener entre 6 y 20 caracteres permitidos (Letras, Números, - _ @ .)');
+        validateInput(
+            value, 
+            passRegex, 
+            setPassErrorMessage,
+            'La contraseña debe contener entre 6 y 20 caracteres permitidos (Letras, Números, - _ @ .)'
+        );
     };
 
     const Log = (e) => {
@@ -63,19 +83,14 @@ const LoginForm = () => {
 
         if (!valid) return;
 
-        const users = {
-            rama2024: 'rama2024',
-            sandra2024: 'sandra2024',
-            juanperez: 'juanperez',
-            luchito: 'luchito'
-        };
+        const storedUsers = JSON.parse(sessionStorage.getItem('users') || '{}'); // Ensure storedUsers isn't null
 
-        if (users[userInput]) {
-            if (users[userInput] === passInput) {
+        if (storedUsers[userInput]) {
+            if (storedUsers[userInput].password === passInput) {
                 setPassErrorMessage('');
                 sessionStorage.setItem('user', userInput); // Session de usuario
                 let carreras = ["Analista de Sistemas", "Publicidad"];
-                sessionStorage.setItem('carreras',JSON.stringify(carreras));
+                sessionStorage.setItem('carreras', JSON.stringify(carreras));
                 navigate('/inicio'); // Redirige a la página de índice
             } else {
                 setPassErrorMessage('Contraseña incorrecta');
@@ -125,7 +140,7 @@ const LoginForm = () => {
                                 Login
                             </button>
                             <a
-                                href="/repass"
+                                href="/sendcode"
                                 className="inline-block align-baseline font-bold text-sm text-gray-500 hover:text-gray-700"
                             >
                                 ¿Has olvidado tu contraseña?

@@ -10,10 +10,13 @@ import Backoffice from './Layouts/Backoffice';
 import AddCarrera from "./Pages/Administradores/AddCarrera.jsx";
 import Indice from "./Pages/Indice.jsx";
 import LoginForm from "./Pages/LoginForm.jsx";
-import Repass from "./Pages/Repass.jsx";
 import AddMateria from "./Pages/Administradores/AddMateria.jsx";
 import AddProfesor from "./Pages/Administradores/AddProfesor.jsx";
-import Programa from "./Pages/Programa.jsx";
+import Programa from "./Pages/Usuarios/Programa.jsx";
+
+//Repass
+import SendCode from "./Pages/Usuarios/Repass/SendCode.jsx";
+import Repass from "./Pages/Usuarios/Repass/Repass.jsx";
 
 const RouterApp = (props) => {
   const [user, setUser] = useState(null);
@@ -66,6 +69,7 @@ const RouterApp = (props) => {
             {baseFrontRoutes("/login",<LoginForm/>)}
             {baseFrontRoutes("/",<Indice/>)}
             {baseFrontRoutes("/inicio",<Indice/>)}
+            {baseFrontRoutes("/sendcode",<SendCode/>)}
             {baseFrontRoutes("/repass",<Repass/>)}
             {baseFrontRoutes("/addcarrera",<AddCarrera/>)}
             {baseFrontRoutes("/addmaterias",<AddMateria/>)}

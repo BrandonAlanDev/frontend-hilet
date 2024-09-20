@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import Navbar from '../Components/Navbar';
-import TablaHistorial from '../Layouts/TablaHistorial'
+import Navbar from '../../Components/Navbar';
+import TablaHistorial from '../../Layouts/TablaHistorial'
 import { useNavigate } from 'react-router-dom';
-import Buscador from '../Components/Buscador'
+import Buscador from '../../Components/Buscador'
 
 const Programa = () => {
     const [nombre, setNombre] = useState('');
@@ -33,7 +33,7 @@ const Programa = () => {
         } else if (nombre === "sandra2024") {
             setCarrera("Administración");
         } else {
-            setCarrera("Yoga de gluteos")
+            setCarrera("Yoga de gluteos");
         }
     }, [nombre]);
 
@@ -68,6 +68,8 @@ const Programa = () => {
                 <p className='text-white font-bold text-5xl select-none'>Programa de {carrera}</p>
                 <div className=''>
                 <TablaHistorial
+                    carrera={carrera}
+                    color={fondoOpaco}
                     busqueda={busqueda}
                     estadoFiltro={estadoFiltro}
                     buscador={<Buscador setBusqueda={setBusqueda} setEstadoFiltro={setEstadoFiltro} />}
