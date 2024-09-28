@@ -40,7 +40,7 @@ const AddCarrera = () => {
         <>
             <div>
                 <Navbar nombre={nombre} carrera={carrera} />
-                <div className={`min-h-screen flex flex-col items-center justify-evenly bg-hilet py-20 lg:py-32`}>
+                <div className={`min-h-screen select-none flex flex-col items-center justify-evenly bg-hilet py-20 lg:py-32`}>
                     <div className='mt-5 gap-8 lg:mt-0'>
                         <h1 className="text-2xl font-bold mb-6 text-center text-titular gap-5">Agregar carreras</h1>
                     </div>

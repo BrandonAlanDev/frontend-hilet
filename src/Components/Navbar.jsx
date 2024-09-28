@@ -57,7 +57,7 @@ const Navbar = ({ nombre, carrera}) => {
 
 
     return (
-        <div className={`fixed top-0 left-0 w-full ${fondoOpaco} z-50 flex items-center justify-between p-4 shadow-lg border-b border-white`}>
+        <div className={`fixed select-none top-0 left-0 w-full ${fondoOpaco} z-50 flex items-center justify-between p-4 shadow-lg border-b border-white`}>
             <div className="flex items-center">
                 <button className={`hamburger ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
                     <span></span>
