@@ -74,7 +74,7 @@ const Indice = () => {
     return (
         <div>
             <Navbar nombre={nombre} carrera={carrera} />
-            <div className={`min-h-screen select-none flex flex-col items-center justify-evenly ${fondoDegradado} py-20 lg:py-32`}>
+            <div className={`min-h-screen select-none flex flex-col items-center justify-evenly ${fondoDegradado} py-20 lg:py-32 gap-8`}>
                 <div className='mt-5 gap-8 lg:mt-0'>
                     <h1 className="text-2xl font-bold mb-6 text-center text-titular gap-5">¡Hola {nombre}!</h1>
                     <h1 className="text-2xl font-bold text-center text-subtitular gap-5">{carrera}</h1>
