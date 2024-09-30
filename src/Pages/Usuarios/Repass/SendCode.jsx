@@ -91,7 +91,7 @@ const SendCode = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-evenly bg-hilet py-20 lg:py-32">
+        <div className="min-h-screen select-none flex items-center justify-evenly bg-hilet py-20 lg:py-32">
             <div className="bg-blanco p-4 rounded-lg w-11/12 sm:w-3/4 lg:w-2/5 flex flex-col lg:flex-row items-center lg:space-x-8 min-h-[55vh] shadow-2xl shadow-black">
                 <div className="flex flex-col m-auto justify-between items-center activo">
                     <h1 className="select-none text-2xl font-bold mb-12 text-center text-analista titulo">Cambio de contraseña</h1>

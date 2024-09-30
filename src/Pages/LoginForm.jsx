@@ -101,7 +101,7 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-evenly bg-hilet py-20 lg:py-32">
+        <div className="min-h-screen select-none flex items-center justify-evenly bg-hilet py-20 lg:py-32">
             <div className="bg-blanco p-8 rounded-lg w-11/12 sm:w-3/4 lg:w-3/5 flex flex-col lg:flex-row items-center lg:space-x-8 min-h-[65vh] shadow-2xl shadow-black">
                 <div className="w-2/3 lg:w-1/2 aspect-square flex justify-center lg:justify-center m-auto bg-figuras activo">
                     <div className="rounded-full w-2/3 aspect-square flex justify-center lg:justify-center m-auto bg-analista border-blanco p-8">

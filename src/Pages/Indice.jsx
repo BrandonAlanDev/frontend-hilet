@@ -5,6 +5,7 @@ import Baja from '../Components/Baja';
 import Final from '../Components/Final';
 import TablaFinales from '../Layouts/TablaFinales';
 import TablaHistorial from '../Layouts/TablaHistorial';
+import Mosaico from '../Components/Mosaico';
 
 const Indice = () => {
     const [nombre, setNombre] = useState('');
@@ -12,8 +13,7 @@ const Indice = () => {
     const [colorText, setColorText] = useState('');
     const [fondoOpaco, setFondoOpaco] = useState('');
     const [fondoDegradado, setFondoDegradado] = useState('');
-    const [boton, setBoton] = useState('');
-    const [colorBorde, setColorBorde] = useState('');
+    const [imagenCarrera, setImagenCarrera] = useState('') ;
     const navigate = useNavigate();
 
     // Este useEffect se ejecuta una sola vez al montar el componente
@@ -45,21 +45,18 @@ const Indice = () => {
             setColorText("text-publicidad");
             setFondoOpaco("bg-publicidad");
             setFondoDegradado("bg-hilet-publicidad");
-            setBoton("publicidad-button");
-            setColorBorde("border-publicidad");
+            setImagenCarrera("src/Assets/Image/LOGO-PUBLI.png");
         } else if (carrera === "Analista de Sistemas"||carrera==="Administración") {
             setColorText("text-analista");
             setFondoOpaco("bg-analista");
             setFondoDegradado("bg-hilet");
-            setBoton("analista-button");
-            setColorBorde("border-analista");
+            setImagenCarrera("src/Assets/Image/LOGO-AS.png");
         }
         else{
             setColorText("text-otro");
             setFondoOpaco("bg-otro");
             setFondoDegradado("bg-hilet-otro");
-            setBoton("otro-button");
-            setColorBorde("border-otro");
+            setImagenCarrera("src/Assets/Image/LOGO-OTRO.png");
         }
     }, [carrera]);
         
@@ -77,7 +74,7 @@ const Indice = () => {
     return (
         <div>
             <Navbar nombre={nombre} carrera={carrera} />
-            <div className={`min-h-screen flex flex-col items-center justify-evenly ${fondoDegradado} py-20 lg:py-32`}>
+            <div className={`min-h-screen select-none flex flex-col items-center justify-evenly ${fondoDegradado} py-20 lg:py-32 gap-8`}>
                 <div className='mt-5 gap-8 lg:mt-0'>
                     <h1 className="text-2xl font-bold mb-6 text-center text-titular gap-5">¡Hola {nombre}!</h1>
                     <h1 className="text-2xl font-bold text-center text-subtitular gap-5">{carrera}</h1>
@@ -85,27 +82,9 @@ const Indice = () => {
                 {(carrera==="Administración")? (<div></div>) : (
                 <div className={`mt-6 lg:mt-0 lg:h-[18vh] lg:min-h-[250px]`}>
                     <div className="flex flex-row flex-wrap gap-8 items-start justify-center">
-                        <div className="bg-blanco p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black">
-                            <div className="flex-grow flex justify-center items-center bg-figuras activo aspect-square">
-                            </div>
-                            <div className="text-mosaico">
-                                <h4 className={`text-2xl font-bold mt-4 text-center ${colorText} text-mosaico`}>Primer año</h4>
-                            </div>
-                        </div>
-                        <div className="bg-blanco p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black">
-                            <div className="flex-grow flex justify-center items-center bg-figuras activo aspect-square">
-                            </div>
-                            <div>
-                                <h4 className={`text-2xl font-bold mt-4 text-center ${colorText} text-mosaico`}>Segundo año</h4>
-                            </div>
-                        </div>
-                        <div className="bg-blanco p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black">
-                            <div className="flex-grow flex justify-center items-center bg-figuras activo aspect-square">
-                            </div>
-                            <div>
-                                <h4 className={`text-2xl font-bold mt-4 text-center ${colorText} text-mosaico`}>Tercer año</h4>
-                            </div>
-                        </div>
+                        <Mosaico titulo="Finales" texto="Primer año" colorText={colorText} imagen={imagenCarrera} />
+                        <Mosaico titulo="Finales" texto="Segundo año" colorText={colorText} imagen={imagenCarrera} />
+                        <Mosaico titulo="Finales" texto="Tercer año" colorText={colorText} imagen={imagenCarrera} />
                     </div>
                 </div>
                 )}

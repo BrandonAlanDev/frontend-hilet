@@ -1,51 +1,31 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
-const Mosaico = ({ carrera, titulo, open, path}) => {
-    const navigate = useNavigate();
-    const Logout=()=>{
-        sessionStorage.clear();
-        navigate("/");
-    }
-    let estilo = 'submenu';
-    const direcciones=[
-    ];
-    if (!open) {
-        if (carrera === "Analista de Sistemas") {
-            estilo += " analista-button";
-        } else if (carrera === "Publicidad") {
-            estilo += " publicidad-button";
-        } else if (carrera === "Administración") {
-            estilo += " analista-button";
-        } else {
-            estilo += " otro-button";
-        }
-    } else {
-        if (carrera === "Analista de Sistemas") {
-            estilo += " bg-white text-analista select-none";
-        } else if (carrera === "Publicidad") {
-            estilo += " bg-white text-publicidad select-none";
-        } else if (carrera === "Administración") {
-            estilo += " bg-white text-analista select-none";
-        } else {
-            estilo += " bg-white text-otro select-none";
-        }
-    }
+const Mosaico = (props) => {
+    const {
+        titulo = "", // Texto superior
+        colorText = "text-analista", // Color del texto, por defecto azul analista
+        colorBg = "bg-blanco", // Fondo, por defecto blanco
+        imagen = "src/Assets/Image/formas-colores.webp", // Imagen, por defecto las figuras
+        texto = "",// Texto inferior
+        anchoImagen="w-[65%]",
+        altoImagen="h-[auto]",
+        callback = ()=>{} // Funcion que se dispara al hacerle click
+      } = props;
 
     return (
         <>
-            {open ? (
-                <div className={estilo}>
-                    {titulo}
-                </div>
-            ) : (
-                <button 
-                    className={estilo}
-                    onClick={titulo === "Cerrar sesion" ? () => Logout() : () => {navigate(path)}}
-                >
-                    {titulo}
-                </button>
-            )}
+        <button
+            className={`${colorBg} ${colorText} text-2xl font-bold text-center text-mosaico p-4 rounded-lg flex flex-col flex-grow items-center justify-between mosaicos shadow-2xl shadow-black`}
+            onClick={callback}
+        >
+            <div className="items-center activo">
+            {titulo}
+            </div>
+            {imagen && <img className={`flex select-none justify-center items-center activo ${anchoImagen} ${altoImagen}`} src={imagen}/> }
+            <div className="text-mosaico">
+                <h4>{texto}</h4>
+            </div>
+        </button>
         </>
     );
 };
