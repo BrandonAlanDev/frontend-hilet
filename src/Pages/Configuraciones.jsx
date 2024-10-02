@@ -4,8 +4,13 @@ import logoHilet from '../Assets/Image/HiletWEBP.webp';
 import logoUsuario from '../Assets/Image/user.png';
 import logoPassword from '../Assets/Image/password.png';
 import InputField from '../Components/InputField';
-/*
-const LoginForm = () => {
+
+const Configuraciones = () => {
+    const [nombre, setNombre] = useState('');
+    const [carrera, setCarrera] = useState('');
+    const [colorText, setColorText] = useState('');
+    const [fondoOpaco, setFondoOpaco] = useState('');
+    const [fondoDegradado, setFondoDegradado] = useState('');
     const [userInput, setUserInput] = useState('');
     const [passInput, setPassInput] = useState('');
     const [userErrorMessage, setUserErrorMessage] = useState('');
@@ -15,18 +20,51 @@ const LoginForm = () => {
     const userRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9._@-]{1,20}$/;
     const passRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9._@-]{1,20}$/;
 
+
+
     useEffect(() => {
-        const storedUsers = sessionStorage.getItem('users');
-        if (!storedUsers) {
-            const defaultUsers = {
-                rama2024: { password: 'rama2024', email: 'rama2024@gmail.com' },
-                sandra2024: { password: 'sandra2024', email: 'sandra2024@gmail.com' },
-                juanperez: { password: 'juanperez', email: 'juanperez@gmail.com' },
-                luchito: { password: 'luchito', email: 'luchito@gmail.com' }
-            };
-            sessionStorage.setItem('users', JSON.stringify(defaultUsers));
+        const user = sessionStorage.getItem('user');
+        if (!user) {
+            navigate('/login'); 
+        } else {
+            setNombre(user);
         }
-    }, []);
+    }, [navigate]);
+
+    useEffect(() => {
+        if (nombre === "rama2024") {
+            setCarrera("Analista de Sistemas");
+        } else if (nombre === "juanperez") {
+            setCarrera("Publicidad");
+        } else if (nombre === "sandra2024") {
+            setCarrera("Administración");
+        } else {
+            setCarrera("Yoga de gluteos");
+        }
+    }, [nombre]);
+
+    useEffect(() => {
+        if (carrera === "Publicidad") {
+            setColorText("text-publicidad");
+            setFondoOpaco("bg-publicidad");
+            setFondoDegradado("bg-hilet-publicidad");
+            setBoton("publicidad-button");
+            setColorBorde("border-publicidad");
+        } else if (carrera === "Analista de Sistemas" || carrera === "Administración") {
+            setColorText("text-analista");
+            setFondoOpaco("bg-analista");
+            setFondoDegradado("bg-hilet");
+            setBoton("analista-button");
+            setColorBorde("border-analista");
+        }
+        else {
+            setColorText("text-otro");
+            setFondoOpaco("bg-otro");
+            setFondoDegradado("bg-hilet-otro");
+            setBoton("otro-button");
+            setColorBorde("border-otro");
+        }
+    }, [carrera]);
 
     const validateInput = (value, regex, setErrorMessage, errorMessage) => {
         if (regex.test(value)) {
@@ -59,7 +97,7 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-evenly bg-hilet py-20 lg:py-32">
+        <div className="min-h-screen flex items-center justify-evenly bg-hilet py-20 lg:py-32 gap-8">
             <div className="bg-blanco p-8 rounded-lg w-11/12 sm:w-3/4 lg:w-3/5 flex flex-col lg:flex-row items-center lg:space-x-8 min-h-[65vh] shadow-2xl shadow-black">
                 <div className="lg:w-1/2 flex flex-col m-auto justify-between items-center activo">
                     <h1 className="text-2xl font-bold mb-6 text-center text-analista titulo">Configuraciones</h1>
@@ -117,5 +155,4 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
-*/
+export default Configuraciones;

@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import Navbar from '../../Components/Navbar';
-import TablaHistorial from '../../Layouts/TablaHistorial'
 import { useNavigate } from 'react-router-dom';
-import Buscador from '../../Components/Buscador'
+import TablaAlumnos from '../../Layouts/TablaAlumnos';
+import BuscadorAlumnos from '../../Components/BuscadorAlumnos';
 
-const Programa = () => {
+const AddAlumnos = () => {
     const [nombre, setNombre] = useState('');
     const [carrera, setCarrera] = useState('');
-    const [colorText, setColorText] = useState('');
     const [fondoOpaco, setFondoOpaco] = useState('');
     const [fondoDegradado, setFondoDegradado] = useState('');
     const [busqueda,setBusqueda] = useState('');
@@ -37,24 +36,15 @@ const Programa = () => {
 
     useEffect(() => {
         if (carrera === "Publicidad") {
-            setColorText("text-publicidad");
             setFondoOpaco("bg-publicidad");
             setFondoDegradado("bg-hilet-publicidad");
-            setBoton("publicidad-button");
-            setColorBorde("border-publicidad");
         } else if (carrera === "Analista de Sistemas" || carrera === "Administración") {
-            setColorText("text-analista");
             setFondoOpaco("bg-analista");
             setFondoDegradado("bg-hilet");
-            setBoton("analista-button");
-            setColorBorde("border-analista");
         }
         else {
-            setColorText("text-otro");
             setFondoOpaco("bg-otro");
             setFondoDegradado("bg-hilet-otro");
-            setBoton("otro-button");
-            setColorBorde("border-otro");
         }
     }, [carrera]);
 
@@ -63,14 +53,14 @@ const Programa = () => {
         <div>
             <Navbar nombre={nombre} carrera={carrera} />
             <div className={`min-h-screen select-none flex flex-col items-center justify-evenly ${fondoDegradado} py-20 lg:py-32 gap-8`}>
-                <p className='text-white font-bold text-5xl select-none'>Programa de {carrera}</p>
+                <p className='text-white font-bold text-5xl select-none'>Gestion de alumnos</p>
                 <div className=''>
-                <TablaHistorial
+                <TablaAlumnos
                     carrera={carrera}
                     color={fondoOpaco}
                     busqueda={busqueda}
                     estadoFiltro={estadoFiltro}
-                    buscador={<Buscador setBusqueda={setBusqueda} setEstadoFiltro={setEstadoFiltro} />}
+                    buscador={<BuscadorAlumnos setBusqueda={setBusqueda} setEstadoFiltro={setEstadoFiltro} />}
                 />
                 </div>
             </div>
@@ -79,4 +69,4 @@ const Programa = () => {
     )
 }
 
-export default Programa;
+export default AddAlumnos;

@@ -109,7 +109,7 @@ const Navbar = ({ nombre, carrera }) => {
                 </div>
             </div>
             <div className="logo">
-                <img src={logoHilet} alt="Logo" className="h-12 w-auto" />
+                <a href="/"><img src={logoHilet} alt="Logo" className="h-12 w-auto" /></a>
             </div>
             <div className="flex items-center relative">
                 <span className="text-white mr-2">{nombre}</span>
@@ -123,7 +123,7 @@ const Navbar = ({ nombre, carrera }) => {
                     onClick={(e) => e.stopPropagation()}
                 >
                     <div className='mt-20'>
-                        <Submenu carrera={carrera} titulo="Configuraciones" open={location.pathname === "/configuraciones"} />
+                        <Submenu carrera={carrera} titulo="Configuraciones" open={location.pathname === "/configuraciones"} path={"/configuraciones"} />
                         <Submenu carrera={carrera} titulo="Cerrar sesion" open={false} />
                     </div>
                 </div>
