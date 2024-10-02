@@ -110,7 +110,7 @@ const LoginForm = () => {
                 </div>
                 <div className="lg:w-1/2 flex flex-col m-auto justify-between items-center activo">
                     <h1 className="text-2xl font-bold mb-6 text-center text-analista titulo">Finales HILET</h1>
-                    <form method="POST" className="flex flex-col justify-between items-center w-full max-w-xs">
+                    <form method="POST" className="flex flex-col justify-between items-center w-full max-w-xs gap-5">
                         <InputField
                             id="user"
                             label="Usuario"
