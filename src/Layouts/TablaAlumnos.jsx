@@ -92,12 +92,12 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
   const headers = ["DNI", "Apellido", "Nombre", "Regular", "Acciones"];
 
   return (
-    <div className={`gap-8 flex flex-col`}>
+    <div className={`gap-8 flex flex-col rounded-xl bg-white p-8`}>
       {/* Botones para seleccionar carrera */}
       <div className="flex flex-row justify-between items-center">
         <div className="flex flex-col justify-between w-[48%] gap-8">
           <div className="flex flex-row gap-2 mb-4">
-          <p className="text-white text-3xl select-none"><strong>Carrera</strong></p>
+          <p className="text-analista text-3xl select-none"><strong>Carrera</strong></p>
             {ALUMNOS.map((alumno, index) => (
               <button
               key={index}
@@ -106,7 +106,7 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
                 setCurrentYear(0); // Reiniciar año al cambiar carrera
               }}
               className={`px-4 py-2 rounded-full select-none ${
-                currentCarrera === alumno.carrera ? "bg-white text-analista" : `${color} text-white`
+                currentCarrera === alumno.carrera ? `${color} text-white` : "bg-white text-analista border-analista"
               }`}
               >
                 {alumno.carrera}
@@ -116,13 +116,13 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
 
           {/* Botones para seleccionar año */}
           <div className="flex flex-row gap-8 mb-4">
-            <p className="text-white text-3xl select-none"><strong>Año</strong></p>
+            <p className="text-analista text-3xl select-none"><strong>Año</strong></p>
             {[...Array(ALUMNOS.find((a) => a.carrera === currentCarrera).años)].map((_, index) => (
               <button
               key={index}
               onClick={() => setCurrentYear(index)}
               className={`px-4 py-2 rounded-full select-none ${
-                currentYear === index ? "bg-white text-analista" : `${color} text-white`
+                currentYear === index ? `${color} text-white` : "bg-white text-analista border-analista"
               }`}
               >
                 {index + 1}

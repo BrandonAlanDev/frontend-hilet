@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import InputField from './InputField';
 
 const BuscadorAlumnos = ({ setBusqueda, setEstadoFiltro }) => {
   const [busquedaTexto, setBusquedaTexto] = useState('');
@@ -16,15 +17,16 @@ const BuscadorAlumnos = ({ setBusqueda, setEstadoFiltro }) => {
 
   return (
     <div className='flex flex-row w-[250px] lg:w-[40vw] justify-between flex-wrap gap-5'>
-      <input
+      <InputField
         type="text"
         placeholder="Buscar ..."
-        className="border border-none p-2 rounded-lg w-[250px] lg:w-[18vw] text-lg"
         value={busquedaTexto}
         onChange={handleTextoChange}
-      />
+        ancho="w-[250px] lg:w-[18vw]"
+        >
+      </InputField>
       <select
-        className="border border-none p-2 rounded-lg w-[250px] lg:w-[18vw] text-lg"
+        className="border p-2 rounded-full flex-1 appearance-none focus:outline-none focus:ring-0 bg-transparent text-gray-700 leading-tight placeholder-analista placeholder-opacity-100 negrita w-[250px]  lg:w-[18vw] text-lg border-analista"
         value={estado}
         onChange={handleEstadoChange}
       >
