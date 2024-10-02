@@ -16,10 +16,10 @@ const Modal = (props) => {
 
                 {/* Contenedor de los botones */}
                 <div className="absolute bottom-4 right-4 flex space-x-4">
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    <button className="aceptar px-4 py-2 rounded-lg">
                         Aceptar
                     </button>
-                    <button onClick={props.onClose} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                    <button onClick={props.onClose} className="cancelar px-4 py-2 rounded-lg">
                         Cancelar
                     </button>
                 </div>

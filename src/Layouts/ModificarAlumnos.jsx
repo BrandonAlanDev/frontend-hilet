@@ -1,39 +1,29 @@
 import { useState, useEffect } from "react";
 import Modal from "../Components/Modal";
-import InputField from "../Components/InputField"; // Componente de entrada reutilizable
+import InputField from "../Components/InputField";
 import { useNavigate } from "react-router-dom";
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { Tooltip } from "@mui/material";
 
 const ModificarAlumnos = () => {
     const [modalisopen, setModalIsOpen] = useState(false);
     const [alumno, setAlumno] = useState({
-        nombre: "",
-        apellido: "",
+        nombre: "Alejandro",
+        apellido: "Verteche",
         email: "",
-        carrera: "",
+        carrera: "Analista de Sistemas",
         usuario: "alee",
-        dni: "",
+        dni: "45031132",
         contraseña: "",
     });
-    const [carreras, setCarreras] = useState([]);
+    const [carreras, setCarreras] = useState(["Analista de Sistemas", "Publicidad"]);
     const navigate = useNavigate();
 
     const open = () => setModalIsOpen(true);
     const close = () => setModalIsOpen(false);
 
     useEffect(() => {
-        // Autocargar datos de alumno y usuario desde localStorage
-        const alumnoStored = JSON.parse(localStorage.getItem('alumno')) || {};
-        const usuarioStored = localStorage.getItem('usuario') || "";
-        const storedCarreras = JSON.parse(localStorage.getItem('carreras')) || [];
-
-        setAlumno((prevAlumno) => ({
-            ...prevAlumno,
-            ...alumnoStored,
-            usuario: usuarioStored,
-        }));
-
-        setCarreras(storedCarreras);
-
         const user = sessionStorage.getItem('user');
         if (!user || user !== "sandra2024") {
             navigate('/');
@@ -50,98 +40,84 @@ const ModificarAlumnos = () => {
 
     return (
         <div>
-            <button onClick={open}>
-                Abrir modal
+            <button className="rounded-lg p-2 bg-yellow-400 hover:bg-yellow-500" onClick={open}>
+                <ModeEditIcon fontSize="medium" />
             </button>
 
             <Modal open={modalisopen} onClose={close}>
-                <h1 className="text-2xl font-bold mb-6 text-center gap-5">Modificar Alumno</h1>
+                <h1 className="text-2xl font-extrabold mb-6 text-center text-analista gap-5">Modificar Alumno</h1>
                 <form>
-    
+
+                    {/* Campo Alumno - solo lectura */}
                     <div className="mb-4">
-                        <label className="block text-sm font-medium">Alumno:</label>
-                        <p className="border p-2 bg-gray-100 rounded">{alumno.nombre}</p>
+                        <label className="block text-sm font-bold text-analista">Alumno:</label>
+                        <p className="border p-2 bg-gray-100 rounded-lg">{alumno.apellido} {alumno.nombre}</p>
                     </div>
 
+                    {/* Campo Usuario */}
                     <div className="mb-4">
+                        <label className="block text-sm font-bold text-analista" htmlFor="usuario">Usuario:</label>
                         <InputField
                             id="usuario"
-                            label="Usuario"
                             value={alumno.usuario}
                             placeholder=""
-                            onChange={(e) => {
-                                setAlumno((prevAlumno) => ({
-                                    ...prevAlumno,
-                                    usuario: e.target.value,
-                                }));
-                            }}
+                            onChange={(e) => ({ ...alumno, usuario: e.target.value })}
                         />
                     </div>
 
-                    
+                    {/* Campo Contraseña */}
                     <div className="mb-4">
-                        <label className="block text-sm font-medium">Contraseña:</label>
+                        <label className="block text-sm font-bold text-analista" htmlFor="contraseña">Contraseña:</label>
                         <div className="flex items-center">
-                            <input
+                            <InputField
                                 type="password"
-                                value={alumno.contraseña}
-                                onChange={(e) => {
-                                    setAlumno((prevAlumno) => ({
-                                        ...prevAlumno,
-                                        contraseña: e.target.value,
-                                    }));
-                                }}
-                                className="flex-1 px-3 py-2 border rounded"
+                                id="contraseña"
+                                value=""
+                                placeholder=""
+                                onChange={(e) => ({ ...alumno, contraseña: e.target.value })}
                             />
-                            <button
-                                type="button"
-                                onClick={resetContraseña}
-                                className="ml-4 bg-gray-500 text-white px-3 py-2 rounded hover:bg-gray-600"
-                            >
-                                Restablecer
-                            </button>
+                            <Tooltip title="La contraseña por defecto es el DNI del usuario">
+                                <HelpOutlineIcon className="ml-2 cursor-pointer text-analista" />
+                            </Tooltip>
                         </div>
+                        <button
+                            type="button"
+                            onClick={resetContraseña}
+                            className="ml-12 analista-button text-white px-3 py-2 rounded-lg "
+                        >
+                            Restablecer
+                        </button>
                     </div>
 
-                   
-                    <InputField
-                        id="apellido"
-                        label="Apellido"
-                        value={alumno.apellido}
-                        placeholder="Ingresa el apellido"
-                        onChange={(e) => {
-                            setAlumno((prevAlumno) => ({
-                                ...prevAlumno,
-                                apellido: e.target.value,
-                            }));
-                        }}
-                    />
-
-                    
-                    <InputField
-                        id="email"
-                        label="Email"
-                        value={alumno.email}
-                        placeholder="Ingresa el email"
-                        onChange={(e) => {
-                            setAlumno((prevAlumno) => ({
-                                ...prevAlumno,
-                                email: e.target.value,
-                            }));
-                        }}
-                    />
-
-                    
+                    {/* Campo Apellido */}
                     <div className="mb-4">
-                        <label className="block text-sm font-medium">Carrera:</label>
+                        <label className="block text-sm font-bold text-analista" htmlFor="apellido">Apellido:</label>
+                        <InputField
+                            id="apellido"
+                            value=""
+                            placeholder=""
+                            onChange={(e) => ({ ...alumno, apellido: e.target.value })}
+                        />
+                    </div>
+
+                    {/* Campo Email */}
+                    <div className="mb-4">
+                        <label className="block text-sm font-bold text-analista" htmlFor="email">Email:</label>
+                        <InputField
+                            id="email"
+                            value=""
+                            placeholder=""
+                            onChange={(e) => ({ ...alumno, email: e.target.value })}
+                        />
+                    </div>
+
+                    {/* Campo Select de Carreras */}
+                    <div className="mb-4">
+                        <label className="block text-sm font-bold text-analista" htmlFor="carrera">Carrera:</label>
                         <select
+                            id="carrera"
                             value={alumno.carrera}
-                            onChange={(e) => {
-                                setAlumno((prevAlumno) => ({
-                                    ...prevAlumno,
-                                    carrera: e.target.value,
-                                }));
-                            }}
+                            onChange={(e) => ({ ...alumno, carrera: e.target.value })}
                             className="w-full px-3 py-2 border rounded"
                         >
                             <option value="" disabled>
