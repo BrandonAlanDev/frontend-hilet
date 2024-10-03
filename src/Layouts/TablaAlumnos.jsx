@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Tabla from "../Components/Tabla";
 import ModificarAlumnos from "../Layouts/ModificarAlumnos";
+import AddAlumnoModal from "./AddAlumnoModal";
 
 const ALUMNOS = [
   {
@@ -150,7 +151,8 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
           </div>
         </div>
         <div className="flex flex-col justify-between items-end w-[48%] gap-8">
-          <button className="analista-button px-4 py-2 rounded-full select-none text-white w-48"><strong>Nuevo alumno</strong> </button>
+          {/* <button className="analista-button px-4 py-2 rounded-full select-none text-white w-48"><strong>Nuevo alumno</strong> </button> */}
+          <AddAlumnoModal/>
           {buscador}
         </div>
       </div>
