@@ -10,13 +10,13 @@ const Modal = (props) => {
                 </button>
 
                 {/* Contenido del modal */}
-                <div className="mb-16">
+                <div className="flex flex-col w-full mb-16">
                     {props.children}
                 </div>
 
                 {/* Contenedor de los botones */}
                 <div className="absolute bottom-4 right-4 flex space-x-4">
-                    <button className="aceptar px-4 py-2 rounded-lg">
+                    <button onClick={props.onClick} className="aceptar px-4 py-2 rounded-lg">
                         Aceptar
                     </button>
                     <button onClick={props.onClose} className="cancelar px-4 py-2 rounded-lg">
