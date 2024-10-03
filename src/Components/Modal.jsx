@@ -2,8 +2,8 @@ const Modal = (props) => {
     if (!props.open) return null; //para que no se renderize al pepe
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white rounded-lg p-6 max-w-md w-full relative">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+            <div className="bg-white rounded-lg p-6 max-w-md w-full relative z-60">
                 {/* Botón de cerrar arriba a la derecha */}
                 <button onClick={props.onClose} className="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
                     ✕

@@ -93,7 +93,7 @@ const ModificarAlumnos = () => {
                                 <HelpOutlineIcon className="ml-2 cursor-pointer text-analista" />
                             </Tooltip>
                         </div>
-                        <div className="flex justify-center">
+                        <div className="flex justify-center m-2">
                             <button
                                 type="button"
                                 onClick={resetContraseña}

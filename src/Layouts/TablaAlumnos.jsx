@@ -2,31 +2,32 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Tabla from "../Components/Tabla";
+import ModificarAlumnos from "../Layouts/ModificarAlumnos";
 
 const ALUMNOS = [
   {
-    carrera:"Analista de Sistemas",
+    carrera: "Analista de Sistemas",
     años: 3,
-    alumnos:[
+    alumnos: [
       {
-        apellido:"Gonzales",
-        nombre:"Sergio",
-        dni:"44888666",
-        regular:true,
+        apellido: "Gonzales",
+        nombre: "Sergio",
+        dni: "44888666",
+        regular: true,
         año: 2
       },
       {
-        apellido:"Pirelli",
-        nombre:"Manolo",
-        dni:"33777555",
-        regular:true,
+        apellido: "Pirelli",
+        nombre: "Manolo",
+        dni: "33777555",
+        regular: true,
         año: 1
       },
       {
-        apellido:"Messi",
-        nombre:"Lionel",
-        dni:"12345678",
-        regular:true,
+        apellido: "Messi",
+        nombre: "Lionel",
+        dni: "12345678",
+        regular: true,
         año: 3
       },
     ]
@@ -39,14 +40,14 @@ const ALUMNOS = [
         apellido: "Splinter",
         nombre: "Maestro",
         dni: "21848646",
-        regular:true,
+        regular: true,
         año: 2
       },
       {
         apellido: "Perez",
         nombre: "Juan",
         dni: "31231212",
-        regular:true,
+        regular: true,
         año: 3
       },
     ]
@@ -67,8 +68,8 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
       const filtro = estadoFiltro === "Regular"
         ? alumnos.filter((alumno) => alumno.regular)
         : estadoFiltro === "Libre"
-        ? alumnos.filter((alumno) => !alumno.regular)
-        : alumnos;
+          ? alumnos.filter((alumno) => !alumno.regular)
+          : alumnos;
 
       // Filtrar alumnos por año y búsqueda
       const resultados = filtro.filter((alumno) => {
@@ -97,17 +98,16 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
       <div className="flex flex-row justify-between items-center">
         <div className="flex flex-col justify-between w-[48%] gap-8">
           <div className="flex flex-row gap-2 mb-4">
-          <p className="text-analista text-3xl select-none"><strong>Carrera</strong></p>
+            <p className="text-analista text-3xl select-none"><strong>Carrera</strong></p>
             {ALUMNOS.map((alumno, index) => (
               <button
-              key={index}
-              onClick={() => {
-                setCurrentCarrera(alumno.carrera);
-                setCurrentYear(0); // Reiniciar año al cambiar carrera
-              }}
-              className={`px-4 py-2 rounded-full select-none ${
-                currentCarrera === alumno.carrera ? `${color} text-white` : "bg-white text-analista border-analista"
-              }`}
+                key={index}
+                onClick={() => {
+                  setCurrentCarrera(alumno.carrera);
+                  setCurrentYear(0); // Reiniciar año al cambiar carrera
+                }}
+                className={`px-4 py-2 rounded-full select-none ${currentCarrera === alumno.carrera ? `${color} text-white` : "bg-white text-analista border-analista"
+                  }`}
               >
                 {alumno.carrera}
               </button>
@@ -119,11 +119,10 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
             <p className="text-analista text-3xl select-none"><strong>Año</strong></p>
             {[...Array(ALUMNOS.find((a) => a.carrera === currentCarrera).años)].map((_, index) => (
               <button
-              key={index}
-              onClick={() => setCurrentYear(index)}
-              className={`px-4 py-2 rounded-full select-none ${
-                currentYear === index ? `${color} text-white` : "bg-white text-analista border-analista"
-              }`}
+                key={index}
+                onClick={() => setCurrentYear(index)}
+                className={`px-4 py-2 rounded-full select-none ${currentYear === index ? `${color} text-white` : "bg-white text-analista border-analista"
+                  }`}
               >
                 {index + 1}
               </button>
@@ -131,10 +130,10 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
           </div>
         </div>
 
-      <div className="flex flex-col justify-between items-end w-[48%] gap-8">
-        <button className="analista-button px-4 py-2 rounded-full select-none text-white w-48"><strong>Nuevo alumno</strong> </button>
-        {buscador}
-      </div>
+        <div className="flex flex-col justify-between items-end w-[48%] gap-8">
+          <button className="analista-button px-4 py-2 rounded-full select-none text-white w-48"><strong>Nuevo alumno</strong> </button>
+          {buscador}
+        </div>
       </div>
       <Tabla headers={headers} color={color}>
         {alumnosFiltrados.map((alumno, index) => (
@@ -143,8 +142,10 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
             <td className="py-3 px-5 text-center">{alumno.apellido}</td>
             <td className="py-3 px-5 text-center">{alumno.nombre}</td>
             <td className="py-3 px-5 text-center">{alumno.regular ? "Regular" : "Libre"}</td>
-            <td className="py-3 px-5 text-center">
-              <button className="bg-blue-500 text-white px-3 py-1 rounded">Acción</button>
+            <td className="py-3 px-5">
+              <div className="flex justify-center">
+                <ModificarAlumnos />
+              </div>
             </td>
           </tr>
         ))}

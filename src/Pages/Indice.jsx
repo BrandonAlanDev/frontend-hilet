@@ -92,7 +92,6 @@ const Indice = () => {
             </div>
             {   
             <div className="flex w-full items-center justify-center">
-                <ModificarAlumnos/>
             </div>
             /* ACA ES DONDE PRUEBO COMO SE VEN LOS COMPONENTES /*<TablaFinales/> */}
             {/* ALT + FLECHITAS PARA IR MOVIENDO LOS COMENTARIOS */}
