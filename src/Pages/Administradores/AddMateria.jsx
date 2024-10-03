@@ -46,6 +46,18 @@ const AddMateria = () => {
                     </div>
                     {(carrera === "Administración") && (
                         <div className="flex flex-row flex-wrap gap-8 items-start justify-center lg:max-w-6xl">
+                            <div
+                                className="opacity-85 select-none bg-slate-100 p-8 rounded-lg flex flex-col items-center justify-between mosaicos shadow-2xl shadow-black cursor-pointer w-[300px] h-[360px]"
+                                onClick={() => setShowModal(true)}
+                            >
+                                <div>
+                                    <h4 className={`text-2xl select-none font-bold mt-4 text-center text-mosaico opacity-100 text-analista`}> </h4>
+                                </div>
+                                <img className="flex select-none justify-center items-center activo aspect-square w-[100px] h-[100px]" src={agregar} alt="Signo de agregar" />
+                                <div>
+                                    <h4 className={`text-2xl select-none font-bold mt-4 text-center text-mosaico opacity-100 text-analista`}>Nueva resolucion</h4>
+                                </div>
+                            </div>
                             {carreras.map((c, index) => (
                                 <div key={index} className="bg-blanco p-8 rounded-lg flex flex-col items-center justify-between mosaicos shadow-2xl shadow-black w-[300px] h-[360px]">
                                     <div className="text-mosaico">
@@ -57,18 +69,6 @@ const AddMateria = () => {
                                     </div>
                                 </div>
                             ))}
-                            <div
-                                className="opacity-85 select-none bg-slate-100 p-8 rounded-lg flex flex-col items-center justify-between mosaicos shadow-2xl shadow-black cursor-pointer w-[300px] h-[360px]"
-                                onClick={() => setShowModal(true)}
-                            >
-                                <div>
-                                    <h4 className={`text-2xl select-none font-bold mt-4 text-center text-mosaico opacity-100 text-analista`}>Nueva carrera</h4>
-                                </div>
-                                <img className="flex select-none justify-center items-center activo aspect-square w-[100px] h-[100px]" src={agregar} alt="Signo de agregar" />
-                                <div>
-                                    <h4 className={`text-2xl select-none font-bold mt-4 text-center text-mosaico opacity-100 text-analista`}>Nueva resolucion</h4>
-                                </div>
-                            </div>
                         </div>
                     )}
                 </div>

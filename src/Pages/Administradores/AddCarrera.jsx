@@ -46,15 +46,6 @@ const AddCarrera = () => {
                     </div>
                     {(carrera === "Administración") && (
                         <div className="flex flex-row flex-wrap gap-8 items-start justify-center lg:max-w-6xl">
-                            {carreras.map((c, index) => (
-                                <div key={index} className="bg-blanco p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black">
-                                    <div className="flex-grow flex justify-center items-center bg-figuras activo aspect-square">
-                                    </div>
-                                    <div className="text-mosaico">
-                                        <h4 className={`text-2xl font-bold mt-4 text-center text-mosaico text-analista`}>{c}</h4>
-                                    </div>
-                                </div>
-                            ))}
                             <div
                                 className="opacity-85 bg-slate-100 p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black cursor-pointer"
                                 onClick={() => setShowModal(true)}
@@ -64,6 +55,15 @@ const AddCarrera = () => {
                                     <h4 className={`text-2xl font-bold mt-4 text-center text-mosaico opacity-100 text-analista`}>Agregar</h4>
                                 </div>
                             </div>
+                            {carreras.map((c, index) => (
+                                <div key={index} className="bg-blanco p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black">
+                                    <div className="flex-grow flex justify-center items-center bg-figuras activo aspect-square">
+                                    </div>
+                                    <div className="text-mosaico">
+                                        <h4 className={`text-2xl font-bold mt-4 text-center text-mosaico text-analista`}>{c}</h4>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     )}
                 </div>
