@@ -6,6 +6,7 @@ import Final from '../Components/Final';
 import TablaFinales from '../Layouts/TablaFinales';
 import TablaHistorial from '../Layouts/TablaHistorial';
 import Mosaico from '../Components/Mosaico';
+import ModificarAlumnos from '../Layouts/ModificarAlumnos';
 
 const Indice = () => {
     const [nombre, setNombre] = useState('');
@@ -91,7 +92,7 @@ const Indice = () => {
             </div>
             {   
             <div className="flex w-full items-center justify-center">
-                <TablaFinales color={fondoOpaco}/>
+                <ModificarAlumnos/>
             </div>
             /* ACA ES DONDE PRUEBO COMO SE VEN LOS COMPONENTES /*<TablaFinales/> */}
             {/* ALT + FLECHITAS PARA IR MOVIENDO LOS COMENTARIOS */}
