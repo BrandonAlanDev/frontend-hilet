@@ -7,7 +7,6 @@ import Buscador from '../../Components/Buscador'
 const Programa = () => {
     const [nombre, setNombre] = useState('');
     const [carrera, setCarrera] = useState('');
-    const [colorText, setColorText] = useState('');
     const [fondoOpaco, setFondoOpaco] = useState('');
     const [fondoDegradado, setFondoDegradado] = useState('');
     const [busqueda,setBusqueda] = useState('');
@@ -37,24 +36,15 @@ const Programa = () => {
 
     useEffect(() => {
         if (carrera === "Publicidad") {
-            setColorText("text-publicidad");
             setFondoOpaco("bg-publicidad");
             setFondoDegradado("bg-hilet-publicidad");
-            setBoton("publicidad-button");
-            setColorBorde("border-publicidad");
         } else if (carrera === "Analista de Sistemas" || carrera === "Administración") {
-            setColorText("text-analista");
             setFondoOpaco("bg-analista");
             setFondoDegradado("bg-hilet");
-            setBoton("analista-button");
-            setColorBorde("border-analista");
         }
         else {
-            setColorText("text-otro");
             setFondoOpaco("bg-otro");
             setFondoDegradado("bg-hilet-otro");
-            setBoton("otro-button");
-            setColorBorde("border-otro");
         }
     }, [carrera]);
 

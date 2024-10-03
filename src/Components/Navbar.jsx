@@ -48,13 +48,11 @@ const Navbar = ({ nombre, carrera }) => {
         } else {
             setDirecciones([
                 { titulo: "Inicio", path: "/inicio" },
-                { titulo: "Profesores", path: "/profesores" },
                 { titulo: "Finales", path: "/finales" },
-                { titulo: "Cargar notas", path: "/addnotas" },
-                { titulo: "Cargar alumno", path: "/addalumno" },
-                { titulo: "Cargar profesor", path: "/addprofesor" },
-                { titulo: "Cargar carrera", path: "/addcarrera" },
-                { titulo: "Cargar materias", path: "/addmaterias" }
+                { titulo: "Gestion de Alumno", path: "/addalumno" },
+                { titulo: "Gestion de Profesor", path: "/addprofesor" },
+                { titulo: "Gestion de Carreras", path: "/addcarrera" },
+                { titulo: "Gestion de Materias", path: "/addmaterias" }
             ]);
         }
     }, [carrera]);
