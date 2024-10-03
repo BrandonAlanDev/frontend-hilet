@@ -6,50 +6,30 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Tooltip } from "@mui/material";
 
-const ModificarAlumnos = () => {
+const ModificarAlumnos = ({ alumno, onAlumnoModificado }) => {
     const [modalisopen, setModalIsOpen] = useState(false);
-    const [nombre, setNombre] = useState("");
-    const [alumno, setAlumno] = useState({
-        nombre: "Alejandro",
-        apellido: "Verteche",
-        email: "alejandroverteche@gmail.com",
-        carrera: "Analista de Sistemas",
-        usuario: "alee",
-        dni: "45031132",
-        contraseña: "",
-    });
-    const [carrera, setCarrera] = useState("");
-    const [carreras, setCarreras] = useState(["Analista de Sistemas", "Publicidad"]);
+    const [alumnoData, setAlumnoData] = useState(alumno);
     const navigate = useNavigate();
 
     const open = () => setModalIsOpen(true);
     const close = () => setModalIsOpen(false);
 
     useEffect(() => {
-        const user = sessionStorage.getItem('user');
-        if (!user || user !== "sandra2024") {
-            navigate('/');
-        } else {
-            setNombre(user);
-            setCarrera("Administración");
-        }
-        const storedCarreras = JSON.parse(sessionStorage.getItem('carreras')) || [];
-        setCarreras(storedCarreras);
-    }, [navigate]);
+        setAlumnoData(alumno);
+    }, [alumno]);
 
     const resetContraseña = () => {
-        setAlumno((prevAlumno) => ({
+        setAlumnoData((prevAlumno) => ({
             ...prevAlumno,
             contraseña: prevAlumno.dni,
         }));
-        alert('Contraseña restablecida a: ' + alumno.dni);
+        alert('Contraseña restablecida a: ' + alumnoData.dni);
     };
 
     const modificarAlumno = () => {
-        sessionStorage.setItem("alumnos", JSON.stringify(alumno));
-        alert('Datos del alumno actualizados');
+        onAlumnoModificado(alumnoData);
         setModalIsOpen(false);
-    }
+    };
 
     return (
         <div>
@@ -64,7 +44,7 @@ const ModificarAlumnos = () => {
                     {/* Campo Alumno - solo lectura */}
                     <div className="mb-4">
                         <label className="block text-sm font-bold text-analista">Alumno:</label>
-                        <p className="border p-2 bg-gray-100 rounded-lg">{alumno.apellido} {alumno.nombre}</p>
+                        <p className="border p-2 bg-gray-100 rounded-lg">{alumnoData.apellido} {alumnoData.nombre}</p>
                     </div>
 
                     {/* Campo Usuario */}
@@ -72,9 +52,9 @@ const ModificarAlumnos = () => {
                         <label className="block text-sm font-bold text-analista" htmlFor="usuario">Usuario:</label>
                         <InputField
                             id="usuario"
-                            value={alumno.usuario}
+                            value={alumnoData.usuario}
                             placeholder=""
-                            onChange={(e) => setAlumno({ ...alumno, usuario: e.target.value })}
+                            onChange={(e) => setAlumnoData({ ...alumnoData, usuario: e.target.value })}
                         />
                     </div>
 
@@ -85,9 +65,9 @@ const ModificarAlumnos = () => {
                             <InputField
                                 type="password"
                                 id="contraseña"
-                                value={alumno.contraseña}
+                                value={alumnoData.contraseña}
                                 placeholder=""
-                                onChange={(e) => setAlumno({ ...alumno, contraseña: e.target.value })}
+                                onChange={(e) => setAlumnoData({ ...alumnoData, contraseña: e.target.value })}
                             />
                             <Tooltip title="La contraseña por defecto es el DNI del usuario">
                                 <HelpOutlineIcon className="ml-2 cursor-pointer text-analista" />
@@ -109,9 +89,9 @@ const ModificarAlumnos = () => {
                         <label className="block text-sm font-bold text-analista" htmlFor="nombre">Nombre:</label>
                         <InputField
                             id="nombre"
-                            value={alumno.nombre}
+                            value={alumnoData.nombre}
                             placeholder=""
-                            onChange={(e) => setAlumno({ ...alumno, nombre: e.target.value })}
+                            onChange={(e) => setAlumnoData({ ...alumnoData, nombre: e.target.value })}
                         />
                     </div>
 
@@ -120,9 +100,9 @@ const ModificarAlumnos = () => {
                         <label className="block text-sm font-bold text-analista" htmlFor="apellido">Apellido:</label>
                         <InputField
                             id="apellido"
-                            value={alumno.apellido}
+                            value={alumnoData.apellido}
                             placeholder=""
-                            onChange={(e) => setAlumno({ ...alumno, apellido: e.target.value })}
+                            onChange={(e) => setAlumnoData({ ...alumnoData, apellido: e.target.value })}
                         />
                     </div>
 
@@ -131,9 +111,9 @@ const ModificarAlumnos = () => {
                         <label className="block text-sm font-bold text-analista" htmlFor="email">Email:</label>
                         <InputField
                             id="email"
-                            value={alumno.email}
+                            value={alumnoData.email}
                             placeholder=""
-                            onChange={(e) => setAlumno({ ...alumno, email: e.target.value })}
+                            onChange={(e) => setAlumnoData({ ...alumnoData, email: e.target.value })}
                         />
                     </div>
 
@@ -142,14 +122,14 @@ const ModificarAlumnos = () => {
                         <label className="block text-sm font-bold text-analista" htmlFor="carrera">Carrera:</label>
                         <select
                             id="carrera"
-                            value={alumno.carrera}
-                            onChange={(e) => setAlumno({ ...alumno, carrera: e.target.value })}
+                            value={alumnoData.carrera}
+                            onChange={(e) => setAlumnoData({ ...alumnoData, carrera: e.target.value })}
                             className="w-full px-3 py-2 border rounded"
                         >
                             <option value="" disabled>
                                 Selecciona una carrera
                             </option>
-                            {carreras.map((c, index) => (
+                            {["Analista de Sistemas", "Publicidad"].map((c, index) => (
                                 <option key={index} value={c}>
                                     {c}
                                 </option>

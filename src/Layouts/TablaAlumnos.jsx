@@ -1,6 +1,4 @@
-
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Tabla from "../Components/Tabla";
 import ModificarAlumnos from "../Layouts/ModificarAlumnos";
 
@@ -10,25 +8,31 @@ const ALUMNOS = [
     años: 3,
     alumnos: [
       {
+        usuario:"ElSergi",
         apellido: "Gonzales",
         nombre: "Sergio",
         dni: "44888666",
         regular: true,
-        año: 2
+        año: 2,
+        email:"gonzalessergio@gmail.com"
       },
       {
+        usuario:"Elmanolo",
         apellido: "Pirelli",
         nombre: "Manolo",
         dni: "33777555",
         regular: true,
-        año: 1
+        año: 1,
+        email:"manolo@gmail.com"
       },
       {
+        usuario:"laPulga",
         apellido: "Messi",
         nombre: "Lionel",
         dni: "12345678",
         regular: true,
-        año: 3
+        año: 3,
+        email:"leomessi@gmail.com"
       },
     ]
   },
@@ -58,22 +62,20 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
   const [alumnosFiltrados, setAlumnosFiltrados] = useState([]);
   const [currentCarrera, setCurrentCarrera] = useState("Analista de Sistemas");
   const [currentYear, setCurrentYear] = useState(0);
+  const [selectedAlumno, setSelectedAlumno] = useState(null); // Estado para el alumno seleccionado
+  const [alumnos, setAlumnos] = useState(ALUMNOS); // Estado para manejar los alumnos
 
   useEffect(() => {
-    const carreraData = ALUMNOS.find((carrera) => carrera.carrera === currentCarrera);
+    const carreraData = alumnos.find((carrera) => carrera.carrera === currentCarrera);
     if (carreraData) {
-      const alumnos = carreraData.alumnos;
-
-      // Filtrar alumnos según el estado (Regular o Libre)
       const filtro = estadoFiltro === "Regular"
-        ? alumnos.filter((alumno) => alumno.regular)
+        ? carreraData.alumnos.filter((alumno) => alumno.regular)
         : estadoFiltro === "Libre"
-          ? alumnos.filter((alumno) => !alumno.regular)
-          : alumnos;
+          ? carreraData.alumnos.filter((alumno) => !alumno.regular)
+          : carreraData.alumnos;
 
-      // Filtrar alumnos por año y búsqueda
       const resultados = filtro.filter((alumno) => {
-        const isInCurrentYear = alumno.año === currentYear + 1; // Compara con el año actual (0-indexado)
+        const isInCurrentYear = alumno.año === currentYear + 1;
         const fullName = `${alumno.nombre} ${alumno.apellido}`.toLowerCase();
         const reverseFullName = `${alumno.apellido} ${alumno.nombre}`.toLowerCase();
         const searchTerm = busqueda.toLowerCase();
@@ -88,23 +90,41 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
 
       setAlumnosFiltrados(resultados);
     }
-  }, [currentCarrera, currentYear, busqueda, estadoFiltro]);
+  }, [currentCarrera, currentYear, busqueda, estadoFiltro, alumnos]);
+
+  // Función para actualizar los datos de un alumno
+  const modificarAlumno = (alumnoActualizado) => {
+    setAlumnos((prevAlumnos) =>
+      prevAlumnos.map((carrera) => {
+        if (carrera.carrera === currentCarrera) {
+          return {
+            ...carrera,
+            alumnos: carrera.alumnos.map((alumno) =>
+              alumno.dni === alumnoActualizado.dni ? alumnoActualizado : alumno
+            ),
+          };
+        }
+        return carrera;
+      })
+    );
+    setSelectedAlumno(null); // Cerrar el modal después de guardar
+  };
 
   const headers = ["DNI", "Apellido", "Nombre", "Regular", "Acciones"];
 
   return (
     <div className={`gap-8 flex flex-col rounded-xl bg-white p-8`}>
-      {/* Botones para seleccionar carrera */}
+      {/* Botones de Carrera */}
       <div className="flex flex-row justify-between items-center">
         <div className="flex flex-col justify-between w-[48%] gap-8">
           <div className="flex flex-row gap-2 mb-4">
             <p className="text-analista text-3xl select-none"><strong>Carrera</strong></p>
-            {ALUMNOS.map((alumno, index) => (
+            {alumnos.map((alumno, index) => (
               <button
                 key={index}
                 onClick={() => {
                   setCurrentCarrera(alumno.carrera);
-                  setCurrentYear(0); // Reiniciar año al cambiar carrera
+                  setCurrentYear(0);
                 }}
                 className={`px-4 py-2 rounded-full select-none ${currentCarrera === alumno.carrera ? `${color} text-white` : "bg-white text-analista border-analista"
                   }`}
@@ -114,10 +134,10 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
             ))}
           </div>
 
-          {/* Botones para seleccionar año */}
+          {/* Botones de Año */}
           <div className="flex flex-row gap-8 mb-4">
             <p className="text-analista text-3xl select-none"><strong>Año</strong></p>
-            {[...Array(ALUMNOS.find((a) => a.carrera === currentCarrera).años)].map((_, index) => (
+            {[...Array(alumnos.find((a) => a.carrera === currentCarrera).años)].map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentYear(index)}
@@ -129,12 +149,12 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
             ))}
           </div>
         </div>
-
         <div className="flex flex-col justify-between items-end w-[48%] gap-8">
           <button className="analista-button px-4 py-2 rounded-full select-none text-white w-48"><strong>Nuevo alumno</strong> </button>
           {buscador}
         </div>
       </div>
+
       <Tabla headers={headers} color={color}>
         {alumnosFiltrados.map((alumno, index) => (
           <tr key={index}>
@@ -144,12 +164,24 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
             <td className="py-3 px-5 text-center">{alumno.regular ? "Regular" : "Libre"}</td>
             <td className="py-3 px-5">
               <div className="flex justify-center">
-                <ModificarAlumnos />
+                <ModificarAlumnos
+                  alumno={alumno} // Pasar el alumno a modificar
+                  onAlumnoModificado={modificarAlumno} // Función para actualizar el alumno
+                />
               </div>
             </td>
           </tr>
         ))}
       </Tabla>
+
+      {/* Mostrar modal si hay un alumno seleccionado */}
+      {selectedAlumno && (
+        <ModificarAlumnos
+          alumno={selectedAlumno}
+          onClose={() => setSelectedAlumno(null)} // Cerrar el modal sin guardar
+          onSave={modificarAlumno} // Guardar cambios
+        />
+      )}
     </div>
   );
 };
