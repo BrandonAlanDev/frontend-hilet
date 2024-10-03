@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from 'react';
-
+import InputField from '../Components/InputField';
+import Modal from '../Components/Modal';
+import { useNavigate } from "react-router-dom";
 const AddAlumnoModal = () => {
 
     const [newAlumno, setNewAlumno] = useState({ nombre: "", apellido: "", dni: "", email: "", carrera: "", resolucion: "", usuario: "", password: "" });
     const [alumnos, setAlumnos] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [nombre, setNombre] = useState("");
     const [carreras, setCarreras] = useState([]);
-
+    const [carrera, setCarrera] = useState('');
+    const navigate = useNavigate();
     useEffect(() => {
+        const user = sessionStorage.getItem('user');
+        if (!user || user !== "sandra2024") {
+            navigate('/');
+        }
         // Cargar las carreras desde sessionStorage
         const storedCarreras = JSON.parse(sessionStorage.getItem('carreras')) || [];
         setCarreras(storedCarreras);
@@ -47,98 +55,81 @@ const AddAlumnoModal = () => {
         <>
             {/* Botón para abrir el modal */}
             <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                className="analista-button px-4 py-2 rounded-full select-none text-white w-48"
                 onClick={() => setShowModal(true)}
             >
-                Agregar Alumno
+                <strong>Nuevo alumno</strong>
             </button>
 
             {/* Modal */}
-            {
-                showModal && (
-                    <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
-                        <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
-                            <h2 className="text-2xl font-bold mb-4 text-analista">
-                                Agregar Nuevo Alumno
-                            </h2>
-                            <input
-                                type="text"
-                                className="w-full p-2 border border-analista rounded mb-4"
-                                placeholder="Nombre del Alumno"
-                                value={newAlumno.nombre}
-                                onChange={(e) => {
-                                    setNewAlumno({ ...newAlumno, nombre: e.target.value });
-                                }}
-                            />
-                            <input
-                                type="text"
-                                className="w-full p-2 border border-analista rounded mb-4"
-                                placeholder="Apellido"
-                                value={newAlumno.apellido}
-                                onChange={(e) => {
-                                    setNewAlumno({ ...newAlumno, apellido: e.target.value });
-                                }}
-                            />
-                            <input
-                                type="text"
-                                className="w-full p-2 border border-analista rounded mb-4"
-                                placeholder="DNI"
-                                value={newAlumno.dni}
-                                onChange={handleDniChange}
-                            />
-                            <input
-                                type="text"
-                                className="w-full p-2 border border-analista rounded mb-4"
-                                placeholder="Correo"
-                                value={newAlumno.email}
-                                onChange={(e) => {
-                                    setNewAlumno({ ...newAlumno, email: e.target.value });
-                                }}
-                            />
+            <Modal open={showModal} onClose={() => setShowModal(false)} onClick={addAlumno}>
+                <h2 className="text-2xl font-bold mb-4 text-analista">Agregar Nuevo Alumno</h2>
 
-                            <select
-                                className="w-full p-2 border border-analista rounded mb-4"
-                                value={newAlumno.carrera}
-                                onChange={(e) => setNewAlumno({ ...newAlumno, carrera: e.target.value })}
-                            >
-                                <option value="">Selecciona una carrera</option>
-                                {carreras.map((carrera, index) => (
-                                    <option key={index} value={carrera}>{carrera}</option>
-                                ))}
-                            </select>
-                            <label htmlFor="usuario" className="w-full bg-white flex input text-left">Usuario</label>
-                            <input
-                                type="text"
-                                className="w-full p-2 border border-analista rounded mb-4"
-                                value={newAlumno.usuario} // Autocompletar con el DNI
-                                disabled
-                            />
-                            <label htmlFor="password" className="w-full bg-white flex input text-left">Contraseña</label>
-                            <input
-                                type="password"
-                                className="w-full p-2 border border-analista rounded mb-4"
-                                value={newAlumno.password} // Autocompletar con el DNI
-                                disabled
-                            />
-
-                            <div className="flex justify-end space-x-4">
-                                <button
-                                    className="cancelar text-white px-4 py-2 rounded"
-                                    onClick={() => setShowModal(false)}
-                                >
-                                    Cancelar
-                                </button>
-                                <button
-                                    className="aceptar text-white px-4 py-2 rounded"
-                                    onClick={addAlumno}
-                                >
-                                    Agregar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )
-            }
+                <div className="mb-4">
+                    <label className="block text-sm font-bold text-analista">Nombre</label>
+                    <InputField
+                        id="text"
+                        placeholder=""
+                        value={newAlumno.nombre}
+                        onChange={(e) => setNewAlumno({ ...newAlumno, nombre: e.target.value })}
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-sm font-bold text-analista">Apellido</label>
+                    <InputField
+                        type="text"
+                        placeholder=""
+                        value={newAlumno.apellido}
+                        onChange={(e) => setNewAlumno({ ...newAlumno, apellido: e.target.value })}
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-sm font-bold text-analista">DNI</label>
+                    <InputField
+                        type="text"
+                        placeholder=""
+                        value={newAlumno.dni}
+                        onChange={handleDniChange}
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-sm font-bold text-analista">Correo</label>
+                    <InputField
+                        type="text"
+                        placeholder=""
+                        value={newAlumno.email}
+                        onChange={(e) => setNewAlumno({ ...newAlumno, email: e.target.value })}
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-sm font-bold text-analista">Selecciona una carrera</label>
+                    <select 
+                        className="w-full p-2 border border-analista rounded mb-4"
+                        value={newAlumno.carrera}
+                        onChange={(e) => setNewAlumno({ ...newAlumno, carrera: e.target.value })}
+                    >
+                        {carreras.map((carrera, index) => (
+                            <option key={index} value={carrera}>{carrera}</option>
+                        ))}
+                    </select>
+                </div>
+                <div className="mb-4">
+                    <label className="block text-sm font-bold text-analista">Usuario</label>
+                    <InputField
+                        type="text"
+                        value={newAlumno.usuario} // Autocompletar con el DNI
+                        disabled
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-sm font-bold text-analista">Contraseña</label>
+                    <InputField
+                        type="password"
+                        value={newAlumno.password} // Autocompletar con el DNI
+                        disabled
+                    />
+                </div>
+            </Modal >
 
         </>
     );

@@ -12,13 +12,13 @@ const Submenu = ({ carrera, titulo, open, path}) => {
     ];
     if (!open) {
         if (carrera === "Analista de Sistemas") {
-            estilo += " analista-button";
+            estilo += " analista-button select-none";
         } else if (carrera === "Publicidad") {
-            estilo += " publicidad-button";
+            estilo += " publicidad-button select-none";
         } else if (carrera === "Administración") {
-            estilo += " analista-button";
+            estilo += " analista-button select-none";
         } else {
-            estilo += " otro-button";
+            estilo += " otro-button select-none";
         }
     } else {
         if (carrera === "Analista de Sistemas") {
