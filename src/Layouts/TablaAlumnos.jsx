@@ -110,7 +110,7 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
     setSelectedAlumno(null); // Cerrar el modal después de guardar
   };
 
-  const headers = ["DNI", "Apellido", "Nombre", "Regular", "Acciones"];
+  const headers = ["DNI", "Apellido", "Nombre","Correo", "Regular", "Acciones"];
 
   return (
     <div className={`gap-8 flex flex-col rounded-xl bg-white p-8`}>
@@ -161,6 +161,7 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
             <td className="py-3 px-5 text-center">{alumno.dni}</td>
             <td className="py-3 px-5 text-center">{alumno.apellido}</td>
             <td className="py-3 px-5 text-center">{alumno.nombre}</td>
+            <td className="py-3 px-5 text-center">{alumno.email}</td>
             <td className="py-3 px-5 text-center">{alumno.regular ? "Regular" : "Libre"}</td>
             <td className="py-3 px-5">
               <div className="flex justify-center">
