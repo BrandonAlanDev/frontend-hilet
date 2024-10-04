@@ -108,11 +108,11 @@ const Indice = () => {
                 </div>
                 )}
             </div>
-            {   
+            {/* ACA ES DONDE PRUEBO COMO SE VEN LOS COMPONENTES /*<TablaFinales/>}
             <div className="flex w-full items-center justify-center">
                 <TablaFinales color={fondoOpaco}/>
             </div>
-            /* ACA ES DONDE PRUEBO COMO SE VEN LOS COMPONENTES /*<TablaFinales/> */}
+            {CIERRE INFERIOR*/}
             {/* ALT + FLECHITAS PARA IR MOVIENDO LOS COMENTARIOS */}
             {/* CIERRE SUPERIOR}
             <Baja final={final}/>
@@ -123,12 +123,12 @@ const Indice = () => {
                 <Final carrera="Analista de Sistemas" materia="Ingenieria de Software 1" horarios={["13/12/2024 8:00","20/12/2024 10:20"]} estadoInicial="Inscribirse"/>
                 <Final carrera="Analista de Sistemas" materia="Ingenieria de Software 2" horarios={["13/12/2024 8:00","20/12/2024 10:20"]} estadoInicial="Inscribirse"/>
             </table>
-                {CIERRE INFERIOR*/}
+            {CIERRE INFERIOR*/}
 
-            {/* PRUEBA MODEL AGREGAR ALUMNO */}
+            {/* PRUEBA MODEL AGREGAR ALUMNO }
     
             <AddAlumnoModal/>
-            {/* CIERRE PRUEBA */}
+            {CIERRE PRUEBA */}
         </div>
     );
 };

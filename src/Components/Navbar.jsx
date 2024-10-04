@@ -48,7 +48,7 @@ const Navbar = ({ nombre, carrera }) => {
         } else {
             setDirecciones([
                 { titulo: "Inicio", path: "/inicio" },
-                { titulo: "Finales", path: "/finales" },
+                { titulo: "Finales (En construccion)", path: "/finales" },
                 { titulo: "Gestion de Alumno", path: "/addalumno" },
                 { titulo: "Gestion de Profesor", path: "/addprofesor" },
                 { titulo: "Gestion de Carreras", path: "/addcarrera" },
@@ -121,7 +121,7 @@ const Navbar = ({ nombre, carrera }) => {
                     onClick={(e) => e.stopPropagation()}
                 >
                     <div className='mt-20'>
-                        <Submenu carrera={carrera} titulo="Configuraciones" open={location.pathname === "/configuraciones"} path={"/configuraciones"} />
+                        <Submenu carrera={carrera} titulo="Configuraciones (En construccion)" open={location.pathname === "/configuraciones"} /*path={"/configuraciones"}*/ />
                         <Submenu carrera={carrera} titulo="Cerrar sesion" open={false} />
                     </div>
                 </div>
