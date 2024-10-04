@@ -76,7 +76,8 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
 
   useEffect(() => {
     const carreraData = alumnos.find((carrera) => carrera.carrera === currentCarrera);
-    if (carreraData) {
+    
+    if (carreraData && carreraData.años) {
       const filtro =
         estadoFiltro === "Regular"
           ? carreraData.alumnos.filter((alumno) => alumno.regular)
@@ -99,6 +100,8 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
       });
 
       setAlumnosFiltrados(resultados);
+    } else {
+
     }
   }, [currentCarrera, currentYear, busqueda, estadoFiltro, alumnos]);
 

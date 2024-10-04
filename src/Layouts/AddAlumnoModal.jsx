@@ -28,7 +28,13 @@ const AddAlumnoModal = ({ setAlumnos }) => { // Accept setAlumnos as a prop
     }, [navigate]);
 
     const addAlumno = () => {
-        const storedAlumnos = JSON.parse(sessionStorage.getItem('alumnos')) || ALUMNOS;
+        const storedAlumnos = JSON.parse(sessionStorage.getItem('alumnos')) || [];
+        const carreraSeleccionada = storedAlumnos.find(carrera => carrera.carrera === newAlumno.carrera);
+
+        if (!carreraSeleccionada || typeof carreraSeleccionada.años === 'undefined') {
+            alert("La carrera seleccionada no es válida o no tiene años definidos.");
+            return;
+        }
 
         if (
             newAlumno.nombre.trim() === "" ||
