@@ -9,33 +9,33 @@ const ALUMNOS = [
     años: 3,
     alumnos: [
       {
-        usuario:"ElSergi",
+        usuario: "ElSergi",
         apellido: "Gonzales",
         nombre: "Sergio",
         dni: "44888666",
         regular: true,
         año: 2,
-        email:"gonzalessergio@gmail.com"
+        email: "gonzalessergio@gmail.com",
       },
       {
-        usuario:"Elmanolo",
+        usuario: "Elmanolo",
         apellido: "Pirelli",
         nombre: "Manolo",
         dni: "33777555",
         regular: true,
         año: 1,
-        email:"manolo@gmail.com"
+        email: "manolo@gmail.com",
       },
       {
-        usuario:"laPulga",
+        usuario: "laPulga",
         apellido: "Messi",
         nombre: "Lionel",
         dni: "12345678",
         regular: true,
         año: 3,
-        email:"leomessi@gmail.com"
+        email: "leomessi@gmail.com",
       },
-    ]
+    ],
   },
   {
     carrera: "Publicidad",
@@ -46,16 +46,16 @@ const ALUMNOS = [
         nombre: "Maestro",
         dni: "21848646",
         regular: true,
-        año: 2
+        año: 2,
       },
       {
         apellido: "Perez",
         nombre: "Juan",
         dni: "31231212",
         regular: true,
-        año: 3
+        año: 3,
       },
-    ]
+    ],
   },
 ];
 
@@ -64,14 +64,18 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
   const [currentCarrera, setCurrentCarrera] = useState("Analista de Sistemas");
   const [currentYear, setCurrentYear] = useState(0);
   const [selectedAlumno, setSelectedAlumno] = useState(null); // Estado para el alumno seleccionado
-  const [alumnos, setAlumnos] = useState(ALUMNOS); // Estado para manejar los alumnos
+  const [alumnos, setAlumnos] = useState(() => {
+    const storedAlumnos = sessionStorage.getItem("alumnos");
+    return storedAlumnos ? JSON.parse(storedAlumnos) : ALUMNOS;
+  });
 
   useEffect(() => {
     const carreraData = alumnos.find((carrera) => carrera.carrera === currentCarrera);
     if (carreraData) {
-      const filtro = estadoFiltro === "Regular"
-        ? carreraData.alumnos.filter((alumno) => alumno.regular)
-        : estadoFiltro === "Libre"
+      const filtro =
+        estadoFiltro === "Regular"
+          ? carreraData.alumnos.filter((alumno) => alumno.regular)
+          : estadoFiltro === "Libre"
           ? carreraData.alumnos.filter((alumno) => !alumno.regular)
           : carreraData.alumnos;
 
@@ -95,23 +99,24 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
 
   // Función para actualizar los datos de un alumno
   const modificarAlumno = (alumnoActualizado) => {
-    setAlumnos((prevAlumnos) =>
-      prevAlumnos.map((carrera) => {
-        if (carrera.carrera === currentCarrera) {
-          return {
-            ...carrera,
-            alumnos: carrera.alumnos.map((alumno) =>
-              alumno.dni === alumnoActualizado.dni ? alumnoActualizado : alumno
-            ),
-          };
-        }
-        return carrera;
-      })
-    );
+    const updatedAlumnos = alumnos.map((carrera) => {
+      if (carrera.carrera === currentCarrera) {
+        return {
+          ...carrera,
+          alumnos: carrera.alumnos.map((alumno) =>
+            alumno.dni === alumnoActualizado.dni ? alumnoActualizado : alumno
+          ),
+        };
+      }
+      return carrera;
+    });
+
+    setAlumnos(updatedAlumnos);
+    sessionStorage.setItem("alumnos", JSON.stringify(updatedAlumnos)); // Guardar en sessionStorage
     setSelectedAlumno(null); // Cerrar el modal después de guardar
   };
 
-  const headers = ["DNI", "Apellido", "Nombre","Correo", "Regular", "Acciones"];
+  const headers = ["DNI", "Apellido", "Nombre", "Correo", "Regular", "Acciones"];
 
   return (
     <div className={`gap-8 flex flex-col rounded-xl bg-white p-8`}>
@@ -127,8 +132,9 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
                   setCurrentCarrera(alumno.carrera);
                   setCurrentYear(0);
                 }}
-                className={`px-4 py-2 rounded-full select-none ${currentCarrera === alumno.carrera ? `${color} text-white` : "bg-white text-analista border-analista"
-                  }`}
+                className={`px-4 py-2 rounded-full select-none ${
+                  currentCarrera === alumno.carrera ? `${color} text-white` : "bg-white text-analista border-analista"
+                }`}
               >
                 {alumno.carrera}
               </button>
@@ -142,8 +148,9 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
               <button
                 key={index}
                 onClick={() => setCurrentYear(index)}
-                className={`px-4 py-2 rounded-full select-none ${currentYear === index ? `${color} text-white` : "bg-white text-analista border-analista"
-                  }`}
+                className={`px-4 py-2 rounded-full select-none ${
+                  currentYear === index ? `${color} text-white` : "bg-white text-analista border-analista"
+                }`}
               >
                 {index + 1}
               </button>
@@ -151,8 +158,7 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
           </div>
         </div>
         <div className="flex flex-col justify-between items-end w-[48%] gap-8">
-          {/* <button className="analista-button px-4 py-2 rounded-full select-none text-white w-48"><strong>Nuevo alumno</strong> </button> */}
-          <AddAlumnoModal/>
+          <AddAlumnoModal setAlumnos={setAlumnos} />
           {buscador}
         </div>
       </div>

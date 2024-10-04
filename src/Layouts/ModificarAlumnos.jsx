@@ -28,8 +28,21 @@ const ModificarAlumnos = ({ alumno, onAlumnoModificado }) => {
 
     const modificarAlumno = () => {
         onAlumnoModificado(alumnoData);
+        const storedAlumnos = JSON.parse(sessionStorage.getItem("alumnos")) || [];
+        const updatedAlumnos = storedAlumnos.map((carrera) => {
+          if (carrera.carrera === alumnoData.carrera) {
+            return {
+              ...carrera,
+              alumnos: carrera.alumnos.map((alumno) =>
+                alumno.dni === alumnoData.dni ? alumnoData : alumno
+              ),
+            };
+          }
+          return carrera;
+        });
+        sessionStorage.setItem("alumnos", JSON.stringify(updatedAlumnos)); // Guardar
         setModalIsOpen(false);
-    };
+      };
 
     return (
         <div>
