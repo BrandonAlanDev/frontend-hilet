@@ -57,6 +57,11 @@ const ALUMNOS = [
       },
     ],
   },
+  {
+    carrera: "Otra Carrera", // Agregamos la nueva carrera aquí
+    años: 3,
+    alumnos: [],
+  },
 ];
 
 const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {

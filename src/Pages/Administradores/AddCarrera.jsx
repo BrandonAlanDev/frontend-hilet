@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
 import agregar from "../../Assets/Image/signomas.png";
+import Mosaico from "../../Components/Mosaico";
 
 const AddCarrera = () => {
     const [nombre, setNombre] = useState('');
@@ -40,7 +41,7 @@ const AddCarrera = () => {
         <>
             <div>
                 <Navbar nombre={nombre} carrera={carrera} />
-                <div className={`min-h-screen select-none flex flex-col items-center justify-evenly bg-hilet py-20 lg:py-32`}>
+                <div className={`min-h-screen select-none flex flex-col items-center justify-evenly bg-hilet py-20 lg:py-32 gap-8`}>
                     <div className='mt-5 gap-8 lg:mt-0'>
                         <h1 className="text-2xl font-bold mb-6 text-center text-titular gap-5">Agregar carreras</h1>
                     </div>
@@ -56,13 +57,15 @@ const AddCarrera = () => {
                                 </div>
                             </div>
                             {carreras.map((c, index) => (
-                                <div key={index} className="bg-blanco p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black">
-                                    <div className="flex-grow flex justify-center items-center bg-figuras activo aspect-square">
-                                    </div>
-                                    <div className="text-mosaico">
-                                        <h4 className={`text-2xl font-bold mt-4 text-center text-mosaico text-analista`}>{c}</h4>
-                                    </div>
+                                <div key={index} className="bg-blanco p-8 rounded-lg flex flex-col items-center justify-between mosaicos shadow-2xl shadow-black w-[300px] h-[360px]">
+                                <div className="text-mosaico">
+                                    <h4 className={`text-2xl select-none font-bold mt-4 text-center text-mosaico text-analista`}>{c}</h4>
                                 </div>
+                                <img className="flex select-none justify-center items-center activo aspect-square w-[100px] h-[100px]" src={(c=="Analista de Sistemas")?"src/Assets/Image/LOGO-AS.png":(c=="Publicidad")?"src/Assets/Image/LOGO-PUBLI.png":"src/Assets/Image/school.png"} alt="Logo instituto"/>
+                                <div className="text-mosaico">
+                                    <h4 className={`text-2xl select-none font-bold mt-4 text-center text-mosaico text-analista`}></h4>
+                                </div>
+                            </div>
                             ))}
                         </div>
                     )}
