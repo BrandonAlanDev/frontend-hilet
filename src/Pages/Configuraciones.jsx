@@ -15,6 +15,16 @@ const Configuraciones = () => {
     const [userInput, setUserInput] = useState('');
     const [userErrorMessage, setUserErrorMessage] = useState('');
     const [passErrorMessage, setPassErrorMessage] = useState('');
+
+    const [showModalPass, setShowModalPass] = useState(false);
+    const [showModalCorreo, setShowModalCorreo] = useState(false);
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [currentCorreo, setCurrentCorreo] = useState('');
+    const [newCorreo, setNewCorreo] = useState('');
+    const [confirmCorreo, setConfirmCorreo] = useState('');
+
     const navigate = useNavigate();
 
     const userRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9._@-]{1,20}$/;
@@ -31,6 +41,7 @@ const Configuraciones = () => {
         const apellido = sessionStorage.getItem('apellido');
         const correo = sessionStorage.getItem('correo');
         const usuario = sessionStorage.getItem('usuario');
+        const storedPassword = sessionStorage.getItem('password');
         if (!user) {
             navigate('/login');
         } else {
@@ -99,15 +110,18 @@ const Configuraciones = () => {
         );
     };
 
-    const handleInputChangePassword = (e) => {
-        const value = e.target.value;
-        setPassInput(value);
-        validateInput(
-            value,
-            passRegex,
-            setPassErrorMessage,
-            'La contraseña debe contener entre 6 y 20 caracteres permitidos (Letras, Números, - _ @ .)'
-        );
+    const handleChangePassword = (e) => {
+        const storedPassword = sessionStorage.getItem('password');
+        if (currentPassword !== storedPassword) {
+            setPasswordErrorMessage('La contraseña actual es incorrecta.');
+            return;
+        }
+        if (newPassword !== confirmPassword) {
+            setPasswordErrorMessage('Las contraseñas ingresadas no coinciden.');
+            return;
+        }
+        sessionStorage.setItem('password', newPassword);
+        setShowModalPass(false);
     };
 
     return (
@@ -170,20 +184,90 @@ const Configuraciones = () => {
                                     />
                                 </div>
                                 <hr className="my-4 border-t-2 border-gray-400 w-full" />
-                                <div className="flex flex-row items-center justify-center w-full space-x-4"> 
+                                <div className="flex flex-row items-center justify-center w-full space-x-4">
                                     <button
-                                        className="analista-button px-4 py-2 rounded-full select-none text-white w-48 whitespace-nowrap" 
-                                        onClick={() => setShowModal(true)}
+                                        className="analista-button px-4 py-2 rounded-full select-none text-white w-48 whitespace-nowrap"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setShowModalPass(true);
+                                        }}
                                     >
                                         <strong>Cambiar contraseña</strong>
                                     </button>
                                     <button
                                         className="analista-button px-4 py-2 rounded-full select-none text-white w-48 whitespace-nowrap"
-                                        onClick={() => setShowModal(true)}
+                                        id='btnCorreo'
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setShowModalCorreo(true);
+                                        }}
                                     >
                                         <strong>Cambiar correo</strong>
                                     </button>
                                 </div>
+                                 {/* Modal para cambiar contraseña */}
+                                <Modal open={showModalPass} onClose={() => setShowModalPass(false)} onClick={handleChangePassword}>
+                                    <h2 className="text-2xl font-bold mb-4 text-analista">Cambiar Contraseña</h2>
+                                    <div className="mb-4">
+                                        <label className="block text-sm font-bold text-analista">Contraseña actual</label>
+                                        <InputField
+                                            id="currentPassword"
+                                            type="password"
+                                            value={currentPassword}
+                                            onChange={(e) => setCurrentPassword(e.target.value)} 
+                                        />
+                                    </div>
+                                    <div className="mb-4">
+                                        <label className="block text-sm font-bold text-analista">Contraseña nueva</label>
+                                        <InputField
+                                            id="newPassword"
+                                            type="password"
+                                            value={newPassword}
+                                            onChange={(e) => setNewPassword(e.target.value)}  
+                                        />
+                                    </div>
+                                    <div className="mb-4">
+                                        <label className="block text-sm font-bold text-analista">Contraseña nueva (repetir)</label>
+                                        <InputField
+                                            id="confirmPassword"
+                                            type="password"
+                                            value={confirmPassword}
+                                            onChange={(e) => setConfirmPassword(e.target.value)}  
+                                        />
+                                    </div>
+                                </Modal>
+
+                                {/* Modal para cambiar correo */}
+                                <Modal open={showModalCorreo} onClose={() => setShowModalCorreo(false)}>
+                                    <h2 className="text-2xl font-bold mb-4 text-analista">Cambiar Correo</h2>
+                                    <div className="mb-4">
+                                        <label className="block text-sm font-bold text-analista">Correo actual</label>
+                                        <InputField
+                                            id="currentCorreo"
+                                            type="email"
+                                            value={currentCorreo}
+                                            onChange={(e) => setCurrentCorreo(e.target.value)}  
+                                        />
+                                    </div>
+                                    <div className="mb-4">
+                                        <label className="block text-sm font-bold text-analista">Correo nuevo</label>
+                                        <InputField
+                                            id="newCorreo"
+                                            type="email"
+                                            value={newCorreo}
+                                            onChange={(e) => setNewCorreo(e.target.value)} 
+                                        />
+                                    </div>
+                                    <div className="mb-4">
+                                        <label className="block text-sm font-bold text-analista">Correo nuevo (repetir)</label>
+                                        <InputField
+                                            id="confirmCorreo"
+                                            type="email"
+                                            value={confirmCorreo}
+                                            onChange={(e) => setConfirmCorreo(e.target.value)}  
+                                        />
+                                    </div>
+                                </Modal>
                                 <hr className="my-4 border-t-2 border-gray-400 w-full" />
                                 <br />
                                 <div className="flex flex-col items-center w-full">
