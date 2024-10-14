@@ -16,6 +16,8 @@ const Configuraciones = () => {
     const [userInput, setUserInput] = useState('');
     const [userErrorMessage, setUserErrorMessage] = useState('');
     const [passErrorMessage, setPassErrorMessage] = useState('');
+    const [correoErrorMessage, setCorreoErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
     const [showModalPass, setShowModalPass] = useState(false);
     const [showModalCorreo, setShowModalCorreo] = useState(false);
@@ -40,10 +42,9 @@ const Configuraciones = () => {
 
     useEffect(() => {
         const user = sessionStorage.getItem('user');
-        /*const apellido = sessionStorage.getItem('apellido');
+        const apellido = sessionStorage.getItem('apellido');
         const correo = sessionStorage.getItem('correo');
-        const usuario = sessionStorage.getItem('usuario');*/
-        const storedPassword = sessionStorage.getItem('password');
+        const usuario = sessionStorage.getItem('usuario');
         if (!user) {
             navigate('/login');
         } else {
@@ -114,30 +115,65 @@ const Configuraciones = () => {
 
     const handleChangePassword = (e) => {
         e.preventDefault();
-        const storedPassword = sessionStorage.getItem('password');
+        const storedUsers = JSON.parse(sessionStorage.getItem('users'));
+        //const storedPassword = sessionStorage.getItem('password');
+
         if (!currentPassword || !newPassword || !confirmPassword) {
             setPassErrorMessage('Todos los campos son obligatorios.');
             return;
         }
-        if (currentPassword !== storedPassword) {
-            setPasswordErrorMessage('La contraseña actual es incorrecta.');
+        if (currentPassword.trim() !== storedUsers[user]?.password) {
+            setPassErrorMessage('La contraseña actual es incorrecta.');
             return;
         }
-        if (newPassword !== confirmPassword) {
-            setPasswordErrorMessage('Las contraseñas ingresadas no coinciden.');
+        if (newPassword.trim() !== confirmPassword.trim()) {
+            setPassErrorMessage('Las contraseñas ingresadas no coinciden.');
+            return;
+        }
+        validateInput(
+            newPassword,
+            passRegex,
+            setPassErrorMessage,
+            'La contraseña debe contener entre 6 y 20 caracteres permitidos (Letras, Números, - _ @ .)'
+        );
+        if (passErrorMessage) {
             return;
         }
         sessionStorage.setItem('password', newPassword);
         setShowModalPass(false);
+        setSuccessMessage('Contraseña cambiada exitosamente.'); // Mensaje de éxito
+        setTimeout(() => setSuccessMessage(''), 3000);
     };
+    const handleChangeCorreo = (e) => {
+        e.preventDefault();
+        const storedUsers = JSON.parse(sessionStorage.getItem('users'));
+        if (!currentCorreo || !newCorreo || !confirmCorreo) {
+            setCorreoErrorMessage('Todos los campos son obligatorios.');
+            return;
+        }
+        if (currentCorreo.trim() !== storedUsers[user]?.email) {
+            setCorreoErrorMessage('El correo actual es incorrecto.');
+            return;
+        }
+        setCorreoErrorMessage('');
+        if (newCorreo.trim() !== confirmCorreo.trim()) {
+            setCorreoErrorMessage('Los correos ingresados no coinciden.');
+            return;
+        }
+        setCorreoErrorMessage('');
+        sessionStorage.setItem('correo', newCorreo);
+        setShowModalCorreo(false);
+        setSuccessMessage('Correo cambiado exitosamente.');
+        setTimeout(() => setSuccessMessage(''), 3000);
+    }
     const handleGuardarCambios = (e) => {
         e.preventDefault();
         if (userInput.trim() === '') {
-            alert('El nombre de usuario no puede estar vacío.');
-            return; 
+            setUserErrorMessage('El nombre de usuario no puede estar vacío.');
+            return;
         }
         if (userErrorMessage === '') {
-            sessionStorage.setItem('usuario', userInput);
+            sessionStorage.setItem('user', userInput);
             setUsuario(userInput);
         } else {
             alert('Corrige los errores antes de guardar.');
@@ -215,6 +251,19 @@ const Configuraciones = () => {
                                         disabled
                                     />
                                 </div>
+                                <br />
+                                {carrera === "Administración" && (
+                                    <div className="flex flex-col items-center w-full">
+                                        <button
+                                            type="submit"
+                                            className={`${colorBoton} font-bold py-2 px-4 rounded-full w-full max-w-xs focus:outline-none focus:shadow-outline mb-4`}
+                                            onClick={handleGuardarCambios}
+                                        >
+                                            Guardar cambios
+                                        </button>
+
+                                    </div>
+                                )}
                                 <hr className="my-4 border-t-2 border-gray-400 w-full" />
                                 <div className="flex flex-row items-center justify-center w-full space-x-4">
                                     <button
@@ -267,10 +316,13 @@ const Configuraciones = () => {
                                             onChange={(e) => setConfirmPassword(e.target.value)}
                                         />
                                     </div>
+                                    {passErrorMessage && (
+                                        <p className="text-red-500 text-sm">{passErrorMessage}</p>
+                                    )}
                                 </Modal>
 
                                 {/* Modal para cambiar correo */}
-                                <Modal open={showModalCorreo} onClose={() => setShowModalCorreo(false)}>
+                                <Modal open={showModalCorreo} onClose={() => setShowModalCorreo(false)} onClick={handleChangeCorreo}>
                                     <h2 className={`text-2xl font-bold mb-4 ${{ colorText }}`}>Cambiar Correo</h2>
                                     <div className="mb-4">
                                         <label className={`block text-sm font-bold ${{ colorText }}`}>Correo actual</label>
@@ -299,20 +351,13 @@ const Configuraciones = () => {
                                             onChange={(e) => setConfirmCorreo(e.target.value)}
                                         />
                                     </div>
+                                    {correoErrorMessage && (
+                                        <p className="text-red-500 text-sm">{correoErrorMessage}</p>
+                                    )}
                                 </Modal>
-                                <hr className="my-4 border-t-2 border-gray-400 w-full" />
-                                <br />
-                                {carrera === "Administración" && (
-                                    <div className="flex flex-col items-center w-full">
-                                        <button
-                                            type="submit"
-                                            className={`${colorBoton} font-bold py-2 px-4 rounded-full w-full max-w-xs focus:outline-none focus:shadow-outline mb-4`}
-                                            onClick={handleGuardarCambios}
-                                        >
-                                            Guardar cambios
-                                        </button>
 
-                                    </div>
+                                {successMessage && (
+                                    <p className="text-green-500 font-bold mb-4">{successMessage}</p>
                                 )}
                             </form>
                         </div>
