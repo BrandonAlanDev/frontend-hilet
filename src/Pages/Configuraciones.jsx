@@ -28,20 +28,21 @@ const Configuraciones = () => {
 
     const navigate = useNavigate();
 
-    const userRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9._@-]{1,20}$/;
-    const passRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9._@-]{1,20}$/;
+    const userRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9._@-]{6,20}$/;
+    const passRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9._@-]{8,20}$/;
 
     const usuarios = [
         { nombre: "Ramiro", apellido: "Sansinanea", usuario: "rama2024", correo: "rama2024@gmail.com", carrera: "Analista de Sistemas" },
         { nombre: "Juan", apellido: "Pérez", usuario: "juanperez", correo: "juanperez@gmail.com", carrera: "Publicidad" },
-        { nombre: "Sandra", apellido: "Becerra", usuario: "sandra2024", correo: "sandra2024@gmail.com", carrera: "Administración" }
+        { nombre: "Sandra", apellido: "Becerra", usuario: "sandra2024", correo: "sandra2024@gmail.com", carrera: "Administración" },
+        { nombre: "Luciano", apellido: "Celes", usuario: "luchito", correo: "luchito@gmail.com", carrera: "Yoga de gluteos" }
     ];
 
     useEffect(() => {
         const user = sessionStorage.getItem('user');
-        const apellido = sessionStorage.getItem('apellido');
+        /*const apellido = sessionStorage.getItem('apellido');
         const correo = sessionStorage.getItem('correo');
-        const usuario = sessionStorage.getItem('usuario');
+        const usuario = sessionStorage.getItem('usuario');*/
         const storedPassword = sessionStorage.getItem('password');
         if (!user) {
             navigate('/login');
@@ -112,7 +113,12 @@ const Configuraciones = () => {
     };
 
     const handleChangePassword = (e) => {
+        e.preventDefault();
         const storedPassword = sessionStorage.getItem('password');
+        if (!currentPassword || !newPassword || !confirmPassword) {
+            setPassErrorMessage('Todos los campos son obligatorios.');
+            return;
+        }
         if (currentPassword !== storedPassword) {
             setPasswordErrorMessage('La contraseña actual es incorrecta.');
             return;
@@ -126,9 +132,13 @@ const Configuraciones = () => {
     };
     const handleGuardarCambios = (e) => {
         e.preventDefault();
-        if (userErrorMessage === '') { 
-            sessionStorage.setItem('usuario', userInput); 
-            setUsuario(userInput); 
+        if (userInput.trim() === '') {
+            alert('El nombre de usuario no puede estar vacío.');
+            return; 
+        }
+        if (userErrorMessage === '') {
+            sessionStorage.setItem('usuario', userInput);
+            setUsuario(userInput);
         } else {
             alert('Corrige los errores antes de guardar.');
         }
@@ -171,27 +181,27 @@ const Configuraciones = () => {
                                 <div className='grid gap-x-0 grid-cols-2'>
                                     <h2 className={colorText}><strong>Usuario</strong></h2>
                                     {carrera === "Administración" ? (
-                                    <InputField
-                                        id="usuario"
-                                        label="usuario"
-                                        type="text"
-                                        placeholder={user}
-                                        value={userInput}
-                                        onChange={handleInputChangeUsuario}
-                                        errorMessage={userErrorMessage}
-                                        ancho="w-[250px] lg:w-[14vw]"
-                                    />
-                                ) : (
-                                    <InputField
-                                        id="usuario"
-                                        label="usuario"
-                                        type="text"
-                                        placeholder=""
-                                        value={user}
-                                        ancho="w-[250px] lg:w-[14vw]"
-                                        disabled
-                                    />
-                                )}
+                                        <InputField
+                                            id="usuario"
+                                            label="usuario"
+                                            type="text"
+                                            placeholder={user}
+                                            value={userInput}
+                                            onChange={handleInputChangeUsuario}
+                                            errorMessage={userErrorMessage}
+                                            ancho="w-[250px] lg:w-[14vw]"
+                                        />
+                                    ) : (
+                                        <InputField
+                                            id="usuario"
+                                            label="usuario"
+                                            type="text"
+                                            placeholder=""
+                                            value={user}
+                                            ancho="w-[250px] lg:w-[14vw]"
+                                            disabled
+                                        />
+                                    )}
                                 </div>
                                 <div className='grid gap-x-0 grid-cols-2'>
                                     <h2 className={colorText}><strong>Correo</strong></h2>
@@ -227,81 +237,83 @@ const Configuraciones = () => {
                                         <strong>Cambiar correo</strong>
                                     </button>
                                 </div>
-                                 {/* Modal para cambiar contraseña */}
+                                {/* Modal para cambiar contraseña */}
                                 <Modal open={showModalPass} onClose={() => setShowModalPass(false)} onClick={handleChangePassword}>
-                                    <h2 className={`text-2xl font-bold mb-4 ${{colorText}}`}>Cambiar Contraseña</h2>
+                                    <h2 className={`text-2xl font-bold mb-4 ${{ colorText }}`}>Cambiar Contraseña</h2>
                                     <div className="mb-4">
-                                        <label className={`block text-sm font-bold ${{colorText}}`}>Contraseña actual</label>
+                                        <label className={`block text-sm font-bold ${{ colorText }}`}>Contraseña actual</label>
                                         <InputField
                                             id="currentPassword"
                                             type="password"
                                             value={currentPassword}
-                                            onChange={(e) => setCurrentPassword(e.target.value)} 
+                                            onChange={(e) => setCurrentPassword(e.target.value)}
                                         />
                                     </div>
                                     <div className="mb-4">
-                                        <label className={`block text-sm font-bold ${{colorText}}`}>Contraseña nueva</label>
+                                        <label className={`block text-sm font-bold ${{ colorText }}`}>Contraseña nueva</label>
                                         <InputField
                                             id="newPassword"
                                             type="password"
                                             value={newPassword}
-                                            onChange={(e) => setNewPassword(e.target.value)}  
+                                            onChange={(e) => setNewPassword(e.target.value)}
                                         />
                                     </div>
                                     <div className="mb-4">
-                                        <label className={`block text-sm font-bold ${{colorText}}`}>Contraseña nueva (repetir)</label>
+                                        <label className={`block text-sm font-bold ${{ colorText }}`}>Contraseña nueva (repetir)</label>
                                         <InputField
                                             id="confirmPassword"
                                             type="password"
                                             value={confirmPassword}
-                                            onChange={(e) => setConfirmPassword(e.target.value)}  
+                                            onChange={(e) => setConfirmPassword(e.target.value)}
                                         />
                                     </div>
                                 </Modal>
 
                                 {/* Modal para cambiar correo */}
                                 <Modal open={showModalCorreo} onClose={() => setShowModalCorreo(false)}>
-                                    <h2 className={`text-2xl font-bold mb-4 ${{colorText}}`}>Cambiar Correo</h2>
+                                    <h2 className={`text-2xl font-bold mb-4 ${{ colorText }}`}>Cambiar Correo</h2>
                                     <div className="mb-4">
-                                        <label className={`block text-sm font-bold ${{colorText}}`}>Correo actual</label>
+                                        <label className={`block text-sm font-bold ${{ colorText }}`}>Correo actual</label>
                                         <InputField
                                             id="currentCorreo"
                                             type="email"
                                             value={currentCorreo}
-                                            onChange={(e) => setCurrentCorreo(e.target.value)}  
+                                            onChange={(e) => setCurrentCorreo(e.target.value)}
                                         />
                                     </div>
                                     <div className="mb-4">
-                                        <label className={`block text-sm font-bold ${{colorText}}`}>Correo nuevo</label>
+                                        <label className={`block text-sm font-bold ${{ colorText }}`}>Correo nuevo</label>
                                         <InputField
                                             id="newCorreo"
                                             type="email"
                                             value={newCorreo}
-                                            onChange={(e) => setNewCorreo(e.target.value)} 
+                                            onChange={(e) => setNewCorreo(e.target.value)}
                                         />
                                     </div>
                                     <div className="mb-4">
-                                        <label className={`block text-sm font-bold ${{colorText}}`}>Correo nuevo (repetir)</label>
+                                        <label className={`block text-sm font-bold ${{ colorText }}`}>Correo nuevo (repetir)</label>
                                         <InputField
                                             id="confirmCorreo"
                                             type="email"
                                             value={confirmCorreo}
-                                            onChange={(e) => setConfirmCorreo(e.target.value)}  
+                                            onChange={(e) => setConfirmCorreo(e.target.value)}
                                         />
                                     </div>
                                 </Modal>
                                 <hr className="my-4 border-t-2 border-gray-400 w-full" />
                                 <br />
-                                <div className="flex flex-col items-center w-full">
-                                    <button
-                                        type="submit"
-                                        className={`${colorBoton} font-bold py-2 px-4 rounded-full w-full max-w-xs focus:outline-none focus:shadow-outline mb-4`}
-                                        onClick={handleGuardarCambios}
-                                    >
-                                        Guardar cambios
-                                    </button>
+                                {carrera === "Administración" && (
+                                    <div className="flex flex-col items-center w-full">
+                                        <button
+                                            type="submit"
+                                            className={`${colorBoton} font-bold py-2 px-4 rounded-full w-full max-w-xs focus:outline-none focus:shadow-outline mb-4`}
+                                            onClick={handleGuardarCambios}
+                                        >
+                                            Guardar cambios
+                                        </button>
 
-                                </div>
+                                    </div>
+                                )}
                             </form>
                         </div>
                     </div>
