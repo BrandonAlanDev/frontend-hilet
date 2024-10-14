@@ -10,6 +10,7 @@ const Configuraciones = () => {
     const [user, setUsuario] = useState('');
     const [carrera, setCarrera] = useState('');
     const [colorText, setColorText] = useState('');
+    const [colorBoton, setBoton] = useState('');
     const [fondoOpaco, setFondoOpaco] = useState('');
     const [fondoDegradado, setFondoDegradado] = useState('');
     const [userInput, setUserInput] = useState('');
@@ -73,20 +74,20 @@ const Configuraciones = () => {
             setColorText("text-publicidad");
             setFondoOpaco("bg-publicidad");
             setFondoDegradado("bg-hilet-publicidad");
-            // setBoton("publicidad-button");
+            setBoton("publicidad-button");
             // setColorBorde("border-publicidad");
         } else if (carrera === "Analista de Sistemas" || carrera === "Administración") {
             setColorText("text-analista");
             setFondoOpaco("bg-analista");
             setFondoDegradado("bg-hilet");
-            // setBoton("analista-button");
+            setBoton("analista-button");
             // setColorBorde("border-analista");
         }
         else {
             setColorText("text-otro");
             setFondoOpaco("bg-otro");
             setFondoDegradado("bg-hilet-otro");
-            // setBoton("otro-button");
+            setBoton("otro-button");
             // setColorBorde("border-otro");
         }
     }, [carrera]);
@@ -128,14 +129,14 @@ const Configuraciones = () => {
         <>
             <div>
                 <Navbar nombre={user} carrera={carrera} />
-                <div className="min-h-screen flex items-center justify-evenly bg-hilet py-20 lg:py-32 gap-8">
+                <div className={`"min-h-screen flex items-center justify-evenly ${fondoDegradado} py-20 lg:py-32 gap-8`}>
                     <div className="bg-blanco p-8 rounded-lg w-11/12 sm:w-3/4 lg:w-3/5 flex flex-col lg:flex-row items-center lg:space-x-8 min-h-[65vh] shadow-2xl shadow-black">
                         <div className="lg:w-1/2 flex flex-col m-auto justify-between items-center activo">
-                            <h1 className="text-2xl font-bold mb-6 text-center text-analista titulo">Configuraciones</h1>
+                            <h1 className={`text-2xl font-bold mb-6 text-center ${colorText} titulo`}>Configuraciones</h1>
                             <form method="POST" className="flex flex-col justify-between items-center w-full  space-y-3">
                                 <hr className="my-4 border-t-2 border-gray-400 w-full" />
                                 <div className='grid gap-x-0 grid-cols-2'>
-                                    <h2 className='text-analista'><strong>Nombre</strong></h2>
+                                    <h2 className={colorText}><strong>Nombre</strong></h2>
                                     <InputField
                                         id="nombre"
                                         label="nombre"
@@ -147,7 +148,7 @@ const Configuraciones = () => {
                                     />
                                 </div>
                                 <div className='grid gap-x-0 grid-cols-2'>
-                                    <h2 className='text-analista'><strong>Apellido</strong></h2>
+                                    <h2 className={colorText}><strong>Apellido</strong></h2>
                                     <InputField
                                         id="apellido"
                                         label="apellido"
@@ -159,7 +160,7 @@ const Configuraciones = () => {
                                     />
                                 </div>
                                 <div className='grid gap-x-0 grid-cols-2'>
-                                    <h2 className='text-analista'><strong>Usuario</strong></h2>
+                                    <h2 className={colorText}><strong>Usuario</strong></h2>
                                     <InputField
                                         id="usuario"
                                         label="usuario"
@@ -172,7 +173,7 @@ const Configuraciones = () => {
                                     />
                                 </div>
                                 <div className='grid gap-x-0 grid-cols-2'>
-                                    <h2 className='text-analista'><strong>Correo</strong></h2>
+                                    <h2 className={colorText}><strong>Correo</strong></h2>
                                     <InputField
                                         id="correo"
                                         label="correo"
@@ -186,7 +187,7 @@ const Configuraciones = () => {
                                 <hr className="my-4 border-t-2 border-gray-400 w-full" />
                                 <div className="flex flex-row items-center justify-center w-full space-x-4">
                                     <button
-                                        className="analista-button px-4 py-2 rounded-full select-none text-white w-48 whitespace-nowrap"
+                                        className={`${colorBoton} px-4 py-2 rounded-full select-none text-white w-48 whitespace-nowrap`}
                                         onClick={(e) => {
                                             e.preventDefault();
                                             setShowModalPass(true);
@@ -195,7 +196,7 @@ const Configuraciones = () => {
                                         <strong>Cambiar contraseña</strong>
                                     </button>
                                     <button
-                                        className="analista-button px-4 py-2 rounded-full select-none text-white w-48 whitespace-nowrap"
+                                        className={`${colorBoton} px-4 py-2 rounded-full select-none text-white w-48 whitespace-nowrap`}
                                         id='btnCorreo'
                                         onClick={(e) => {
                                             e.preventDefault();
@@ -207,9 +208,9 @@ const Configuraciones = () => {
                                 </div>
                                  {/* Modal para cambiar contraseña */}
                                 <Modal open={showModalPass} onClose={() => setShowModalPass(false)} onClick={handleChangePassword}>
-                                    <h2 className="text-2xl font-bold mb-4 text-analista">Cambiar Contraseña</h2>
+                                    <h2 className={`text-2xl font-bold mb-4 ${{colorText}}`}>Cambiar Contraseña</h2>
                                     <div className="mb-4">
-                                        <label className="block text-sm font-bold text-analista">Contraseña actual</label>
+                                        <label className={`block text-sm font-bold ${{colorText}}`}>Contraseña actual</label>
                                         <InputField
                                             id="currentPassword"
                                             type="password"
@@ -218,7 +219,7 @@ const Configuraciones = () => {
                                         />
                                     </div>
                                     <div className="mb-4">
-                                        <label className="block text-sm font-bold text-analista">Contraseña nueva</label>
+                                        <label className={`block text-sm font-bold ${{colorText}}`}>Contraseña nueva</label>
                                         <InputField
                                             id="newPassword"
                                             type="password"
@@ -227,7 +228,7 @@ const Configuraciones = () => {
                                         />
                                     </div>
                                     <div className="mb-4">
-                                        <label className="block text-sm font-bold text-analista">Contraseña nueva (repetir)</label>
+                                        <label className={`block text-sm font-bold ${{colorText}}`}>Contraseña nueva (repetir)</label>
                                         <InputField
                                             id="confirmPassword"
                                             type="password"
@@ -239,9 +240,9 @@ const Configuraciones = () => {
 
                                 {/* Modal para cambiar correo */}
                                 <Modal open={showModalCorreo} onClose={() => setShowModalCorreo(false)}>
-                                    <h2 className="text-2xl font-bold mb-4 text-analista">Cambiar Correo</h2>
+                                    <h2 className={`text-2xl font-bold mb-4 ${{colorText}}`}>Cambiar Correo</h2>
                                     <div className="mb-4">
-                                        <label className="block text-sm font-bold text-analista">Correo actual</label>
+                                        <label className={`block text-sm font-bold ${{colorText}}`}>Correo actual</label>
                                         <InputField
                                             id="currentCorreo"
                                             type="email"
@@ -250,7 +251,7 @@ const Configuraciones = () => {
                                         />
                                     </div>
                                     <div className="mb-4">
-                                        <label className="block text-sm font-bold text-analista">Correo nuevo</label>
+                                        <label className={`block text-sm font-bold ${{colorText}}`}>Correo nuevo</label>
                                         <InputField
                                             id="newCorreo"
                                             type="email"
@@ -259,7 +260,7 @@ const Configuraciones = () => {
                                         />
                                     </div>
                                     <div className="mb-4">
-                                        <label className="block text-sm font-bold text-analista">Correo nuevo (repetir)</label>
+                                        <label className={`block text-sm font-bold ${{colorText}}`}>Correo nuevo (repetir)</label>
                                         <InputField
                                             id="confirmCorreo"
                                             type="email"
@@ -273,7 +274,7 @@ const Configuraciones = () => {
                                 <div className="flex flex-col items-center w-full">
                                     <button
                                         type="submit"
-                                        className="analista-button font-bold py-2 px-4 rounded-full w-full max-w-xs focus:outline-none focus:shadow-outline mb-4"
+                                        className={`${colorBoton} font-bold py-2 px-4 rounded-full w-full max-w-xs focus:outline-none focus:shadow-outline mb-4`}
                                     >
                                         Guardar cambios
                                     </button>
