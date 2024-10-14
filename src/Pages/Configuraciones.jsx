@@ -124,6 +124,15 @@ const Configuraciones = () => {
         sessionStorage.setItem('password', newPassword);
         setShowModalPass(false);
     };
+    const handleGuardarCambios = (e) => {
+        e.preventDefault();
+        if (userErrorMessage === '') { 
+            sessionStorage.setItem('usuario', userInput); 
+            setUsuario(userInput); 
+        } else {
+            alert('Corrige los errores antes de guardar.');
+        }
+    };
 
     return (
         <>
@@ -133,7 +142,7 @@ const Configuraciones = () => {
                     <div className="bg-blanco p-8 rounded-lg w-11/12 sm:w-3/4 lg:w-3/5 flex flex-col lg:flex-row items-center lg:space-x-8 min-h-[65vh] shadow-2xl shadow-black">
                         <div className="lg:w-1/2 flex flex-col m-auto justify-between items-center activo">
                             <h1 className={`text-2xl font-bold mb-6 text-center ${colorText} titulo`}>Configuraciones</h1>
-                            <form method="POST" className="flex flex-col justify-between items-center w-full  space-y-3">
+                            <form method="POST" className="flex flex-col justify-between items-center w-full  space-y-3" onSubmit={handleGuardarCambios}>
                                 <hr className="my-4 border-t-2 border-gray-400 w-full" />
                                 <div className='grid gap-x-0 grid-cols-2'>
                                     <h2 className={colorText}><strong>Nombre</strong></h2>
@@ -161,6 +170,7 @@ const Configuraciones = () => {
                                 </div>
                                 <div className='grid gap-x-0 grid-cols-2'>
                                     <h2 className={colorText}><strong>Usuario</strong></h2>
+                                    {carrera === "Administración" ? (
                                     <InputField
                                         id="usuario"
                                         label="usuario"
@@ -168,9 +178,20 @@ const Configuraciones = () => {
                                         placeholder={user}
                                         value={userInput}
                                         onChange={handleInputChangeUsuario}
-                                        errorMessage={passErrorMessage}
+                                        errorMessage={userErrorMessage}
                                         ancho="w-[250px] lg:w-[14vw]"
                                     />
+                                ) : (
+                                    <InputField
+                                        id="usuario"
+                                        label="usuario"
+                                        type="text"
+                                        placeholder=""
+                                        value={user}
+                                        ancho="w-[250px] lg:w-[14vw]"
+                                        disabled
+                                    />
+                                )}
                                 </div>
                                 <div className='grid gap-x-0 grid-cols-2'>
                                     <h2 className={colorText}><strong>Correo</strong></h2>
@@ -275,6 +296,7 @@ const Configuraciones = () => {
                                     <button
                                         type="submit"
                                         className={`${colorBoton} font-bold py-2 px-4 rounded-full w-full max-w-xs focus:outline-none focus:shadow-outline mb-4`}
+                                        onClick={handleGuardarCambios}
                                     >
                                         Guardar cambios
                                     </button>
