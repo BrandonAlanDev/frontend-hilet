@@ -7,13 +7,14 @@ import TablaFinales from '../Layouts/TablaFinales';
 import TablaHistorial from '../Layouts/TablaHistorial';
 import Mosaico from '../Components/Mosaico';
 
+
 const Indice = () => {
     const [nombre, setNombre] = useState('');
     const [carrera, setCarrera] = useState('');
     const [colorText, setColorText] = useState('');
     const [fondoOpaco, setFondoOpaco] = useState('');
     const [fondoDegradado, setFondoDegradado] = useState('');
-    const [imagenCarrera, setImagenCarrera] = useState('') ;
+    const [imagenCarrera, setImagenCarrera] = useState('');
     const navigate = useNavigate();
 
     // Este useEffect se ejecuta una sola vez al montar el componente
@@ -25,7 +26,7 @@ const Indice = () => {
             setNombre(user); // Establece el nombre del usuario
         }
     }, [navigate]);
-    
+
     // Este useEffect se ejecuta cuando nombre cambia
     useEffect(() => {
         if (nombre === "rama2024") {
@@ -46,20 +47,20 @@ const Indice = () => {
             setFondoOpaco("bg-publicidad");
             setFondoDegradado("bg-hilet-publicidad");
             setImagenCarrera("src/Assets/Image/LOGO-PUBLI.png");
-        } else if (carrera === "Analista de Sistemas"||carrera==="Administración") {
+        } else if (carrera === "Analista de Sistemas" || carrera === "Administración") {
             setColorText("text-analista");
             setFondoOpaco("bg-analista");
             setFondoDegradado("bg-hilet");
             setImagenCarrera("src/Assets/Image/LOGO-AS.png");
         }
-        else{
+        else {
             setColorText("text-otro");
             setFondoOpaco("bg-otro");
             setFondoDegradado("bg-hilet-otro");
             setImagenCarrera("src/Assets/Image/LOGO-OTRO.png");
         }
     }, [carrera]);
-        
+
     const final = {
         nombreMateria: 'Matemáticas',
         horario: '10:00 - 12:00',
@@ -67,10 +68,11 @@ const Indice = () => {
         vocal1: 'Dr. López',
         vocal2: 'Dra. Martínez',
         horarios: [
-          { dia:'14/02/2024', horario: '10:00 - 12:00', disponible: true },
-          { dia:'15/02/2024',horario: '14:00 - 16:00', disponible: true },
+            { dia: '14/02/2024', horario: '10:00 - 12:00', disponible: true },
+            { dia: '15/02/2024', horario: '14:00 - 16:00', disponible: true },
         ],
-      };
+    };
+
     return (
         <div>
             <Navbar nombre={nombre} carrera={carrera} />
@@ -79,17 +81,26 @@ const Indice = () => {
                     <h1 className="text-2xl font-bold mb-6 text-center text-titular gap-5">¡Hola {nombre}!</h1>
                     <h1 className="text-2xl font-bold text-center text-subtitular gap-5">{carrera}</h1>
                 </div>
-                {(carrera==="Administración")? (<div></div>) : (
-                <div className={`mt-6 lg:mt-0 lg:h-[18vh] lg:min-h-[250px]`}>
-                    <div className="flex flex-row flex-wrap gap-8 items-start justify-center">
-                        <Mosaico titulo="Finales" texto="Primer año" colorText={colorText} imagen={imagenCarrera} />
-                        <Mosaico titulo="Finales" texto="Segundo año" colorText={colorText} imagen={imagenCarrera} />
-                        <Mosaico titulo="Finales" texto="Tercer año" colorText={colorText} imagen={imagenCarrera} />
-                    </div>
-                </div>
-                )}
+                {(carrera === "Administración") ?
+                    (<div className={`mt-6 lg:mt-0 lg:h-[18vh] lg:min-h-[250px]`}>
+                        <div className="flex flex-row flex-wrap gap-8 items-start justify-center">
+                            <Mosaico titulo="Gestion de Alumno" navigateTo="/addalumno" colorText={colorText} imagen="" />
+                            <Mosaico titulo="Gestion de Profesor" navigateTo="/addprofesor" colorText={colorText} imagen="" />
+                            <Mosaico titulo="Gestion de Materias" navigateTo="/addmaterias" colorText={colorText} imagen="" />
+                            <Mosaico titulo="Gestion de Carreras" navigateTo="/addcarrera" colorText={colorText} imagen="" />
+                            <Mosaico titulo="Finales" navigateTo="" colorText={colorText} imagen="" />
+                        </div>
+                    </div>) : (
+                        <div className={`mt-6 lg:mt-0 lg:h-[18vh] lg:min-h-[250px]`}>
+                            <div className="flex flex-row flex-wrap gap-8 items-start justify-center">
+                                <Mosaico titulo="Finales" texto="Primer año" colorText={colorText} imagen={imagenCarrera} />
+                                <Mosaico titulo="Finales" texto="Segundo año" colorText={colorText} imagen={imagenCarrera} />
+                                <Mosaico titulo="Finales" texto="Tercer año" colorText={colorText} imagen={imagenCarrera} />
+                            </div>
+                        </div>
+                    )}
             </div>
-            {   
+            {
             /* ACA ES DONDE PRUEBO COMO SE VEN LOS COMPONENTES /*<TablaFinales/> */}
             {/* ALT + FLECHITAS PARA IR MOVIENDO LOS COMENTARIOS */}
             {/* CIERRE SUPERIOR}
