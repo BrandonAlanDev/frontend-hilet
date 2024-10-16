@@ -6,6 +6,7 @@ import Final from '../Components/Final';
 import TablaFinales from '../Layouts/TablaFinales';
 import TablaHistorial from '../Layouts/TablaHistorial';
 import Mosaico from '../Components/Mosaico';
+import ProximosFinales from '../Layouts/ProximosFinales';
 
 
 const Indice = () => {
@@ -76,28 +77,48 @@ const Indice = () => {
     return (
         <div>
             <Navbar nombre={nombre} carrera={carrera} />
-            <div className={`min-h-screen select-none flex flex-col items-center justify-evenly ${fondoDegradado} py-20 lg:py-32 gap-8`}>
-                <div className='mt-5 gap-8 lg:mt-0'>
-                    <h1 className="text-2xl font-bold mb-6 text-center text-titular gap-5">¡Hola {nombre}!</h1>
-                    <h1 className="text-2xl font-bold text-center text-subtitular gap-5">{carrera}</h1>
-                </div>
+            <div className={`min-h-screen select-none flex flex-col items-center justify-evenly overflow-hidden ${fondoDegradado} py-20 lg:py-32 gap-8`}>
                 {(carrera === "Administración") ?
-                    (<div className={`mt-6 lg:mt-0 lg:h-[18vh] lg:min-h-[250px]`}>
-                        <div className="flex flex-row flex-wrap gap-8 items-start justify-center">
-                            <Mosaico titulo="Gestion de Alumno" navigateTo="/addalumno" colorText={colorText} imagen="src/Assets/Image/alumnoimagen.png" />
-                            <Mosaico titulo="Gestion de Profesor" navigateTo="/addprofesor" colorText={colorText} imagen="src/Assets/Image/profesorcopia2.png" />
-                            <Mosaico titulo="Gestion de Materias" navigateTo="/addmaterias" colorText={colorText} imagen="src/Assets/Image/materia.webp" />
-                            <Mosaico titulo="Gestion de Carreras" navigateTo="/addcarrera" colorText={colorText} imagen="src/Assets/Image/carrera.png" />
-                            <Mosaico titulo="Finales" navigateTo="" colorText={colorText} imagen="src/Assets/Image/calendarcopia.png" />
+                    (<div className={`mb-20 lg:mt-0 lg:h-[60vh] lg:min-h-[250px]`}>
+                        <div className='mt-5 mb-5 gap-8 lg:mt-0'>
+                            <h1 className="text-2xl font-bold mb-6 text-start text-titular gap-5">¡Hola {nombre}!</h1>
+                            <h1 className="text-2xl font-bold text-start text-subtitular gap-5">{carrera}</h1>
                         </div>
-                    </div>) : (
-                        <div className={`mt-6 lg:mt-0 lg:h-[18vh] lg:min-h-[250px]`}>
-                            <div className="flex flex-row flex-wrap gap-8 items-start justify-center">
-                                <Mosaico titulo="Finales" texto="Primer año" colorText={colorText} imagen={imagenCarrera} />
-                                <Mosaico titulo="Finales" texto="Segundo año" colorText={colorText} imagen={imagenCarrera} />
-                                <Mosaico titulo="Finales" texto="Tercer año" colorText={colorText} imagen={imagenCarrera} />
+                        <div className="flex flex-col gap-8 items-start justify-center">
+
+                            {/* Primera fila: Gestión de Alumno, Gestión de Profesor y Próximos Finales */}
+                            <div className="flex flex-row gap-6 items-start justify-center">
+                                <Mosaico titulo="Gestion de Alumno" navigateTo="/addalumno" colorText={colorText} imagen="src/Assets/Image/alumnoimagen.png" />
+                                <Mosaico titulo="Gestion de Profesor" navigateTo="/addprofesor" colorText={colorText} imagen="src/Assets/Image/profesorcopia2.png" />
+                                <div className="flex-1">
+                                    <ProximosFinales />
+                                </div>
                             </div>
+
+                            {/* Segunda fila: Los mosaicos restantes */}
+                            <div className="flex flex-row gap-6 items-start justify-center">
+                                <Mosaico titulo="Gestion de Materias" navigateTo="/addmaterias" colorText={colorText} imagen="src/Assets/Image/materia.webp" />
+                                <Mosaico titulo="Gestion de Carreras" navigateTo="/addcarrera" colorText={colorText} imagen="src/Assets/Image/carrera.png" />
+                                <Mosaico titulo="Finales" navigateTo="" colorText={colorText} imagen="src/Assets/Image/calendarcopia.png" />
+                            </div>
+
                         </div>
+
+
+                    </div>) : (
+                        <>
+                            <div className='mt-5 gap-8 lg:mt-0'>
+                                <h1 className="text-2xl font-bold mb-6 text-center text-titular gap-5">¡Hola {nombre}!</h1>
+                                <h1 className="text-2xl font-bold text-center text-subtitular gap-5">{carrera}</h1>
+                            </div>
+                            <div className={`mt-6 lg:mt-0 lg:h-[18vh] lg:min-h-[250px]`}>
+                                <div className="flex flex-row flex-wrap gap-8 items-start justify-center">
+                                    <Mosaico titulo="Finales" texto="Primer año" colorText={colorText} imagen={imagenCarrera} />
+                                    <Mosaico titulo="Finales" texto="Segundo año" colorText={colorText} imagen={imagenCarrera} />
+                                    <Mosaico titulo="Finales" texto="Tercer año" colorText={colorText} imagen={imagenCarrera} />
+                                </div>
+                            </div>
+                        </>
                     )}
             </div>
             {
