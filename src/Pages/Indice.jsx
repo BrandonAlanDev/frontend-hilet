@@ -84,11 +84,11 @@ const Indice = () => {
                 {(carrera === "Administración") ?
                     (<div className={`mt-6 lg:mt-0 lg:h-[18vh] lg:min-h-[250px]`}>
                         <div className="flex flex-row flex-wrap gap-8 items-start justify-center">
-                            <Mosaico titulo="Gestion de Alumno" navigateTo="/addalumno" colorText={colorText} imagen="" />
-                            <Mosaico titulo="Gestion de Profesor" navigateTo="/addprofesor" colorText={colorText} imagen="" />
-                            <Mosaico titulo="Gestion de Materias" navigateTo="/addmaterias" colorText={colorText} imagen="" />
-                            <Mosaico titulo="Gestion de Carreras" navigateTo="/addcarrera" colorText={colorText} imagen="" />
-                            <Mosaico titulo="Finales" navigateTo="" colorText={colorText} imagen="" />
+                            <Mosaico titulo="Gestion de Alumno" navigateTo="/addalumno" colorText={colorText} imagen="src/Assets/Image/alumnoimagen.png" />
+                            <Mosaico titulo="Gestion de Profesor" navigateTo="/addprofesor" colorText={colorText} imagen="src/Assets/Image/profesorcopia2.png" />
+                            <Mosaico titulo="Gestion de Materias" navigateTo="/addmaterias" colorText={colorText} imagen="src/Assets/Image/materia.webp" />
+                            <Mosaico titulo="Gestion de Carreras" navigateTo="/addcarrera" colorText={colorText} imagen="src/Assets/Image/carrera.png" />
+                            <Mosaico titulo="Finales" navigateTo="" colorText={colorText} imagen="src/Assets/Image/calendarcopia.png" />
                         </div>
                     </div>) : (
                         <div className={`mt-6 lg:mt-0 lg:h-[18vh] lg:min-h-[250px]`}>
