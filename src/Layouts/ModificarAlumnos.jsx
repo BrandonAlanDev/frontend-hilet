@@ -6,7 +6,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Tooltip } from "@mui/material";
 
-const ModificarAlumnos = ({ alumno, onAlumnoModificado }) => {
+const ModificarAlumnos = ({ alumno, onAlumnoModificado, onAlumnoEliminado }) => {
     const [modalisopen, setModalIsOpen] = useState(false);
     const [initialModalOpen, setInitialModalOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false); // New delete modal state
@@ -61,15 +61,12 @@ const ModificarAlumnos = ({ alumno, onAlumnoModificado }) => {
     const confirmDeleteUser = () => {
         setDeleteModalOpen(true); // Open delete confirmation modal
     };
-
-    // Handle delete action
     const deleteUser = () => {
-        // Logic to delete the user
-        alert(`${alumnoData.nombre} eliminado.`);
+        onAlumnoEliminado(alumnoData.dni); // Call the parent function to handle deletion
         setDeleteModalOpen(false); // Close delete modal after deletion
-        setInitialModalOpen(false); // Optionally close the initial modal if needed
-    };
-
+        setInitialModalOpen(false); // Close the initial modal if needed
+      };
+      
     return (
         <div>
             <button className="rounded-lg p-2 bg-yellow-400 hover:bg-yellow-500" onClick={open}>
@@ -77,62 +74,42 @@ const ModificarAlumnos = ({ alumno, onAlumnoModificado }) => {
             </button>
 
             {/* Initial Modal - What do you want to do with the student? */}
-            <Modal open={initialModalOpen} onClose={closeInitialModal}>
+            <Modal open={initialModalOpen} onClose={closeInitialModal} aceptar={false}>
                 <h1 className="text-2xl font-extrabold mb-6 text-center text-analista">
-                    ¿Qué deseas hacer con {alumnoData.nombre}?
+                    ¿Qué acción tomar con : {alumnoData.nombre} ?
                 </h1>
                 <div className="flex flex-col space-y-4">
                     <button
                         onClick={openModifyModal}
-                        className="bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded-lg"
+                        className="analista-button text-white px-4 py-2 rounded-lg"
                     >
                         Modificar Alumno
                     </button>
                     <button
                         onClick={() => navigate(`/alumno/${alumnoData.dni}/status`)}
-                        className="bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded-lg"
+                        className="analista-button text-white px-4 py-2 rounded-lg"
                     >
                         Situación Académica
                     </button>
                     <button
                         onClick={confirmDeleteUser} // Open delete confirmation modal
-                        className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg"
+                        className="otro-button text-white px-4 py-2 rounded-lg"
                     >
-                        Eliminar Usuario
-                    </button>
-                    <button
-                        onClick={closeInitialModal}
-                        className="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded-lg"
-                    >
-                        Cancelar
+                        <strong>Eliminar Usuario</strong>
                     </button>
                 </div>
             </Modal>
 
             {/* Delete Confirmation Modal */}
-            <Modal open={deleteModalOpen} onClose={closeDeleteModal}>
+            <Modal open={deleteModalOpen} onClose={closeDeleteModal} onClick={deleteUser}>
                 <h2 className="text-xl font-extrabold mb-4 text-center text-red-600">
                     Confirmar Eliminación
                 </h2>
                 <p className="text-center mb-6">¿Estás seguro de que quieres eliminar a {alumnoData.nombre}?</p>
-                <div className="flex justify-center space-x-4">
-                    <button
-                        onClick={deleteUser} // Delete user action
-                        className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded-lg"
-                    >
-                        Confirmar
-                    </button>
-                    <button
-                        onClick={closeDeleteModal}
-                        className="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded-lg"
-                    >
-                        Cancelar
-                    </button>
-                </div>
             </Modal>
 
             {/* Existing "Modificar Alumno" Modal */}
-            <Modal open={modalisopen} onClose={closeModifyModal} onClick={modificarAlumno}>
+            <Modal open={modalisopen} onClose={closeModifyModal} onClick={modificarAlumno} aceptar={false}>
                 <h1 className="text-2xl font-extrabold mb-6 text-center text-analista">Modificar Alumno</h1>
                 <form>
                     {/* Alumno details */}
@@ -154,13 +131,14 @@ const ModificarAlumnos = ({ alumno, onAlumnoModificado }) => {
                     {/* Password field */}
                     <div className="mb-4">
                         <label className="block text-sm font-bold text-analista" htmlFor="contraseña">Contraseña:</label>
-                        <div className="flex items-center">
+                        <div className="flex items-center justify-between">
                             <InputField
                                 type="password"
                                 id="contraseña"
                                 value={alumnoData.contraseña}
                                 disabled
                                 className="bg-gray-300"
+                                bg="bg-gray-300"
                             />
                             <button
                                 type="button"

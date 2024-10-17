@@ -57,11 +57,6 @@ const ALUMNOS = [
       },
     ],
   },
-  {
-    carrera: "Otra Carrera", // Agregamos la nueva carrera aquí
-    años: 3,
-    alumnos: [],
-  },
 ];
 
 const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
@@ -124,6 +119,22 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
     setSelectedAlumno(null); // Cerrar el modal después de guardar
   };
 
+  const eliminarAlumno = (dni) => {
+    const updatedAlumnos = alumnos.map((carrera) => {
+      if (carrera.carrera === currentCarrera) {
+        return {
+          ...carrera,
+          alumnos: carrera.alumnos.filter((alumno) => alumno.dni !== dni),
+        };
+      }
+      return carrera;
+    });
+  
+    setAlumnos(updatedAlumnos);
+    sessionStorage.setItem("alumnos", JSON.stringify(updatedAlumnos)); // Update session storage
+    setSelectedAlumno(null); // Close any open modals if needed
+  };
+
   const headers = ["DNI", "Apellido", "Nombre", "Correo", "Regular", "Acciones"];
 
   return (
@@ -184,6 +195,7 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
                 <ModificarAlumnos
                   alumno={alumno} // Pasar el alumno a modificar
                   onAlumnoModificado={modificarAlumno} // Función para actualizar el alumno
+                  onAlumnoEliminado={eliminarAlumno}
                 />
               </div>
             </td>
@@ -197,6 +209,8 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
           alumno={selectedAlumno}
           onClose={() => setSelectedAlumno(null)} // Cerrar el modal sin guardar
           onSave={modificarAlumno} // Guardar cambios
+          onAlumnoModificado={modificarAlumno}
+          onAlumnoEliminado={eliminarAlumno}
         />
       )}
     </div>
