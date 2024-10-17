@@ -13,6 +13,7 @@ const InputField = (props) => {
     className = "flex-1 appearance-none border-none focus:outline-none focus:ring-0 bg-transparent text-gray-700 leading-tight placeholder-analista placeholder-opacity-100 negrita",
     ancho="",
     alto="",
+    disabled=false,
   } = props;
 
   return (
@@ -29,7 +30,8 @@ const InputField = (props) => {
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className={className + " h-auto " + alto}
+          disabled={disabled}
+          className={`${className} h-auto ${alto} ${disabled ? 'cursor-default pointer-events-none' : ''}`}
         />
       </label>
       {errorMessage && <p className="text-red-500 text-xs italic mt-2 mb-4 negrita">{errorMessage}</p>}

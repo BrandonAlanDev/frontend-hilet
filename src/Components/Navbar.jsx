@@ -121,7 +121,7 @@ const Navbar = ({ nombre, carrera }) => {
                     onClick={(e) => e.stopPropagation()}
                 >
                     <div className='mt-20'>
-                        <Submenu carrera={carrera} titulo="Configuraciones (En construccion)" open={location.pathname === "/configuraciones"} /*path={"/configuraciones"}*/ />
+                        <Submenu carrera={carrera} titulo="Configuraciones (En construccion)" open={location.pathname === "/configuraciones"} path={"/configuraciones"} />
                         <Submenu carrera={carrera} titulo="Cerrar sesion" open={false} />
                     </div>
                 </div>
