@@ -85,27 +85,23 @@ const Indice = () => {
                             <h1 className="text-2xl font-bold text-start text-subtitular gap-5">{carrera}</h1>
                         </div>
                         <div className="flex flex-col gap-8 items-start justify-center">
-
-                            {/* Primera fila: Gestión de Alumno, Gestión de Profesor y Próximos Finales */}
-                            <div className="flex flex-row gap-6 items-start justify-center">
+                            {/* Fila de mosaicos */}
+                            <div className="flex flex-col md:flex-row md:flex-wrap gap-6 items-start justify-center">
                                 <Mosaico titulo="Gestion de Alumnos" navigateTo="/addalumno" colorText={colorText} imagen="src/Assets/Image/EstudianteGrandeInvisible.png" />
                                 <Mosaico titulo="Gestion de Profesores" navigateTo="/addprofesor" colorText={colorText} imagen="src/Assets/Image/profesorGrandeInvisible.png" />
-                                <div className="flex-1">
+                                <div className="flex-1 md:w-auto lg:w-[15vw]">
                                     <ProximosFinales />
                                 </div>
                             </div>
-
-                            {/* Segunda fila: Los mosaicos restantes */}
-                            <div className="flex flex-row gap-6 items-start justify-center">
+                            {/* Segunda fila */}
+                            <div className="flex flex-col md:flex-row md:flex-wrap gap-6 items-start justify-center">
                                 <Mosaico titulo="Gestion de Materias" navigateTo="/addmaterias" colorText={colorText} imagen="src/Assets/Image/LibrosGrandeInvisible.png" />
                                 <Mosaico titulo="Gestion de Carreras" navigateTo="/addcarrera" colorText={colorText} imagen="src/Assets/Image/DiplomaGrandeInvisible.png" />
                                 <Mosaico titulo="Finales" navigateTo="" colorText={colorText} imagen="src/Assets/Image/FechaGrandeInvisible.png" />
                             </div>
-
                         </div>
-
-
-                    </div>) : (
+                    </div>
+                    ) : (
                         <>
                             <div className='mt-5 gap-8 lg:mt-0'>
                                 <h1 className="text-2xl font-bold mb-6 text-center text-titular gap-5">¡Hola {nombre}!</h1>

@@ -45,7 +45,7 @@ const ProximosFinales = () => {
   const puntos = Array.from({ length: totalPaginas }, (_, index) => index);
 
   return (
-    <div className="p-6 bg-blanco w-[15vw] h-[47vh] rounded-lg mt-[-160px] flex flex-col justify-center">
+    <div className="p-6 bg-blanco w-full md:w-[15vw] h-[47vh] rounded-lg mt-[-160px] flex flex-col justify-center">
       <h1 className="text-2xl text-analista font-bold text-center mb-4">Próximos Finales</h1>
       <div className="flex justify-between items-center mb-6 bg-analista w-full p-0 rounded-xl">
         <button
