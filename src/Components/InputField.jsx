@@ -10,7 +10,7 @@ const InputField = (props) => {
     value = "",
     onChange = () => {},
     errorMessage = "",
-    className = "flex-1 appearance-none border-none focus:outline-none focus:ring-0 bg-transparent text-gray-700 leading-tight placeholder-analista placeholder-opacity-100 negrita",
+    className = "flex-1 appearance-none border-none focus:outline-none focus:ring-0 bg-transparent text-gray-700 leading-tight placeholder-analista placeholder-opacity-100 negrita ",
     ancho="",
     alto="",
     disabled=false,
@@ -32,6 +32,7 @@ const InputField = (props) => {
           onChange={onChange}
           disabled={disabled}
           className={`${className} h-auto ${alto} ${disabled ? 'cursor-default pointer-events-none' : ''}`}
+          style={{ overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%' }}
         />
       </label>
       {errorMessage && <p className="text-red-500 text-xs italic mt-2 mb-4 negrita">{errorMessage}</p>}
