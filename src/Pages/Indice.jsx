@@ -88,8 +88,8 @@ const Indice = () => {
 
                             {/* Primera fila: Gestión de Alumno, Gestión de Profesor y Próximos Finales */}
                             <div className="flex flex-row gap-6 items-start justify-center">
-                                <Mosaico titulo="Gestion de Alumno" navigateTo="/addalumno" colorText={colorText} imagen="src/Assets/Image/alumnoimagen.png" />
-                                <Mosaico titulo="Gestion de Profesor" navigateTo="/addprofesor" colorText={colorText} imagen="src/Assets/Image/profesorcopia2.png" />
+                                <Mosaico titulo="Gestion de Alumnos" navigateTo="/addalumno" colorText={colorText} imagen="src/Assets/Image/EstudianteGrandeInvisible.png" />
+                                <Mosaico titulo="Gestion de Profesores" navigateTo="/addprofesor" colorText={colorText} imagen="src/Assets/Image/profesorGrandeInvisible.png" />
                                 <div className="flex-1">
                                     <ProximosFinales />
                                 </div>
@@ -97,9 +97,9 @@ const Indice = () => {
 
                             {/* Segunda fila: Los mosaicos restantes */}
                             <div className="flex flex-row gap-6 items-start justify-center">
-                                <Mosaico titulo="Gestion de Materias" navigateTo="/addmaterias" colorText={colorText} imagen="src/Assets/Image/materia.webp" />
-                                <Mosaico titulo="Gestion de Carreras" navigateTo="/addcarrera" colorText={colorText} imagen="src/Assets/Image/carrera.png" />
-                                <Mosaico titulo="Finales" navigateTo="" colorText={colorText} imagen="src/Assets/Image/calendarcopia.png" />
+                                <Mosaico titulo="Gestion de Materias" navigateTo="/addmaterias" colorText={colorText} imagen="src/Assets/Image/LibrosGrandeInvisible.png" />
+                                <Mosaico titulo="Gestion de Carreras" navigateTo="/addcarrera" colorText={colorText} imagen="src/Assets/Image/DiplomaGrandeInvisible.png" />
+                                <Mosaico titulo="Finales" navigateTo="" colorText={colorText} imagen="src/Assets/Image/FechaGrandeInvisible.png" />
                             </div>
 
                         </div>
