@@ -184,13 +184,13 @@ const Configuraciones = () => {
         <>
             <div>
                 <Navbar nombre={user} carrera={carrera} />
-                <div className={`"min-h-screen flex items-center justify-evenly ${fondoDegradado} py-20 lg:py-32 gap-8`}>
-                    <div className="bg-blanco p-8 rounded-lg w-11/12 sm:w-3/4 lg:w-3/5 flex flex-col lg:flex-row items-center lg:space-x-8 min-h-[65vh] shadow-2xl shadow-black">
-                        <div className="lg:w-1/2 flex flex-col m-auto justify-between items-center activo">
-                            <h1 className={`text-2xl font-bold mb-6 text-center ${colorText} titulo`}>Configuraciones</h1>
+                <div className={`"min-h-screen max-w-[100vw] flex items-center justify-evenly ${fondoDegradado} md:py-32 gap-8`}>
+                    <div className="bg-blanco p-3 md:p-5 rounded-lg flex flex-col w-[100vw] max-w-full md:w-3/5 lg:flex-row items-center lg:space-x-8 h-[100vh] md:h-[75vh] lg:min-h-[65vh] shadow-2xl shadow-black">
+                        <div className=" flex flex-col m-auto justify-between items-center activo w-full">
+                            <h1 className={`text-2xl font-bold mt-3 mb-3 md:mt-0 md:mb-6 text-center ${colorText} titulo`}>Configuraciones</h1>
                             <form method="POST" className="flex flex-col justify-between items-center w-full  space-y-3" onSubmit={handleGuardarCambios}>
                                 <hr className="my-4 border-t-2 border-gray-400 w-full" />
-                                <div className='grid gap-x-0 grid-cols-2'>
+                                <div className='flex flex-row justify-around items-center w-full m-0 p-0 gap-0'>
                                     <h2 className={colorText}><strong>Nombre</strong></h2>
                                     <InputField
                                         id="nombre"
@@ -198,11 +198,11 @@ const Configuraciones = () => {
                                         type="text"
                                         placeholder=""
                                         value={nombre}
-                                        ancho="w-[250px] lg:w-[14vw]"
+                                        ancho="w-[230px] lg:w-[275px]  "
                                         disabled
                                     />
                                 </div>
-                                <div className='grid gap-x-0 grid-cols-2'>
+                                <div className='flex flex-row justify-around items-center w-full'>
                                     <h2 className={colorText}><strong>Apellido</strong></h2>
                                     <InputField
                                         id="apellido"
@@ -210,11 +210,11 @@ const Configuraciones = () => {
                                         type="text"
                                         placeholder=""
                                         value={apellido}
-                                        ancho="w-[250px] lg:w-[14vw]"
+                                        ancho="w-[230px] lg:w-[275px] "
                                         disabled
                                     />
                                 </div>
-                                <div className='grid gap-x-0 grid-cols-2'>
+                                <div className='flex flex-row justify-around items-center w-full'>
                                     <h2 className={colorText}><strong>Usuario</strong></h2>
                                     {carrera === "Administración" ? (
                                         <InputField
@@ -225,7 +225,7 @@ const Configuraciones = () => {
                                             value={userInput}
                                             onChange={handleInputChangeUsuario}
                                             errorMessage={userErrorMessage}
-                                            ancho="w-[250px] lg:w-[14vw]"
+                                            ancho="w-[230px] lg:w-[275px] "
                                         />
                                     ) : (
                                         <InputField
@@ -234,12 +234,12 @@ const Configuraciones = () => {
                                             type="text"
                                             placeholder=""
                                             value={user}
-                                            ancho="w-[250px] lg:w-[14vw]"
+                                            ancho="w-[230px] lg:w-[275px] "
                                             disabled
                                         />
                                     )}
                                 </div>
-                                <div className='grid gap-x-0 grid-cols-2'>
+                                <div className='flex flex-row justify-around items-center w-full'>
                                     <h2 className={colorText}><strong>Correo</strong></h2>
                                     <InputField
                                         id="correo"
@@ -247,7 +247,7 @@ const Configuraciones = () => {
                                         type="text"
                                         placeholder=""
                                         value={correo}
-                                        ancho="w-[250px] lg:w-[14vw]"
+                                        ancho="w-[230px] lg:w-[275px] "
                                         disabled
                                     />
                                 </div>
@@ -265,7 +265,7 @@ const Configuraciones = () => {
                                     </div>
                                 )}
                                 <hr className="my-4 border-t-2 border-gray-400 w-full" />
-                                <div className="flex flex-row items-center justify-center w-full space-x-4">
+                                <div className="flex flex-col md:flex-row items-center justify-center w-full gap-5">
                                     <button
                                         className={`${colorBoton} px-4 py-2 rounded-full select-none text-white w-48 whitespace-nowrap`}
                                         onClick={(e) => {
