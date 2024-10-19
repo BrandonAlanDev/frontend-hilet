@@ -1,32 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: 'Open sans',-apple-system, BlinkMacSystemFont, 'Fira Sans', 'Roboto', 'Segoe UI', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: 'Open sans',source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.bg-hilet { background: linear-gradient(45deg,#061f3a,#a7bace); background-attachment: fixed;}
+/*(45deg,#031122,#5f8ec0)
+(45deg,#010811,#092d53)
+*/
+.bg-hilet { background: linear-gradient(-135deg,#031122,#5f8ec0); background-attachment: fixed;}
 .bg-figuras{
   background-image: url("/src/Assets/Image/formas-colores.webp");
   background-size: cover;
 }
 .bg-analista { background-color: #213F60; }
-.text-analista { color: #213F60; }
+.text-analista { color: #213F60;
+}
 .text-titular {
   color: #ffffff;
-  font-size: 3rem;
+  font-size: 4rem;
+  font-weight: 700;
 }
 .text-subtitular {
   color: #ffffff;
@@ -34,16 +38,16 @@ code {
 }
 
 .border-analista{ border-width: 2px; border-color: #213F60;}
-.bg-blanco { background: linear-gradient(45deg,#cecece,#ffffff); background-attachment: fixed;}
+.bg-blanco { background: linear-gradient(45deg,#e2e2e2,#ffffff); background-attachment: fixed;}
 .border-blanco{  border-width: 2px; border-color: whitesmoke;}
 .text-publicidad { color: #1d6a3f; }
 .bg-publicidad { background-color: #1d6a3f; }
-.bg-hilet-publicidad { background: linear-gradient(45deg,#1d6a3f,#a7ceae); background-attachment: fixed;}
+.bg-hilet-publicidad { background: linear-gradient(-135deg,#185e36,#65a871); background-attachment: fixed;}
 .border-publicidad{  border-width: 2px; border-color: #1d6a3f;}
 
 .text-otro { color: #750000; }
 .bg-otro { background-color: #750000; }
-.bg-hilet-otro { background: linear-gradient(45deg,#750000,#cea7a7); background-attachment: fixed;}
+.bg-hilet-otro { background: linear-gradient(-135deg,#610101,#b46c6c); background-attachment: fixed;}
 .border-otro{  border-width: 2px; border-color: #750000;}
 
 

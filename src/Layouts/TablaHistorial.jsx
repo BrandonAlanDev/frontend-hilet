@@ -36,15 +36,64 @@ const materiasPorAno = [
   ],
 ];
 
+
 const resolucion_general = "6790/19";
 
-const TablaHistorial = ({ busqueda, estadoFiltro, buscador }) => {
+const materiasPorAnoPubli = [
+  // 1º año
+  [
+    { Materia: "Marketing general", Titular: "Profesor A", Duracion: "Anual", estadoinicial: "Pendiente", notainicial: "-" },
+    { Materia: "Psicología", Titular: "Profesor B", Duracion: "Anual", estadoinicial: "Aprobado", notainicial: "7" },
+    { Materia: "Fundamentos del diseño publicitario", Titular: "Profesor C", Duracion: "Anual", estadoinicial: "Aprobado", notainicial: "8" },
+    { Materia: "Computación 1", Titular: "Profesor D", Duracion: "Anual", estadoinicial: "Pendiente", notainicial: "-" },
+    { Materia: "Introducción a la publicidad", Titular: "Profesor E", Duracion: "Anual", estadoinicial: "Aprobado", notainicial: "6" },
+    { Materia: "Producción gráfica", Titular: "Profesor F", Duracion: "Anual", estadoinicial: "Pendiente", notainicial: "-" },
+    { Materia: "Producción radial", Titular: "Profesor G", Duracion: "Anual", estadoinicial: "Aprobado", notainicial: "9" },
+    { Materia: "Producción audiovisual", Titular: "Profesor H", Duracion: "Anual", estadoinicial: "Aprobado", notainicial: "8" },
+    { Materia: "Edi: Creatividad publicitaria 1", Titular: "Profesor I", Duracion: "Anual", estadoinicial: "Pendiente", notainicial: "-" },
+    { Materia: "Edi: Comunicación digital", Titular: "Profesor J", Duracion: "Anual", estadoinicial: "Aprobado", notainicial: "7" },
+    { Materia: "Edi: Gráfica Asistida 1", Titular: "Profesor K", Duracion: "Anual", estadoinicial: "Pendiente", notainicial: "-" }
+  ],
+  // 2º año
+  [
+    { Materia: "Computación 2", Titular: "Profesor L", Duracion: "Anual", estadoinicial: "Aprobado", notainicial: "8" },
+    { Materia: "Inglés 1", Titular: "Profesor M", Duracion: "Anual", estadoinicial: "Pendiente", notainicial: "-" },
+    { Materia: "Psicología social", Titular: "Profesor N", Duracion: "Anual", estadoinicial: "Pendiente", notainicial: "-" },
+    { Materia: "Marketing directo", Titular: "Profesor O", Duracion: "Anual", estadoinicial: "Aprobado", notainicial: "7" },
+    { Materia: "Arte, cine, literatura e historia de la publicidad", Titular: "Profesor P", Duracion: "Anual", estadoinicial: "Pendiente", notainicial: "-" },
+    { Materia: "Redacción creativa 1", Titular: "Profesor Q", Duracion: "Anual", estadoinicial: "Aprobado", notainicial: "9" },
+    { Materia: "Dirección de arte 1", Titular: "Profesor R", Duracion: "Anual", estadoinicial: "Pendiente", notainicial: "-" },
+    { Materia: "Planificación estratégica de medios", Titular: "Profesor S", Duracion: "Anual", estadoinicial: "Aprobado", notainicial: "8" },
+    { Materia: "Semiología publicitaria", Titular: "Profesor T", Duracion: "Anual", estadoinicial: "Pendiente", notainicial: "-" },
+    { Materia: "Técnica promocional y pop", Titular: "Profesor U", Duracion: "Anual", estadoinicial: "Aprobado", notainicial: "7" },
+    { Materia: "Edi: Creatividad publicitaria 2", Titular: "Profesor V", Duracion: "Anual", estadoinicial: "Pendiente", notainicial: "-" },
+    { Materia: "Edi: Gráfica Asistida 2", Titular: "Profesor W", Duracion: "Anual", estadoinicial: "Aprobado", notainicial: "9" }
+  ],
+  // 3º año
+  [
+    { Materia: "Inglés 2", Titular: "Profesor X", Duracion: "Anual", estadoinicial: "Aprobado", notainicial: "8" },
+    { Materia: "Investigación de mercados", Titular: "Profesor Y", Duracion: "Anual", estadoinicial: "Pendiente", notainicial: "-" },
+    { Materia: "Redacción creativa 2", Titular: "Profesor Z", Duracion: "Anual", estadoinicial: "Pendiente", notainicial: "-" },
+    { Materia: "Dirección de arte 2", Titular: "Profesor AA", Duracion: "Anual", estadoinicial: "Aprobado", notainicial: "9" },
+    { Materia: "Seminario de práctica profesional", Titular: "Profesor BB", Duracion: "Anual", estadoinicial: "Pendiente", notainicial: "-" },
+    { Materia: "Atención de cuentas", Titular: "Profesor CC", Duracion: "Anual", estadoinicial: "Aprobado", notainicial: "8" },
+    { Materia: "Organización y administración de la agencia", Titular: "Profesor DD", Duracion: "Anual", estadoinicial: "Pendiente", notainicial: "-" },
+    { Materia: "Derecho y legislación publicitaria", Titular: "Profesor EE", Duracion: "Anual", estadoinicial: "Aprobado", notainicial: "7" },
+    { Materia: "Edi: Comunicación 2.0", Titular: "Profesor FF", Duracion: "Anual", estadoinicial: "Pendiente", notainicial: "-" },
+    { Materia: "Edi: Fotografía", Titular: "Profesor GG", Duracion: "Anual", estadoinicial: "Aprobado", notainicial: "9" }
+  ]
+];
+
+const TablaHistorial = ({ busqueda, estadoFiltro, buscador, color, carrera }) => {
   const [currentYear, setCurrentYear] = useState(0); // Año actual (0 = primer año)
   const [materias, setMaterias] = useState([]);
-
   useEffect(() => {
-    setMaterias(materiasPorAno[currentYear]); // Cargar materias según el año seleccionado
-  }, [currentYear]);
+    if (carrera === "Analista de Sistemas") {
+      setMaterias(materiasPorAno[currentYear]); // Cargar materias según el año seleccionado
+    } else if (carrera === "Publicidad") {
+      setMaterias(materiasPorAnoPubli[currentYear]); // Cargar materias según el año seleccionado
+    }
+  }, [currentYear, carrera]);
 
   const historialFiltrado = materias.filter(
     (item) =>
@@ -57,17 +106,18 @@ const TablaHistorial = ({ busqueda, estadoFiltro, buscador }) => {
       {/* Botones para navegar entre años */}
       <div className="flex flex-row w-full justify-between">
         <div className="flex flex-row gap-1 items-center">
-          <p className="text-white text-3xl select-none">Años :</p>
-          {materiasPorAno.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentYear(index)}
-              className={`px-4 py-2 m-2 rounded-full select-none ${currentYear === index ? "bg-white text-analista" : "bg-analista text-white"
-                }`}
-            >
-              {index + 1}
-            </button>
-          ))}
+            <p className="text-white text-3xl select-none">Años :</p>
+        {materiasPorAno.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentYear(index)}
+            className={`px-4 py-2 m-2 rounded-full select-none ${
+              currentYear === index ? "bg-white text-analista" : `${color} text-white`
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
         </div>
         {buscador}
       </div>
@@ -79,9 +129,10 @@ const TablaHistorial = ({ busqueda, estadoFiltro, buscador }) => {
       </div>
 
       {/* Tabla con las materias filtradas */}
-      <div className="mt-6">
-        <Tabla headers={["Materia", "Titular", "Duracion", "Estado", "Nota"]}>
-          {historialFiltrado.map((item, index) => (
+
+      <div className="mt-5">
+        <Tabla color={color} headers={["Materia", "Titular", "Duracion", "Estado", "Nota"]}>
+            {historialFiltrado.map((item, index) => (
             <Historial
               key={index}
               materia={item.Materia}

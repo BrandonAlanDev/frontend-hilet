@@ -66,7 +66,7 @@ const AddProfesor = () => {
     <div>
       <Navbar nombre={nombre} carrera={carrera} />
       <div
-        className={`min-h-screen flex flex-col items-center justify-evenly bg-hilet py-20 lg:py-32`}
+        className={`min-h-screen select-none flex flex-col items-center justify-evenly bg-hilet py-20 lg:py-32`}
       >
         <div className="mt-5 gap-8 flex flex-col lg:flex-row lg:mt-0 justify-between items-center">
           <p className="text-2xl font-bold mb-6 text-center text-titular gap-5">

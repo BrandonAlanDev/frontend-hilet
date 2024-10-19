@@ -1,5 +1,4 @@
-export const backendurl = "http://localhost:8000/api/";
-
+export const backendurl = "http://localhost:8080/";
 
 //RegExp's
 export const VALIDATIONS = {

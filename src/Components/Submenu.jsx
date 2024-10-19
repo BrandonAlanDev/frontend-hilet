@@ -5,20 +5,20 @@ const Submenu = ({ carrera, titulo, open, path}) => {
     const navigate = useNavigate();
     const Logout=()=>{
         sessionStorage.clear();
-        navigate("/");
+        location.replace("/");
     }
     let estilo = 'submenu';
     const direcciones=[
     ];
     if (!open) {
         if (carrera === "Analista de Sistemas") {
-            estilo += " analista-button";
+            estilo += " analista-button select-none";
         } else if (carrera === "Publicidad") {
-            estilo += " publicidad-button";
+            estilo += " publicidad-button select-none";
         } else if (carrera === "Administración") {
-            estilo += " analista-button";
+            estilo += " analista-button select-none";
         } else {
-            estilo += " otro-button";
+            estilo += " otro-button select-none";
         }
     } else {
         if (carrera === "Analista de Sistemas") {
