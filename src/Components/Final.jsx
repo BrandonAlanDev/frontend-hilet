@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CancelIcon from '@mui/icons-material/Cancel';
 
-const Final = ({ carrera, materia, horarios, estadoInicial }) => {
+const Final = ({ carrera, materia, horarios, estadoInicial}) => {
   const [estado, setEstado] = useState(estadoInicial);
   const [estilo, setEstilo] = useState("");
   const [capacidad, setCapacidad] = useState({ actual: 25, limite: 50 });

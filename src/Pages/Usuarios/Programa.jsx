@@ -7,6 +7,7 @@ import Buscador from '../../Components/Buscador'
 const Programa = () => {
     const [nombre, setNombre] = useState('');
     const [carrera, setCarrera] = useState('');
+    const [color, setColor] = useState('');
     const [fondoOpaco, setFondoOpaco] = useState('');
     const [fondoDegradado, setFondoDegradado] = useState('');
     const [busqueda,setBusqueda] = useState('');
@@ -38,13 +39,16 @@ const Programa = () => {
         if (carrera === "Publicidad") {
             setFondoOpaco("bg-publicidad");
             setFondoDegradado("bg-hilet-publicidad");
+            setColor("publicidad");
         } else if (carrera === "Analista de Sistemas" || carrera === "Administración") {
             setFondoOpaco("bg-analista");
             setFondoDegradado("bg-hilet");
+            setColor("analista");
         }
         else {
             setFondoOpaco("bg-otro");
             setFondoDegradado("bg-hilet-otro");
+            setColor("otro");
         }
     }, [carrera]);
 
@@ -53,15 +57,18 @@ const Programa = () => {
         <div>
             <Navbar nombre={nombre} carrera={carrera} />
             <div className={`min-h-screen select-none flex flex-col items-center justify-evenly ${fondoDegradado} py-20 lg:py-32 gap-8`}>
-                <p className='text-white font-bold text-5xl select-none'>Historial Academico de {carrera}</p>
+                <div className='flex flex-col items-center justify-evenly bg-white p-8 rounded-3xl gap-8'>
+
+                <p className={`text-${color} font-bold text-5xl select-none`}>Historial Academico de {carrera}</p>
                 <div className=''>
                 <TablaHistorial
                     carrera={carrera}
-                    color={fondoOpaco}
+                    color={color}
                     busqueda={busqueda}
                     estadoFiltro={estadoFiltro}
-                    buscador={<Buscador setBusqueda={setBusqueda} setEstadoFiltro={setEstadoFiltro} />}
-                />
+                    buscador={<Buscador setBusqueda={setBusqueda} setEstadoFiltro={setEstadoFiltro} color={color}/>}
+                    />
+                </div>
                 </div>
             </div>
 

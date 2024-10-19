@@ -15,13 +15,14 @@ const InputField = (props) => {
     alto="",
     disabled=false,
     bg="bg-white",
+    borde="analista",
   } = props;
 
   return (
     <>
       <label
         htmlFor={id}
-        className={`rounded-full border-analista ${bg} p-2 flex items-center input ${ancho} ${alto}`}
+        className={`rounded-full border-${borde} ${bg} p-2 flex items-center input ${ancho} ${alto}`}
       >
         {icon && <img src={icon} alt={label} className="w-6 h-6 rounded-full mr-2" />}
         <input

@@ -106,13 +106,13 @@ const TablaHistorial = ({ busqueda, estadoFiltro, buscador, color, carrera }) =>
       {/* Botones para navegar entre años */}
       <div className="flex flex-row w-full justify-between">
         <div className="flex flex-row gap-1 items-center">
-            <p className="text-white text-3xl select-none">Años :</p>
+            <p className={`text-${color} text-3xl select-none`}>Años :</p>
         {materiasPorAno.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentYear(index)}
             className={`px-4 py-2 m-2 rounded-full select-none ${
-              currentYear === index ? "bg-white text-analista" : `${color} text-white`
+              currentYear === index ? `bg-${color} text-white` : `bg-white text-${color} border-${color}`
             }`}
           >
             {index + 1}
@@ -123,7 +123,7 @@ const TablaHistorial = ({ busqueda, estadoFiltro, buscador, color, carrera }) =>
       </div>
 
       <div className="mt-5 text-left">
-        <p className="text-xl font-bold text-white">
+        <p className={`text-xl font-bold text-${color}`}>
           Resolución : {resolucion_general}
         </p>
       </div>
