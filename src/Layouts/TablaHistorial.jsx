@@ -36,6 +36,9 @@ const materiasPorAno = [
   ],
 ];
 
+
+const resolucion_general = "6790/19";
+
 const materiasPorAnoPubli = [
   // 1º año
   [
@@ -119,19 +122,26 @@ const TablaHistorial = ({ busqueda, estadoFiltro, buscador, color, carrera }) =>
         {buscador}
       </div>
 
+      <div className="mt-5 text-left">
+        <p className="text-xl font-bold text-white">
+          Resolución : {resolucion_general}
+        </p>
+      </div>
+
       {/* Tabla con las materias filtradas */}
+
       <div className="mt-5">
         <Tabla color={color} headers={["Materia", "Titular", "Duracion", "Estado", "Nota"]}>
             {historialFiltrado.map((item, index) => (
             <Historial
-                key={index}
-                materia={item.Materia}
-                titular={item.Titular}
-                duracion={item.Duracion}
-                estadoInicial={item.estadoinicial}
-                notaInicial={item.notainicial}
+              key={index}
+              materia={item.Materia}
+              titular={item.Titular}
+              duracion={item.Duracion}
+              estadoInicial={item.estadoinicial}
+              notaInicial={item.notainicial}
             />
-            ))}
+          ))}
         </Tabla>
       </div>
     </div>

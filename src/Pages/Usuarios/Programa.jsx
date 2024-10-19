@@ -53,7 +53,7 @@ const Programa = () => {
         <div>
             <Navbar nombre={nombre} carrera={carrera} />
             <div className={`min-h-screen select-none flex flex-col items-center justify-evenly ${fondoDegradado} py-20 lg:py-32 gap-8`}>
-                <p className='text-white font-bold text-5xl select-none'>Programa de {carrera}</p>
+                <p className='text-white font-bold text-5xl select-none'>Historial Academico de {carrera}</p>
                 <div className=''>
                 <TablaHistorial
                     carrera={carrera}
