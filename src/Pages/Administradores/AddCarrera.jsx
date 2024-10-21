@@ -99,6 +99,7 @@ const AddCarrera = () => {
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                     <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
                         <h2 className="text-2xl font-bold mb-4 text-analista">Modificar carrera</h2>
+                        <h4 className="text-md font-bold mb-4 text-gray-500">Modificando : {modifiedCarrera}</h4>
                         <input
                             type="text"
                             className="w-full p-2 border border-analista rounded mb-4"
