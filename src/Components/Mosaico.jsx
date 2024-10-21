@@ -16,18 +16,21 @@ const Mosaico = (props) => {
         navigateTo = ""
     } = props;
 
-
     const navegarAdmin = () => {
         if (navigateTo) {
             navigate(navigateTo);
         }
     }
 
+    const eventoClick = ()=>{
+        callback();
+        if(navigateTo) navegarAdmin();
+    }
     return (
         <>
             <button
                 className={`${colorBg} ${colorText} text-2xl font-bold text-center text-mosaico p-4 rounded-lg flex flex-col flex-grow items-center justify-between mosaicos shadow-2xl shadow-black`}
-                onClick={navegarAdmin}
+                onClick={eventoClick}
             >
                 <div className="items-center activo">
                     {titulo}

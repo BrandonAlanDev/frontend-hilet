@@ -10,6 +10,9 @@ const AddCarrera = () => {
     const [carreras, setCarreras] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [newCarrera, setNewCarrera] = useState('');
+    const [showModalModify, setShowModalModify] = useState(false);
+    const [modifiedCarrera, setModifiedCarrera] = useState('');
+    const [newModifiedCarrera, setNewModifiedCarrera] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -36,6 +39,11 @@ const AddCarrera = () => {
         setNewCarrera('');
         setShowModal(false);
     };
+    const modificarCarrera = (nombreCarrera)=>{
+        setModifiedCarrera(nombreCarrera);
+        setNewModifiedCarrera(nombreCarrera);
+        setShowModalModify(true);
+    }
 
     return (
         <>
@@ -47,25 +55,9 @@ const AddCarrera = () => {
                     </div>
                     {(carrera === "Administración") && (
                         <div className="flex flex-row flex-wrap gap-8 items-start justify-center lg:max-w-6xl">
-                            <div
-                                className="opacity-85 bg-slate-100 p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black cursor-pointer"
-                                onClick={() => setShowModal(true)}
-                            >
-                                <img className="flex-grow h-10 flex justify-center items-center activo aspect-square" src={agregar} alt="Signo de agregar" />
-                                <div>
-                                    <h4 className={`text-2xl font-bold mt-4 text-center text-mosaico opacity-100 text-analista`}>Agregar</h4>
-                                </div>
-                            </div>
+                            <Mosaico titulo={"Agregar"} callback={() => setShowModal(true)} imagen={agregar} />
                             {carreras.map((c, index) => (
-                                <div key={index} className="bg-blanco p-8 rounded-lg flex flex-col items-center justify-between mosaicos shadow-2xl shadow-black w-[300px] h-[360px]">
-                                <div className="text-mosaico">
-                                    <h4 className={`text-2xl select-none font-bold mt-4 text-center text-mosaico text-analista`}>{c}</h4>
-                                </div>
-                                <img className="flex select-none justify-center items-center activo aspect-square w-[100px] h-[100px]" src={(c=="Analista de Sistemas")?"src/Assets/Image/LOGO-AS.png":(c=="Publicidad")?"src/Assets/Image/LOGO-PUBLI.png":"src/Assets/Image/school.png"} alt="Logo instituto"/>
-                                <div className="text-mosaico">
-                                    <h4 className={`text-2xl select-none font-bold mt-4 text-center text-mosaico text-analista`}></h4>
-                                </div>
-                            </div>
+                                <Mosaico key={index} titulo={c} callback={()=>{modificarCarrera(c)}} imagen={(c=="Analista de Sistemas")?"src/Assets/Image/LOGO-AS.png":(c=="Publicidad")?"src/Assets/Image/LOGO-PUBLI.png":"src/Assets/Image/school.png"} />
                             ))}
                         </div>
                     )}
@@ -94,6 +86,45 @@ const AddCarrera = () => {
                             <button
                                 className="aceptar text-white px-4 py-2 rounded"
                                 onClick={addCarrera}
+                            >
+                                Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Modal Modificar*/}
+            {showModalModify && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
+                        <h2 className="text-2xl font-bold mb-4 text-analista">Modificar carrera</h2>
+                        <input
+                            type="text"
+                            className="w-full p-2 border border-analista rounded mb-4"
+                            placeholder="Nombre de la carrera"
+                            value={newModifiedCarrera}
+                            onChange={(e) => setNewModifiedCarrera(e.target.value)}
+                        />
+                        <div className="flex justify-end space-x-4">
+                            <button
+                                className="cancelar text-white px-4 py-2 rounded"
+                                onClick={()=>{
+                                    setShowModalModify(false);
+                                    setModifiedCarrera('');
+                                    setNewModifiedCarrera('');
+                                }}
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                className="aceptar text-white px-4 py-2 rounded"
+                                onClick={()=>{
+                                    /* CAMBIO POR API */
+                                    setShowModalModify(false);
+                                    setModifiedCarrera('');
+                                    setNewModifiedCarrera('');
+                                }}
                             >
                                 Agregar
                             </button>
