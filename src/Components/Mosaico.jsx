@@ -10,6 +10,8 @@ const Mosaico = (props) => {
         colorBg = "bg-blanco", // Fondo, por defecto blanco
         imagen = "src/Assets/Image/formas-colores.webp", // Imagen, por defecto las figuras
         texto = "",// Texto inferior
+        ancho = "",
+        alto = "",
         anchoImagen = "w-[65%]",
         altoImagen = "h-[auto]",
         callback = () => { }, // Funcion que se dispara al hacerle click
@@ -30,7 +32,7 @@ const Mosaico = (props) => {
     return (
         <>
             <button
-                className={`${colorBg} ${colorText} text-2xl font-bold text-center text-mosaico p-4 rounded-lg flex flex-col flex-grow items-center justify-between mosaicos shadow-2xl shadow-black`}
+                className={`${colorBg} ${colorText} text-2xl font-bold text-center text-mosaico p-4 rounded-lg flex flex-col flex-grow items-center justify-between mosaicos shadow-2xl shadow-black ${ancho} ${alto}`}
                 onClick={eventoClick}
             >
                 <div className="items-center activo">
