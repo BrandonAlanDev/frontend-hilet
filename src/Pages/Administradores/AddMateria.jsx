@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
 import agregar from "../../Assets/Image/signomas.png";
+import Mosaico from "../../Components/Mosaico";
 
 const AddMateria = () => {
     const [nombre, setNombre] = useState('');
@@ -9,6 +10,8 @@ const AddMateria = () => {
     const [carreras, setCarreras] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [newResolucion, setnewResolucion] = useState('');
+    const [resoluciones, setResoluciones] = useState([]);
+    const [resolucionesLegacy, setResolucionesLegacy] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -21,6 +24,32 @@ const AddMateria = () => {
         }
         const storedCarreras = JSON.parse(sessionStorage.getItem('carreras')) || [];
         setCarreras(storedCarreras);
+        setResolucionesLegacy([
+            {
+                id:1,
+                carrera:"Analista de Sistemas",
+                resolucion:"123",
+                anio:2002
+            },
+            {
+                id:2,
+                carrera:"Analista de Sistemas",
+                resolucion:"345",
+                anio:2002
+            },
+            {
+                id:3,
+                carrera:"Publicidad",
+                resolucion:"567",
+                anio:2002
+            },
+            {
+                id:4,
+                carrera:"Diseño",
+                resolucion:"789",
+                anio:2002
+            },
+        ])
     }, [navigate]);
 
     const addCarrera = () => {
@@ -38,40 +67,31 @@ const AddMateria = () => {
 
     return (
         <>
-            <div>
+            <div className="bg-hilet pb-20">
                 <Navbar nombre={nombre} carrera={carrera} />
-                <div className={`min-h-screen select-none flex flex-col items-center justify-evenly bg-hilet py-20 lg:py-32 gap-8`}>
+                <div className={`min-h-screen select-none flex flex-col items-center justify-evenly py-20 lg:py-32 gap-8`}>
                     <div className='mt-5 gap-8 lg:mt-0'>
-                        <h1 className="text-2xl select-none font-bold mb-6 text-center text-titular gap-5">Cargar materias</h1>
+                        <h1 className="text-2xl select-none font-bold mb-6 text-center text-titular gap-5">Gestion de Materias</h1>
                     </div>
                     {(carrera === "Administración") && (
-                        <div className="flex flex-row flex-wrap gap-8 items-start justify-center lg:max-w-6xl">
-                            <div
-                                className="opacity-85 select-none bg-slate-100 p-8 rounded-lg flex flex-col items-center justify-between mosaicos shadow-2xl shadow-black cursor-pointer w-[300px] h-[360px]"
-                                onClick={() => setShowModal(true)}
-                            >
-                                <div>
-                                    <h4 className={`text-2xl select-none font-bold mt-4 text-center text-mosaico opacity-100 text-analista`}> </h4>
-                                </div>
-                                <img className="flex select-none justify-center items-center activo aspect-square w-[100px] h-[100px]" src={agregar} alt="Signo de agregar" />
-                                <div>
-                                    <h4 className={`text-2xl select-none font-bold mt-4 text-center text-mosaico opacity-100 text-analista`}>Nueva resolucion</h4>
-                                </div>
-                            </div>
+                        <div className="flex flex-row flex-wrap gap-8 items-start justify-center lg:max-w-7xl">
+                            <Mosaico titulo={"Agregar"} texto={"Nueva Resolucion"} callback={() => setShowModal(true)} imagen={agregar} />
                             {carreras.map((c, index) => (
-                                <div key={index} className="bg-blanco p-8 rounded-lg flex flex-col items-center justify-between mosaicos shadow-2xl shadow-black w-[300px] h-[360px]">
-                                    <div className="text-mosaico">
-                                        <h4 className={`text-2xl select-none font-bold mt-4 text-center text-mosaico text-analista`}>{c}</h4>
-                                    </div>
-                                    <img className="flex select-none justify-center items-center activo aspect-square w-[100px] h-[100px]" src={(c=="Analista de Sistemas")?"src/Assets/Image/LOGO-AS.png":(c=="Publicidad")?"src/Assets/Image/LOGO-PUBLI.png":"src/Assets/Image/school.png"} alt="Logo instituto"/>
-                                    <div className="text-mosaico">
-                                        <h4 className={`text-2xl select-none font-bold mt-4 text-center text-mosaico text-analista`}>{"6790/9"}</h4>
-                                    </div>
-                                </div>
+                                <Mosaico key={index} titulo={c} texto={"Resolucion: "} callback={()=>{modificarCarrera(c)}} imagen={(c=="Analista de Sistemas")?"src/Assets/Image/LOGO-AS.png":(c=="Publicidad")?"src/Assets/Image/LOGO-PUBLI.png":"src/Assets/Image/school.png"} />
                             ))}
                         </div>
                     )}
                 </div>
+                {(resolucionesLegacy.length>-1) && (
+                    <div className="flex flex-col justify-center align-top items-center gap-8 mt-3">
+                        <h2 className="text-2xl select-none font-bold text-center text-titular gap-5 mb-8">Resoluciones anteriores</h2>
+                        <div className="flex flex-row justify-center items-center gap-8 lg:max-w-7xl">
+                            {resolucionesLegacy.map((c, index) => (
+                                <Mosaico key={index} titulo={c.carrera} html={`<div className="flex flex-row justify-between items-center gap-8"><p>Resolucion: ${c.resolucion}</p><p>Año: ${c.anio}</p></div>`} callback={()=>{}} imagen={(c.carrera=="Analista de Sistemas")?"src/Assets/Image/LOGO-AS.png":(c.carrera=="Publicidad")?"src/Assets/Image/LOGO-PUBLI.png":"src/Assets/Image/school.png"} />
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* Modal */}

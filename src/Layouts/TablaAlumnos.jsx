@@ -152,7 +152,7 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
                   setCurrentYear(0);
                 }}
                 className={`px-4 py-2 rounded-full select-none ${
-                  currentCarrera === alumno.carrera ? `${color} text-white` : "bg-white text-analista border-analista"
+                  currentCarrera === alumno.carrera ? `bg-${color} text-white` : "bg-white text-analista border-analista"
                 }`}
               >
                 {alumno.carrera}
@@ -168,7 +168,7 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
                 key={index}
                 onClick={() => setCurrentYear(index)}
                 className={`px-4 py-2 rounded-full select-none ${
-                  currentYear === index ? `${color} text-white` : "bg-white text-analista border-analista"
+                  currentYear === index ? `bg-${color} text-white` : "bg-white text-analista border-analista"
                 }`}
               >
                 {index + 1}

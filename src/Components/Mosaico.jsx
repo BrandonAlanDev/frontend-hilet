@@ -13,7 +13,8 @@ const Mosaico = (props) => {
         anchoImagen = "w-[65%]",
         altoImagen = "h-[auto]",
         callback = () => { }, // Funcion que se dispara al hacerle click
-        navigateTo = ""
+        navigateTo = "",
+        html=""
     } = props;
 
     const navegarAdmin = () => {
@@ -36,9 +37,12 @@ const Mosaico = (props) => {
                     {titulo}
                 </div>
                 {imagen && <img className={`flex select-none justify-center items-center activo ${anchoImagen} ${altoImagen}`} src={imagen} />}
-                <div className="text-mosaico">
-                    <h4>{texto}</h4>
-                </div>
+                {html && <div className="text-mosaico" dangerouslySetInnerHTML={{ __html: html }} />}
+                {!html &&
+                    <div className="text-mosaico">
+                        <h4>{texto}</h4>
+                    </div>
+                }
             </button>
         </>
     );
