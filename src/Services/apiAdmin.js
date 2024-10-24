@@ -1,1 +1,0 @@
-// aca llamados a la api de updates insert o deletes sensibles de SOLO usuario administrador
