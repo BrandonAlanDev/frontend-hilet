@@ -1,4 +1,4 @@
-export const backendurl = "http://localhost:8080/";
+export const backendurl = "http://localhost:5121/";
 
 //RegExp's
 export const VALIDATIONS = {

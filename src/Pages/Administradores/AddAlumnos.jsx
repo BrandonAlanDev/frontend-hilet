@@ -9,6 +9,7 @@ const AddAlumnos = () => {
     const [carrera, setCarrera] = useState('');
     const [fondoOpaco, setFondoOpaco] = useState('');
     const [fondoDegradado, setFondoDegradado] = useState('');
+    const [color,setColor] = useState('');
     const [busqueda,setBusqueda] = useState('');
     const [estadoFiltro,setEstadoFiltro] = useState('');
     const navigate = useNavigate();
@@ -38,13 +39,16 @@ const AddAlumnos = () => {
         if (carrera === "Publicidad") {
             setFondoOpaco("bg-publicidad");
             setFondoDegradado("bg-hilet-publicidad");
+            setColor("publicidad");
         } else if (carrera === "Analista de Sistemas" || carrera === "Administración") {
             setFondoOpaco("bg-analista");
             setFondoDegradado("bg-hilet");
+            setColor("analista");
         }
         else {
             setFondoOpaco("bg-otro");
             setFondoDegradado("bg-hilet-otro");
+            setColor("otro");
         }
     }, [carrera]);
 
@@ -57,7 +61,7 @@ const AddAlumnos = () => {
                 <div className=''>
                 <TablaAlumnos
                     carrera={carrera}
-                    color={fondoOpaco}
+                    color={color}
                     busqueda={busqueda}
                     estadoFiltro={estadoFiltro}
                     buscador={<BuscadorAlumnos setBusqueda={setBusqueda} setEstadoFiltro={setEstadoFiltro} />}

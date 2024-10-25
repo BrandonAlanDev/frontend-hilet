@@ -15,6 +15,8 @@ const AddProfesor = () => {
   const [profesorBuscado, setProfesorBuscado] = useState("");
   const [profesoresEncontrados, setProfesoresEncontrados] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showModalModify, setShowModalModify] = useState(false);
+  const [profesorSeleccionado,setProfesorSeleccionado] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,6 +64,10 @@ const AddProfesor = () => {
     setShowModal(false);
   };
 
+  const modificarProfesor=(id,nombre,apellido,email,telefono)=>{
+    setProfesorSeleccionado({id:id, nombre: nombre, apellido: apellido, email: email, telefono: telefono });
+    setShowModalModify(true);
+  }
   return (
     <div>
       <Navbar nombre={nombre} carrera={carrera} />
@@ -93,7 +99,7 @@ const AddProfesor = () => {
               </div>
             ) : (
               profesoresEncontrados.map((p, index) => (
-                <div key={index} className="bg-analista p-8 rounded-lg flex flex-col items-center mosaicos-profe shadow-2xl shadow-black">
+                <button key={index} onClick={()=>{modificarProfesor(1,p.nombre,p.apellido,p.email,p.telefono)}} className="bg-analista p-8 rounded-lg flex flex-col items-center mosaicos-profe shadow-2xl shadow-black">
                   <div className="text-mosaico-profe">
                     <p className="text-center text-[13px] text-white">{"Nombre Completo :"}</p>
                     <p className="font-bold text-center text-mosaico-profe text-white">{`${p.nombre} ${p.apellido}`}</p>
@@ -107,7 +113,7 @@ const AddProfesor = () => {
                     <p className="text-center text-[13px] text-white">{"Teléfono :"}</p>
                     <p className="font-bold text-center text-mosaico-profe text-white">{p.telefono}</p>
                   </div>
-                </div>
+                </button>
               ))
             )
           ) : (
@@ -128,7 +134,7 @@ const AddProfesor = () => {
                 </div>
               </div>
               {profesores.map((p, index) => (
-                <div key={index} className="bg-analista p-8 rounded-lg flex flex-col items-center mosaicos-profe shadow-2xl shadow-black">
+                <button key={index} onClick={()=>{modificarProfesor(1,p.nombre,p.apellido,p.email,p.telefono)}} className="bg-analista p-8 rounded-lg flex flex-col items-center mosaicos-profe shadow-2xl shadow-black">
                   <div className="text-mosaico-profe">
                     <p className="text-center text-[13px] text-white">{"Nombre Completo :"}</p>
                     <p className="font-bold text-center text-mosaico-profe text-white">{`${p.nombre} ${p.apellido}`}</p>
@@ -142,7 +148,7 @@ const AddProfesor = () => {
                     <p className="text-center text-[13px] text-white">{"Teléfono :"}</p>
                     <p className="font-bold text-center text-mosaico-profe text-white">{p.telefono}</p>
                   </div>
-                </div>
+                </button>
               ))}
             </>
           )}
@@ -193,6 +199,69 @@ const AddProfesor = () => {
                 <button
                   className="cancelar text-white px-4 py-2 rounded"
                   onClick={() => setShowModal(false)}
+                >
+                  Cancelar
+                </button>
+                <button
+                  className="aceptar text-white px-4 py-2 rounded"
+                  onClick={addProfesor}
+                >
+                  Agregar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* Modificar */}
+        {showModalModify && (
+          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
+              <h2 className="text-2xl font-bold mb-4 text-analista">
+                Modificar profesor
+              </h2>
+              <h4 className="text-md font-bold mb-4 text-gray-400">
+                {"Modificando : "+profesorSeleccionado.apellido+" "+profesorSeleccionado.nombre}
+              </h4>
+              <input
+                type="text"
+                className="w-full p-2 border border-analista rounded mb-4"
+                placeholder="Nombre del Profesor"
+                value={newProfesor.nombre}
+                onChange={(e) => {
+                  setNewProfesor({ ...newProfesor, nombre: e.target.value });
+                }}
+              />
+              <input
+                type="text"
+                className="w-full p-2 border border-analista rounded mb-4"
+                placeholder="Apellido"
+                value={newProfesor.apellido}
+                onChange={(e) => {
+                  setNewProfesor({ ...newProfesor, apellido: e.target.value });
+                }}
+              />
+              <input
+                type="text"
+                className="w-full p-2 border border-analista rounded mb-4"
+                placeholder="Correo electrónico"
+                value={newProfesor.email}
+                onChange={(e) => {
+                  setNewProfesor({ ...newProfesor, email: e.target.value });
+                }}
+              />
+              <input
+                type="text"
+                className="w-full p-2 border border-analista rounded mb-4"
+                placeholder="Teléfono de contacto"
+                value={newProfesor.telefono}
+                onChange={(e) => {
+                  setNewProfesor({ ...newProfesor, telefono: e.target.value });
+                }}
+              />
+              <div className="flex justify-end space-x-4">
+                <button
+                  className="cancelar text-white px-4 py-2 rounded"
+                  onClick={() => setShowModalModify(false)}
                 >
                   Cancelar
                 </button>
