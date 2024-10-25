@@ -14,6 +14,19 @@ export const PostCarrera = async (nombre) => {
     }
 };
 
+export const GetAllCarreras = async () => {
+    try {
+        const response = await GET(`CarrerasController/Get`);
+        if (response) {
+            return response;
+        }
+        throw new Error("No se recibió respuesta");
+    } catch (error) {
+        console.error("Error al hacer GET a carreras:", error);
+        throw error;
+    }
+};
+
 export const GetCarrera = async (id) => {
     try {
         const response = await GET(`CarrerasController/Get/${id}`);

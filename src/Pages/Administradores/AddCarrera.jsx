@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
 import agregar from "../../Assets/Image/signomas.png";
 import Mosaico from "../../Components/Mosaico";
+import {GetAllCarreras} from "../../Services/apiAdmin/Carreras"
 
 const AddCarrera = () => {
     const [nombre, setNombre] = useState('');
@@ -13,7 +14,27 @@ const AddCarrera = () => {
     const [showModalModify, setShowModalModify] = useState(false);
     const [modifiedCarrera, setModifiedCarrera] = useState('');
     const [newModifiedCarrera, setNewModifiedCarrera] = useState('');
+    const [carrerasPrueba, setCarrerasPrueba] = useState([]);
     const navigate = useNavigate();
+
+
+    const refrescarCarreras= async ()=>{
+        try {
+            let carreras = await GetAllCarreras();
+    
+            if (carreras && carreras.length > 0) {
+                console.log("Carreras obtenidas:", carreras);
+                setCarrerasPrueba(carreras);
+                sessionStorage.setItem('carreras', JSON.stringify(carreras)); // Guarda las carreras en sessionStorage
+            } else {
+                // Mensaje más específico si no hay carreras
+                console.warn("La respuesta fue exitosa pero no se obtuvieron carreras. Posible cuerpo vacío o datos incorrectos.");
+            }
+        } catch (error) {
+            // Mensaje más detallado del error
+            console.error("Error al intentar obtener las carreras. Detalles:", error.message);
+        }
+    }
 
     useEffect(() => {
         const user = sessionStorage.getItem('user');
@@ -25,6 +46,7 @@ const AddCarrera = () => {
         }
         const storedCarreras = JSON.parse(sessionStorage.getItem('carreras')) || [];
         setCarreras(storedCarreras);
+        refrescarCarreras();
     }, [navigate]);
 
     const addCarrera = () => {
@@ -44,6 +66,26 @@ const AddCarrera = () => {
         setNewModifiedCarrera(nombreCarrera);
         setShowModalModify(true);
     }
+    const modificarCarreraFinal = () => {
+        if (newModifiedCarrera.trim() === '') return;
+        const updatedCarreras = carreras.map(c =>
+            c === modifiedCarrera ? newModifiedCarrera : c
+        );
+        setCarreras(updatedCarreras);
+        sessionStorage.setItem('carreras', JSON.stringify(updatedCarreras));
+        setModifiedCarrera('');
+        setNewModifiedCarrera('');
+        setShowModalModify(false);
+    };
+    
+    const eliminarCarrera = (nombreCarrera) => {
+        const updatedCarreras = carreras.filter(c => c !== nombreCarrera);
+        setCarreras(updatedCarreras);
+        sessionStorage.setItem('carreras', JSON.stringify(updatedCarreras));
+        setModifiedCarrera('');
+        setNewModifiedCarrera('');
+        setShowModalModify(false);
+    };
 
     return (
         <>
@@ -55,9 +97,9 @@ const AddCarrera = () => {
                     </div>
                     {(carrera === "Administración") && (
                         <div className="flex flex-row flex-wrap gap-8 items-start justify-center lg:max-w-6xl">
-                            <Mosaico titulo={"Agregar"} callback={() => setShowModal(true)} imagen={agregar} />
+                            <Mosaico titulo={"Agregar"} ancho={"max-w-[400px]"} callback={() => setShowModal(true)} imagen={agregar} />
                             {carreras.map((c, index) => (
-                                <Mosaico key={index} titulo={c} callback={()=>{modificarCarrera(c)}} imagen={(c=="Analista de Sistemas")?"src/Assets/Image/LOGO-AS.png":(c=="Publicidad")?"src/Assets/Image/LOGO-PUBLI.png":"src/Assets/Image/school.png"} />
+                                <Mosaico key={index} ancho={"max-w-[400px]"} titulo={c} callback={()=>{modificarCarrera(c)}} imagen={(c=="Analista de Sistemas")?"src/Assets/Image/LOGO-AS.png":(c=="Publicidad")?"src/Assets/Image/LOGO-PUBLI.png":"src/Assets/Image/school.png"} />
                             ))}
                         </div>
                     )}
@@ -110,6 +152,12 @@ const AddCarrera = () => {
                         <div className="flex justify-end space-x-4">
                             <button
                                 className="cancelar text-white px-4 py-2 rounded"
+                                onClick={() => eliminarCarrera(modifiedCarrera)}
+                            >
+                                Eliminar carrera
+                            </button>
+                            <button
+                                className="cancelar text-white px-4 py-2 rounded"
                                 onClick={()=>{
                                     setShowModalModify(false);
                                     setModifiedCarrera('');
@@ -121,13 +169,10 @@ const AddCarrera = () => {
                             <button
                                 className="aceptar text-white px-4 py-2 rounded"
                                 onClick={()=>{
-                                    /* CAMBIO POR API */
-                                    setShowModalModify(false);
-                                    setModifiedCarrera('');
-                                    setNewModifiedCarrera('');
+                                    modificarCarreraFinal();
                                 }}
                             >
-                                Agregar
+                                Modificar
                             </button>
                         </div>
                     </div>

@@ -24,28 +24,40 @@ export async function POST(url, data) {
     });
 };
 
-export async function GET(url, data){
-
+export async function GET(url, data) {
     let objString = '?';
-    if(Array.isArray(data))
-    {
+    if (Array.isArray(data)) {
         data.forEach((el, index) => {
-                objString = objString + `array[${index}][id]=${el.id}&`;
-        })
-    }else{
+            objString = objString + `array[${index}][id]=${el.id}&`;
+        });
+    } else {
         objString = objString + new URLSearchParams(data).toString();
     }
 
-    return await fetch(backendurl + url + objString, {
-        method: 'GET',
-        mode: 'cors',
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+    try {
+        const response = await fetch(backendurl + url + objString, {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        // Verificar si la respuesta es correcta
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
         }
-    })
-    .then((res) => res.json())
-    .then((res) => res);
-};
+
+        // Parsear el JSON correctamente
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error("Error en la solicitud GET:", error);
+        throw error; // Lanzar el error para manejarlo en el catch del que llama a la función
+    }
+}
 
 export async function PATCH(url, data){
     return await fetch(backendurl + url, {
