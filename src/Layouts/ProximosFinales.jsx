@@ -45,8 +45,8 @@ const ProximosFinales = () => {
   const puntos = Array.from({ length: totalPaginas }, (_, index) => index);
 
   return (
-    <div className="p-6 bg-blanco w-full md:w-[15vw] h-[47vh] rounded-lg mt-[-160px] flex flex-col justify-center">
-      <h1 className="text-2xl text-analista font-bold text-center mb-4">Próximos Finales</h1>
+    <div className="p-3 bg-blanco w-auto h-auto rounded-lg flex flex-col justify-center">
+      <h2 className="text-xl text-analista font-bold text-center mb-4">Próximos Finales</h2>
       <div className="flex justify-between items-center mb-6 bg-analista w-full p-0 rounded-xl">
         <button
           className="text-white"
@@ -54,7 +54,7 @@ const ProximosFinales = () => {
         >
           <ArrowBackIcon fontSize="medium" />
         </button>
-        <h2 className="text-xl font-semibold text-center text-white p-2 m-0">{carreras[carreraIndex]}</h2>
+        <h2 className="text-md font-semibold text-center text-white p-2 m-0">{carreras[carreraIndex]}</h2>
         <button
           className="text-white"
           onClick={siguienteCarrera}
@@ -62,7 +62,7 @@ const ProximosFinales = () => {
           <ArrowForwardIcon fontSize="medium" />
         </button>
       </div>
-      <div className="flex-grow gap-4">
+      <div className="flex-row flex-grow gap-4">
         {finalesActuales.map((final) => (
           <div
             key={final.id}
