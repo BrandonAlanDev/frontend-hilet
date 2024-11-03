@@ -77,15 +77,15 @@ const Indice = () => {
     return (
         <div>
             <Navbar nombre={nombre} carrera={carrera} />
-            <div className={`w-screen min-h-screen select-none flex flex-col items-center justify-evenly  overflow-hidden ${fondoDegradado} py-20 lg:py-32`}>
+            <div className={`w-screen min-h-screen select-none flex flex-col items-center justify-between  overflow-hidden ${fondoDegradado} py-20 lg:py-32`}>
                 {(carrera === "Administración") ?
                     (<div className={`flex flex-col md:flex-row mt-5 md:mt-0 mb-5 gap-5 items-center justify-center`}>
-                        <div className={`flex flex-col justify-center items-center`}>
-                            <div className='flex flex-col md:flex-row mt-5 mb-5 gap-8 justify-center items-center'>
-                                <div className='flex flex-col mt-5 mb-5 gap-8 md:mt-0 justify-center items-center'>
-                                    <h2 className="font-bold text-start text-titular text-md gap-5 leading-10">¡Hola {nombre}!</h2>
+                        <div className={`flex flex-col justify-between items-start`}>
+                            <div className='flex flex-col md:flex-row mt-5 mb-5 gap-6 justify-between items-center'>
+                                <div className='flex flex-col mt-5 mb-5 gap-3 md:mt-0 justify-between items-start'>
+                                    <h2 className="font-bold text-start text-white text-5xl gap-5 leading-10">¡Hola {nombre}!</h2>
                                     <h2 className="md font-bold text-start text-subtitular gap-5 leading-10">{carrera}</h2>
-                                    <div className="flex flex-col md:flex-row md:flex-row md:flex-wrap gap-6 items-center justify-center">
+                                    <div className="flex flex-col md:flex-row md:flex-wrap gap-6 items-center justify-center">
                                         <Mosaico titulo="Gestion de Alumnos" navigateTo="/addalumno" colorText={colorText} imagen="src/Assets/Image/EstudianteGrandeInvisible.png" />
                                         <Mosaico titulo="Finales" navigateTo="" colorText={colorText} imagen="src/Assets/Image/FechaGrandeInvisible.png" />
                                     </div>
@@ -93,7 +93,7 @@ const Indice = () => {
                                 <ProximosFinales />
                             </div>
                             <div className="flex flex-col gap-6 items-start justify-center">
-                                    <div className="flex flex-col md:flex-row md:flex-row md:flex-wrap gap-6 items-start justify-center">
+                                    <div className="flex flex-col md:flex-row md:flex-wrap gap-6 items-start justify-start">
                                         <Mosaico titulo="Gestion de Carreras" navigateTo="/addcarrera" colorText={colorText} imagen="src/Assets/Image/DiplomaGrandeInvisible.png" />
                                         <Mosaico titulo="Gestion de Materias" navigateTo="/addmaterias" colorText={colorText} imagen="src/Assets/Image/LibrosGrandeInvisible.png" />
                                         <Mosaico titulo="Gestion de Profesores" navigateTo="/addprofesor" colorText={colorText} imagen="src/Assets/Image/profesorGrandeInvisible.png" />
