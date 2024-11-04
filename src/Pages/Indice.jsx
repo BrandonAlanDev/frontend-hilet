@@ -77,26 +77,26 @@ const Indice = () => {
     return (
         <div>
             <Navbar nombre={nombre} carrera={carrera} />
-            <div className={`w-screen min-h-screen select-none flex flex-col items-center justify-between  overflow-hidden ${fondoDegradado} py-20 lg:py-32`}>
+            <div className={`w-screen min-h-screen select-none flex flex-col items-center justify-between  overflow-hidden ${fondoDegradado} py-20 lg:py-15`}>
                 {(carrera === "Administración") ?
-                    (<div className={`flex flex-col md:flex-row mt-5 md:mt-0 mb-5 gap-5 items-center justify-center`}>
-                        <div className={`flex flex-col justify-between items-start`}>
-                            <div className='flex flex-col md:flex-row mt-5 mb-5 gap-6 justify-between items-center'>
-                                <div className='flex flex-col mt-5 mb-5 gap-3 md:mt-0 justify-between items-start'>
+                    (<div className={`flex flex-col md:flex-row mt-0 md:mt-0 mb-5 gap-2 items-center lg:items-start justify-start`}>
+                        <div className={`flex flex-col justify-center sm:justify-between items-center sm:items-start`}>
+                            <div className='flex flex-col md:flex-row mt-5 mb-5 gap-6 justify-center sm:justify-start items-start sm:items-end'>
+                                <div className='flex flex-col mt-5 mb-1 gap-2 md:mt-0 justify-between items-center sm:items-start'>
                                     <h2 className="font-bold text-start text-white text-5xl gap-5 leading-10">¡Hola {nombre}!</h2>
                                     <h2 className="md font-bold text-start text-subtitular gap-5 leading-10">{carrera}</h2>
                                     <div className="flex flex-col md:flex-row md:flex-wrap gap-6 items-center justify-center">
-                                        <Mosaico titulo="Gestion de Alumnos" navigateTo="/addalumno" colorText={colorText} imagen="src/Assets/Image/EstudianteGrandeInvisible.png" />
-                                        <Mosaico titulo="Finales" navigateTo="" colorText={colorText} imagen="src/Assets/Image/FechaGrandeInvisible.png" />
+                                        <Mosaico titulo="Gestion de Alumnos"  ancho="aspect-w-1 aspect-h-1 w-[80vw] hover:w-[85vw] h-[80vw] hover:h-[85vw] sm:w-[17vw] sm:hover:w-[14vw] sm:max-w-[18vw] sm:h-[14vw] sm:hover:h-[18vw]"   navigateTo="/addalumno" colorText={colorText} imagen="src/Assets/Image/EstudianteGrandeInvisible.png" />
+                                        <Mosaico titulo="Finales" navigateTo=""  ancho="aspect-w-1 aspect-h-1 w-[80vw] hover:w-[85vw] h-[80vw] hover:h-[85vw] sm:w-[17vw] sm:hover:w-[14vw] sm:max-w-[18vw] sm:h-[14vw] sm:hover:h-[18vw]"  colorText={colorText} imagen="src/Assets/Image/FechaGrandeInvisible.png" />
                                     </div>
                                 </div>
                                 <ProximosFinales />
                             </div>
                             <div className="flex flex-col gap-6 items-start justify-center">
                                     <div className="flex flex-col md:flex-row md:flex-wrap gap-6 items-start justify-start">
-                                        <Mosaico titulo="Gestion de Carreras" navigateTo="/addcarrera" colorText={colorText} imagen="src/Assets/Image/DiplomaGrandeInvisible.png" />
-                                        <Mosaico titulo="Gestion de Materias" navigateTo="/addmaterias" colorText={colorText} imagen="src/Assets/Image/LibrosGrandeInvisible.png" />
-                                        <Mosaico titulo="Gestion de Profesores" navigateTo="/addprofesor" colorText={colorText} imagen="src/Assets/Image/profesorGrandeInvisible.png" />
+                                        <Mosaico titulo="Gestion de Carreras" navigateTo="/addcarrera"  ancho="aspect-w-1 aspect-h-1 w-[80vw] hover:w-[85vw] h-[80vw] hover:h-[85vw] sm:w-[17vw] sm:hover:w-[14vw] sm:max-w-[18vw] sm:h-[14vw] sm:hover:h-[18vw]"  colorText={colorText} imagen="src/Assets/Image/DiplomaGrandeInvisible.png" />
+                                        <Mosaico titulo="Gestion de Materias" navigateTo="/addmaterias"  ancho="aspect-w-1 aspect-h-1 w-[80vw] hover:w-[85vw] h-[80vw] hover:h-[85vw] sm:w-[17vw] sm:hover:w-[14vw] sm:max-w-[18vw] sm:h-[14vw] sm:hover:h-[18vw]"  colorText={colorText} imagen="src/Assets/Image/LibrosGrandeInvisible.png" />
+                                        <Mosaico titulo="Gestion de Profesores" navigateTo="/addprofesor" ancho="aspect-w-1 aspect-h-1 w-[80vw] hover:w-[85vw] h-[80vw] hover:h-[85vw] sm:w-[17vw] sm:hover:w-[14vw] sm:max-w-[18vw] sm:h-[14vw] sm:hover:h-[18vw]" colorText={colorText} imagen="src/Assets/Image/profesorGrandeInvisible.png" />
                                     </div>
                             </div>
                         </div>

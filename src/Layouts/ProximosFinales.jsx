@@ -45,8 +45,8 @@ const ProximosFinales = () => {
   const puntos = Array.from({ length: totalPaginas }, (_, index) => index);
 
   return (
-    <div className="p-3 bg-blanco w-auto h-auto rounded-lg flex flex-col justify-center">
-      <h2 className="text-xl text-analista font-bold text-center mb-4">Próximos Finales</h2>
+    <div className="p-3 bg-blanco rounded-lg flex flex-col justify-center w-[80vw] min-h-[325px] min-w-[200px] sm:w-[17vw]">
+      <h2 className="text-xl text-analista font-bold text-center mb-2">Próximos Finales</h2>
       <div className="flex justify-between items-center mb-6 bg-analista w-full p-0 rounded-xl">
         <button
           className="text-white"
@@ -54,7 +54,7 @@ const ProximosFinales = () => {
         >
           <ArrowBackIcon fontSize="medium" />
         </button>
-        <h2 className="text-md font-semibold text-center text-white p-2 m-0">{carreras[carreraIndex]}</h2>
+        <h2 className="text-md font-semibold text-center text-white m-0">{carreras[carreraIndex]}</h2>
         <button
           className="text-white"
           onClick={siguienteCarrera}
@@ -62,14 +62,14 @@ const ProximosFinales = () => {
           <ArrowForwardIcon fontSize="medium" />
         </button>
       </div>
-      <div className="flex-row flex-grow gap-4">
+      <div className="flex-row flex-grow gap-2">
         {finalesActuales.map((final) => (
           <div
             key={final.id}
-            className="p-4 mb-5 bg-white shadow-md rounded-md hover:shadow-lg"
+            className="p-4 mb-2 bg-white shadow-md rounded-md hover:shadow-lg"
           >
-            <h3 className="text-lg text-analista font-bold mb-2">{final.materia}</h3>
-            <p className="text-gray-700">Fecha: {final.fecha}</p>
+            <h3 className="text-sm text-analista font-bold mb-1">{final.materia}</h3>
+            <p className="text-sm text-gray-700">Fecha: {final.fecha}</p>
           </div>
         ))}
       </div>
