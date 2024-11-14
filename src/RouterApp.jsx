@@ -12,7 +12,8 @@ import Indice from "./Pages/Indice.jsx";
 import LoginForm from "./Pages/LoginForm.jsx";
 import AddMateria from "./Pages/Administradores/AddMateria.jsx";
 import AddProfesor from "./Pages/Administradores/AddProfesor.jsx";
-import AddAlumnos from "./Pages/Administradores/AddAlumnos.jsx"
+import AddAlumnos from "./Pages/Administradores/AddAlumnos.jsx";
+import AddFinales from "./Pages/Administradores/AddFinales.jsx";
 import Programa from "./Pages/Usuarios/Programa.jsx";
 
 //De ajustes
@@ -79,6 +80,7 @@ const RouterApp = (props) => {
             {baseFrontRoutes("/historialacademico",<Programa/>)}
             {baseFrontRoutes("/addalumno",<AddAlumnos/>)}
             {baseFrontRoutes("/configuraciones",<Configuraciones/>)}
+            {baseFrontRoutes("/finales",<AddFinales/>)}
           </Routes>
       </BrowserRouter>
     </>

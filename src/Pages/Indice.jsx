@@ -103,9 +103,10 @@ const Indice = () => {
                     </div>
                     ) : (
                         <>
-                            <div className='mt-5 gap-8 lg:mt-0'>
-                                <h1 className="text-2xl font-bold mb-6 text-center text-titular gap-5">¡Hola {nombre}!</h1>
-                                <h1 className="text-2xl font-bold text-center text-subtitular gap-5">{carrera}</h1>
+                            <div className={`flex flex-col mt-0 md:mt-0 mb-5 gap-8 items-center justify-start`}>
+                            <div className=' items-center mt-5 gap-8 pt-5'>
+                                <h1 className="text-2xl font-bold mb-6 text-center text-titular gap-5 leading-normal">¡Hola {nombre}!</h1>
+                                <h1 className="text-2xl font-bold text-center text-subtitular gap-5 leading-normal">{carrera}</h1>
                             </div>
                             <div className={`mt-6 lg:mt-0 lg:h-[18vh] lg:min-h-[250px]`}>
                                 <div className="flex flex-col md:flex-row flex-wrap gap-8 items-start justify-center">
@@ -113,6 +114,7 @@ const Indice = () => {
                                     <Mosaico titulo="Finales" texto="Segundo año" colorText={colorText} imagen={imagenCarrera} />
                                     <Mosaico titulo="Finales" texto="Tercer año" colorText={colorText} imagen={imagenCarrera} />
                                 </div>
+                            </div>
                             </div>
                         </>
                     )}

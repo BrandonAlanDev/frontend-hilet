@@ -57,7 +57,7 @@ const AddFinales = () => {
         <div>
             <Navbar nombre={nombre} carrera={carrera} />
             <div className={`min-h-screen select-none flex flex-col items-center justify-evenly ${fondoDegradado} py-20 lg:py-32 gap-8`}>
-                <p className='text-white font-bold text-5xl select-none'>Gestion de alumnos</p>
+                <p className='text-white font-bold text-5xl select-none'>Gestion de Finales</p>
                 <div className=''>
                 <TablaAlumnos
                     carrera={carrera}

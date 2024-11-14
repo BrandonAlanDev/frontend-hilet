@@ -127,8 +127,8 @@ const AddMateria = () => {
                 <Navbar nombre={nombre}  ancho="aspect-w-1 aspect-h-2 w-[48vw] hover:w-[55vw] h-[59vw] hover:h-[62vw] max-w-[60vw] md:w-[17vw] md:hover:w-[20vw] md:max-w-[22vw] md:h-[30vw] md:hover:h-[32vw]"  carrera={carrera} />
                 <div className={`min-h-screen select-none flex flex-col items-center justify-evenly py-20 lg:py-32 gap-8`}>
                     <div className='flex flex-col mt-5 gap-8 lg:mt-0'>
-                        <h1 className="text-2xl select-none font-bold mb-6 text-center text-titular gap-5">Gestion de Materias</h1>
-                        <h2 className="text-4xl select-none font-bold text-center text-white gap-5 mb-8">Resoluciones actuales</h2>
+                        <h1 className="text-2xl select-none font-bold mb-6 text-center text-titular gap-5 leading-normal">Gestion de Materias</h1>
+                        <h2 className="text-4xl select-none font-bold text-center text-white gap-5 mb-8 leading-normal">Resoluciones actuales</h2>
                     </div>
                     {(carrera === "Administración") && (
                         <div className="flex flex-row flex-wrap gap-8 items-start justify-center lg:max-w-6xl">
@@ -154,7 +154,7 @@ const AddMateria = () => {
                 </div>
                 {(resolucionesLegacy.length>-1) && (
                     <div className="flex flex-col justify-center align-top items-center gap-8 mt-3">
-                        <h2 className="text-xl select-none font-bold text-center text-titular gap-5 mb-8">Todas las resoluciones</h2>
+                        <h2 className="text-xl select-none font-bold text-center text-titular gap-5 mb-8 leading-normal">Todas las resoluciones</h2>
                         <div className="flex flex-wrap flex-row justify-center items-center gap-8 lg:max-w-7xl p-5">
                             {resoluciones.map((c, index) => (
                                 <Mosaico key={index} titulo={c.carrera} ancho="aspect-w-1 aspect-h-2 w-[48vw] hover:w-[55vw] h-[59vw] hover:h-[62vw] max-w-[60vw] md:w-[17vw] md:hover:w-[20vw] md:max-w-[22vw] md:h-[30vw] md:hover:h-[32vw]" html={`<div className="flex flex-row justify-between items-center gap-8"><p>Resolucion: ${c.resolucion}</p><p>Año: ${c.anio}</p></div>`} callback={()=>{}} imagen={(c.carrera=="Analista de Sistemas")?"src/Assets/Image/LOGO-AS.png":(c.carrera=="Publicidad")?"src/Assets/Image/LOGO-PUBLI.png":"src/Assets/Image/school.png"} />
