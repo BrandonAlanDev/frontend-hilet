@@ -37,6 +37,9 @@ const Buscador = ({ setBusqueda, setEstadoFiltro, color }) => {
           <option value="Aprobado">Aprobado</option>
           <option value="Pendiente">Pendiente</option>
           <option value="Desaprobado">Desaprobado</option>
+          <option value="Correlativa pendiente">Correlativa pendiente</option>
+          <option value="Por Cursar">Por Cursar</option>
+          
         </select>
       </div>
     </>

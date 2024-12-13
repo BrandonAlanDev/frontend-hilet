@@ -6,6 +6,7 @@ import usuario from "../../Assets/Image/UserWhite.webp";
 import InputField from "../../Components/InputField";
 import usuarioSearch from "../../Assets/Image/user.png";
 import buscando from "../../Assets/Image/buscando.png";
+import Mosaico from "../../Components/Mosaico";
 
 const AddProfesor = () => {
   const [nombre, setNombre] = useState("");
@@ -18,16 +19,16 @@ const AddProfesor = () => {
   const [showModalModify, setShowModalModify] = useState(false);
   const [profesorSeleccionado,setProfesorSeleccionado] = useState();
   const navigate = useNavigate();
-
+  
   useEffect(() => {
-    const user = sessionStorage.getItem("user");
-    if (!user || user !== "sandra2024") {
-      navigate("/");
+    const user = sessionStorage.getItem('user');
+    if (!user || sessionStorage.getItem('carrera')!='Administracion') {
+      navigate('/');
     } else {
-      setNombre(user);
+      setNombre(sessionStorage.getItem('nombre')+' '+sessionStorage.getItem('apellido'));
+      setCarrera("Administracion");
       const storedProfesores = sessionStorage.getItem("profesores");
       setProfesores(storedProfesores ? JSON.parse(storedProfesores) : []);
-      setCarrera("Administración");
     }
   }, [navigate]);
 
@@ -39,7 +40,7 @@ const AddProfesor = () => {
       setProfesoresEncontrados([]);
     } else {
       const resultados = profesores.filter((p) => {
-        const nombreCompleto = `${p.nombre} ${p.apellido}`.toLowerCase();
+        const nombreCompleto = `${p.apellido} ${p.nombre}`.toLowerCase();
         return nombreCompleto.includes(valorBuscado);
       });
       setProfesoresEncontrados(resultados);
@@ -102,7 +103,7 @@ const AddProfesor = () => {
                 <button key={index} onClick={()=>{modificarProfesor(1,p.nombre,p.apellido,p.email,p.telefono)}} className="bg-analista p-8 rounded-lg flex flex-col items-center mosaicos-profe shadow-2xl shadow-black">
                   <div className="text-mosaico-profe">
                     <p className="text-center text-[13px] text-white">{"Nombre Completo :"}</p>
-                    <p className="font-bold text-center text-mosaico-profe text-white">{`${p.nombre} ${p.apellido}`}</p>
+                    <p className="font-bold text-center text-mosaico-profe text-white">{`${p.apellido} ${p.nombre} `}</p>
                   </div>
                   <img src={usuario} alt="Imagen de perfil" width="150px" height="auto"/>
                   <div className="text-mosaico-profe">
@@ -118,26 +119,12 @@ const AddProfesor = () => {
             )
           ) : (
             <>
-              <div
-                className="opacity-85 bg-slate-100 p-8 rounded-lg flex flex-col items-center mosaicos shadow-2xl shadow-black cursor-pointer"
-                onClick={() => setShowModal(true)}
-              >
-                <img
-                  className="flex-grow h-10 flex justify-center items-center activo aspect-square"
-                  src={agregar}
-                  alt="Signo de agregar"
-                />
-                <div>
-                  <h4 className="text-2xl font-bold mt-4 text-center text-mosaico-profe opacity-100 text-analista">
-                    Agregar
-                  </h4>
-                </div>
-              </div>
+              <Mosaico titulo={"Agregar"} ancho={"max-w-[400px]"} callback={() => setShowModal(true)} imagen={agregar} />
               {profesores.map((p, index) => (
                 <button key={index} onClick={()=>{modificarProfesor(1,p.nombre,p.apellido,p.email,p.telefono)}} className="bg-analista p-8 rounded-lg flex flex-col items-center mosaicos-profe shadow-2xl shadow-black">
                   <div className="text-mosaico-profe">
                     <p className="text-center text-[13px] text-white">{"Nombre Completo :"}</p>
-                    <p className="font-bold text-center text-mosaico-profe text-white">{`${p.nombre} ${p.apellido}`}</p>
+                    <p className="font-bold text-center text-mosaico-profe text-white">{`${p.apellido} ${p.nombre} `}</p>
                   </div>
                   <img src={usuario} alt="Imagen de perfil" width="150px" height="auto"/>
                   <div className="text-mosaico-profe">

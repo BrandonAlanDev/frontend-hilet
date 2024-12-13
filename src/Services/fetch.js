@@ -1,8 +1,11 @@
 import { backendurl } from "../env.jsx";
 
 export async function POST(url, data) {
-    const token = localStorage.getItem('jwtToken');
-    return await fetch(backendurl + url, {
+    const token = sessionStorage.getItem('jwtToken');
+    const fullUrl = backendurl + url;
+    console.log(`Making request to: ${fullUrl}`);
+
+    return await fetch(fullUrl, {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -12,35 +15,35 @@ export async function POST(url, data) {
         body: JSON.stringify(data)
     })
     .then(async (res) => {
-        if (!res.ok) {
-            const errorData = await res.json();
-            throw new Error(errorData.message || 'Error en la solicitud');
+        const contentType = res.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error('La respuesta no es un JSON válido');
         }
-        return res.json();
+        const result = await res.json();
+        if (!res.ok) {
+            throw new Error(result.message || 'Error en la solicitud');
+        }
+        return result;
     })
     .catch((err) => {
         console.log('Error en la solicitud: ', err.message);
-        window.alert(err.message); // O cualquier manejo de errores que desees hacer
+        window.alert(err.message); 
+        throw err; // Asegúrate de lanzar el error de nuevo para manejarlo en el lugar donde se llama a POST
     });
 };
 
-export async function GET(url, data) {
-    let objString = '?';
-    if (Array.isArray(data)) {
-        data.forEach((el, index) => {
-            objString = objString + `array[${index}][id]=${el.id}&`;
-        });
-    } else {
-        objString = objString + new URLSearchParams(data).toString();
-    }
+export async function GET(url) {
+    const token = sessionStorage.getItem('jwtToken');
+    const fullUrl = backendurl + url;
+    console.log(`Making request to: ${fullUrl}`);
 
     try {
-        const response = await fetch(backendurl + url + objString, {
+        const response = await fetch(fullUrl, {
             method: 'GET',
             mode: 'cors',
             headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         });
 
@@ -59,19 +62,32 @@ export async function GET(url, data) {
     }
 }
 
-export async function PATCH(url, data){
-    return await fetch(backendurl + url, {
-        method:'PATCH',
-        mode: 'cors',
-        headers:{
-            'Content-Type':'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify(data)
+
+export async function PATCH(url, data) {
+    const token = sessionStorage.getItem('jwtToken');
+    const fullUrl = backendurl + url;
+    console.log(`Making request to: ${fullUrl}`);
+    return await fetch(fullUrl, {
+        method: 'PATCH', mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }, body: JSON.stringify(data)
     })
-    .then((res) => res.json())
-    .then((res) => res)
-    .catch((err) => console.log(err));
+    .then(async (res) => {
+        const contentType = res.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error('La respuesta no es un JSON válido');
+        }
+        const result = await res.json();
+        if (!res.ok) {
+            throw new Error(result.message || 'Error en la solicitud');
+        }
+        return result;})
+        .catch((err) => {
+            console.log('Error en la solicitud: ', err.message);
+        window.alert(err.message); throw err;
+    });
 }
 
 export async function DELETE(url, data){

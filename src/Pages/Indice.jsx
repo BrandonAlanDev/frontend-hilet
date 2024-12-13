@@ -20,26 +20,14 @@ const Indice = () => {
 
     // Este useEffect se ejecuta una sola vez al montar el componente
     useEffect(() => {
-        const user = sessionStorage.getItem('user');
-        if (!user) {
-            navigate('/login'); // Redirige al login si no hay usuario en sessionStorage
+        if (!sessionStorage.getItem('nombre')) {
+            navigate('/login');
         } else {
-            setNombre(user); // Establece el nombre del usuario
+            const NombreCompleto = sessionStorage.getItem('nombre')+' '+sessionStorage.getItem('apellido');
+            setNombre(NombreCompleto);
+            setCarrera(sessionStorage.getItem('carrera'))
         }
     }, [navigate]);
-
-    // Este useEffect se ejecuta cuando nombre cambia
-    useEffect(() => {
-        if (nombre === "rama2024") {
-            setCarrera("Analista de Sistemas");
-        } else if (nombre === "juanperez") {
-            setCarrera("Publicidad");
-        } else if (nombre === "sandra2024") {
-            setCarrera("Administración");
-        } else {
-            setCarrera("Yoga de gluteos")
-        }
-    }, [nombre]);
 
     // Este useEffect se ejecuta cuando carrera cambia
     useEffect(() => {
@@ -48,7 +36,7 @@ const Indice = () => {
             setFondoOpaco("bg-publicidad");
             setFondoDegradado("bg-hilet-publicidad");
             setImagenCarrera("src/Assets/Image/LOGO-PUBLI.png");
-        } else if (carrera === "Analista de Sistemas" || carrera === "Administración") {
+        } else if (carrera === "Analista de sistemas" || carrera === "Administracion") {
             setColorText("text-analista");
             setFondoOpaco("bg-analista");
             setFondoDegradado("bg-hilet");
@@ -78,7 +66,7 @@ const Indice = () => {
         <div>
             <Navbar nombre={nombre} carrera={carrera} />
             <div className={`w-screen min-h-screen select-none flex flex-col items-center justify-between  overflow-hidden ${fondoDegradado} py-20 lg:py-15`}>
-                {(carrera === "Administración") ?
+                {(carrera === "Administracion") ?
                     (<div className={`flex flex-col md:flex-row mt-0 md:mt-0 mb-5 gap-2 items-center lg:items-start justify-start`}>
                         <div className={`flex flex-col justify-center sm:justify-between items-center sm:items-start`}>
                             <div className='flex flex-col md:flex-row mt-5 mb-5 gap-6 justify-center sm:justify-start items-start sm:items-end'>
@@ -87,7 +75,7 @@ const Indice = () => {
                                     <h2 className="md font-bold text-start text-subtitular gap-5 leading-10">{carrera}</h2>
                                     <div className="flex flex-col md:flex-row md:flex-wrap gap-6 items-center justify-center">
                                         <Mosaico titulo="Gestion de Alumnos"  ancho="aspect-w-1 aspect-h-1 w-[80vw] hover:w-[85vw] h-[80vw] hover:h-[85vw] sm:w-[17vw] sm:hover:w-[14vw] sm:max-w-[18vw] sm:h-[14vw] sm:hover:h-[18vw]"   navigateTo="/addalumno" colorText={colorText} imagen="src/Assets/Image/EstudianteGrandeInvisible.png" />
-                                        <Mosaico titulo="Finales" navigateTo=""  ancho="aspect-w-1 aspect-h-1 w-[80vw] hover:w-[85vw] h-[80vw] hover:h-[85vw] sm:w-[17vw] sm:hover:w-[14vw] sm:max-w-[18vw] sm:h-[14vw] sm:hover:h-[18vw]"  colorText={colorText} imagen="src/Assets/Image/FechaGrandeInvisible.png" />
+                                        <Mosaico titulo="Finales" navigateTo="/finales"  ancho="aspect-w-1 aspect-h-1 w-[80vw] hover:w-[85vw] h-[80vw] hover:h-[85vw] sm:w-[17vw] sm:hover:w-[14vw] sm:max-w-[18vw] sm:h-[14vw] sm:hover:h-[18vw]"  colorText={colorText} imagen="src/Assets/Image/FechaGrandeInvisible.png" />
                                     </div>
                                 </div>
                                 <ProximosFinales />

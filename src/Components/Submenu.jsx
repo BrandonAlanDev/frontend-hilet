@@ -11,21 +11,21 @@ const Submenu = ({ carrera, titulo, open, path}) => {
     const direcciones=[
     ];
     if (!open) {
-        if (carrera === "Analista de Sistemas") {
+        if (carrera === "Analista de sistemas") {
             estilo += " analista-button select-none";
         } else if (carrera === "Publicidad") {
             estilo += " publicidad-button select-none";
-        } else if (carrera === "Administración") {
+        } else if (carrera === "Administracion") {
             estilo += " analista-button select-none";
         } else {
             estilo += " otro-button select-none";
         }
     } else {
-        if (carrera === "Analista de Sistemas") {
+        if (carrera === "Analista de sistemas") {
             estilo += " bg-white text-analista select-none";
         } else if (carrera === "Publicidad") {
             estilo += " bg-white text-publicidad select-none";
-        } else if (carrera === "Administración") {
+        } else if (carrera === "Administracion") {
             estilo += " bg-white text-analista select-none";
         } else {
             estilo += " bg-white text-otro select-none";

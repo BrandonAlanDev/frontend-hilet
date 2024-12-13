@@ -5,7 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import Buscador from '../../Components/Buscador'
 
 const Programa = () => {
+    const [id, setId] = useState(null);
+    const [usuario, setUsuario] = useState('');
     const [nombre, setNombre] = useState('');
+    const [apellido, setApellido] = useState('');
+    const [correo, setCorreo] = useState('');
     const [carrera, setCarrera] = useState('');
     const [color, setColor] = useState('');
     const [fondoOpaco, setFondoOpaco] = useState('');
@@ -15,32 +19,24 @@ const Programa = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const user = sessionStorage.getItem('user');
-        if (!user) {
-            navigate('/login'); 
+        if (!sessionStorage.getItem('user')) {
+            navigate('/login');
         } else {
-            setNombre(user);
+            setId(sessionStorage.getItem('id'));
+            setUsuario(sessionStorage.getItem('user'));
+            setNombre(sessionStorage.getItem('nombre'));
+            setApellido(sessionStorage.getItem('apellido'));
+            setCorreo(sessionStorage.getItem('correo'));
+            setCarrera(sessionStorage.getItem('carrera'));
         }
     }, [navigate]);
-
-    useEffect(() => {
-        if (nombre === "rama2024") {
-            setCarrera("Analista de Sistemas");
-        } else if (nombre === "juanperez") {
-            setCarrera("Publicidad");
-        } else if (nombre === "sandra2024") {
-            setCarrera("Administración");
-        } else {
-            setCarrera("Yoga de gluteos");
-        }
-    }, [nombre]);
 
     useEffect(() => {
         if (carrera === "Publicidad") {
             setFondoOpaco("bg-publicidad");
             setFondoDegradado("bg-hilet-publicidad");
             setColor("publicidad");
-        } else if (carrera === "Analista de Sistemas" || carrera === "Administración") {
+        } else if (carrera === "Analista de sistemas" || carrera === "Administracion") {
             setFondoOpaco("bg-analista");
             setFondoDegradado("bg-hilet");
             setColor("analista");
@@ -55,10 +51,9 @@ const Programa = () => {
 
     return (
         <div>
-            <Navbar nombre={nombre} carrera={carrera} />
+            <Navbar nombre={nombre+' '+apellido} carrera={carrera} />
             <div className={`min-h-screen select-none flex flex-col items-center justify-evenly ${fondoDegradado} py-20 lg:py-32 gap-8`}>
                 <div className='flex flex-col items-center justify-evenly bg-white p-8 rounded-3xl gap-8'>
-
                 <p className={`text-${color} font-bold text-5xl select-none`}>Historial Academico de {carrera}</p>
                 <div className=''>
                 <TablaHistorial
@@ -66,7 +61,8 @@ const Programa = () => {
                     color={color}
                     busqueda={busqueda}
                     estadoFiltro={estadoFiltro}
-                    buscador={<Buscador setBusqueda={setBusqueda} setEstadoFiltro={setEstadoFiltro} color={color}/>}
+                    buscador={<Buscador setBusqueda={setBusqueda} setEstadoFiltro={setEstadoFiltro} color={color} />}
+                    idAlumno={id}
                     />
                 </div>
                 </div>

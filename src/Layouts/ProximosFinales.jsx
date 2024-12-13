@@ -6,7 +6,7 @@ const ProximosFinales = () => {
   const [carreraIndex, setCarreraIndex] = useState(0);
   const [pagina, setPagina] = useState(0);
 
-  const carreras = ["Analista de Sistemas", "Publicidad"];
+  const carreras = ["Analista de sistemas", "Publicidad"];
 
   const finales = [
     [

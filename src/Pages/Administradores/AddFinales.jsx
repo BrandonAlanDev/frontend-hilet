@@ -16,42 +16,19 @@ const AddFinales = () => {
 
     useEffect(() => {
         const user = sessionStorage.getItem('user');
-        if (!user) {
-            navigate('/login'); 
+        if (!user || sessionStorage.getItem('carrera')!='Administracion') {
+            navigate('/');
         } else {
-            setNombre(user);
+            setNombre(sessionStorage.getItem('nombre')+' '+sessionStorage.getItem('apellido'));
+            setCarrera("Administracion");
         }
     }, [navigate]);
 
     useEffect(() => {
-        if (nombre === "rama2024") {
-            setCarrera("Analista de Sistemas");
-        } else if (nombre === "juanperez") {
-            setCarrera("Publicidad");
-        } else if (nombre === "sandra2024") {
-            setCarrera("Administración");
-        } else {
-            setCarrera("Yoga de gluteos");
-        }
-    }, [nombre]);
-
-    useEffect(() => {
-        if (carrera === "Publicidad") {
-            setFondoOpaco("bg-publicidad");
-            setFondoDegradado("bg-hilet-publicidad");
-            setColor("publicidad");
-        } else if (carrera === "Analista de Sistemas" || carrera === "Administración") {
-            setFondoOpaco("bg-analista");
-            setFondoDegradado("bg-hilet");
-            setColor("analista");
-        }
-        else {
-            setFondoOpaco("bg-otro");
-            setFondoDegradado("bg-hilet-otro");
-            setColor("otro");
-        }
+        setFondoOpaco("bg-analista");
+        setFondoDegradado("bg-hilet");
+        setColor("analista");
     }, [carrera]);
-
 
     return (
         <div>

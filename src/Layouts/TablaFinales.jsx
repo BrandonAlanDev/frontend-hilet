@@ -6,19 +6,19 @@ const TablaFinales = ({carrera, color}) => {
   const [finales, setFinal] = useState([
     {
       materia: "Algoritmos",
-      carrera: "Analista de Sistemas",
+      carrera: "Analista de sistemas",
       horarios: ["06/12/23 8:00hs", "12/12/23 8:00hs"],
       estadoInicial: "Inscribirse",
     },
     {
       materia: "Ingles",
-      carrera: "Analista de Sistemas",
+      carrera: "Analista de sistemas",
       horarios: ["8/12/23 10:00hs", "16/12/23 10:00hs"],
       estadoInicial: "Inscribirse",
     },
     {
       materia: "Economia",
-      carrera: "Analista de Sistemas",
+      carrera: "Analista de sistemas",
       horarios: ["13/12/23 10:00hs"],
       estadoInicial: "Inscribirse",
     },
@@ -29,19 +29,19 @@ const TablaFinales = ({carrera, color}) => {
       setFinal([
         {
           materia: "Algoritmos",
-          carrera: "Analista de Sistemas",
+          carrera: "Analista de sistemas",
           horarios: ["06/12/23 8:00hs", "12/12/23 8:00hs"],
           estadoInicial: "Inscribirse",
         },
         {
           materia: "Ingles",
-          carrera: "Analista de Sistemas",
+          carrera: "Analista de sistemas",
           horarios: ["8/12/23 10:00hs", "16/12/23 10:00hs"],
           estadoInicial: "Inscribirse",
         },
         {
           materia: "Economia",
-          carrera: "Analista de Sistemas",
+          carrera: "Analista de sistemas",
           horarios: ["13/12/23 10:00hs"],
           estadoInicial: "Inscribirse",
         },

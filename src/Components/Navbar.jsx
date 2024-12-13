@@ -32,15 +32,15 @@ const Navbar = ({ nombre, carrera }) => {
     useEffect(() => {
         if (carrera === "Publicidad") {
             setFondoOpaco("bg-publicidad");
-        } else if (carrera === "Analista de Sistemas") {
+        } else if (carrera === "Analista de sistemas") {
             setFondoOpaco("bg-analista");
-        } else if (carrera === "Administración") {
+        } else if (carrera === "Administracion") {
             setFondoOpaco("bg-analista");
         } else {
             setFondoOpaco("bg-otro");
         }
 
-        if (carrera !== "Administración") {
+        if (carrera !== "Administracion") {
             setDirecciones([
                 { titulo: "Inicio", path: "/inicio" },
                 { titulo: "Historial Academico", path: "/historialacademico" }
@@ -49,10 +49,10 @@ const Navbar = ({ nombre, carrera }) => {
             setDirecciones([
                 { titulo: "Inicio", path: "/inicio" },
                 { titulo: "Finales (En construccion)", path: "/finales" },
-                { titulo: "Gestion de Alumno", path: "/addalumno" },
-                { titulo: "Gestion de Profesor", path: "/addprofesor" },
+                { titulo: "Gestion de Alumno (En construccion)", path: "/addalumno" },
+                { titulo: "Gestion de Profesor (En construccion)", path: "/addprofesor" },
                 { titulo: "Gestion de Carreras", path: "/addcarrera" },
-                { titulo: "Gestion de Materias", path: "/addmaterias" }
+                { titulo: "Gestion de Materias (En construccion)", path: "/addmaterias" }
             ]);
         }
     }, [carrera]);
@@ -121,7 +121,7 @@ const Navbar = ({ nombre, carrera }) => {
                     onClick={(e) => e.stopPropagation()}
                 >
                     <div className='mt-20'>
-                        <Submenu carrera={carrera} titulo="Configuraciones (En construccion)" open={location.pathname === "/configuraciones"} path={"/configuraciones"} />
+                        <Submenu carrera={carrera} titulo="Configuraciones" open={location.pathname === "/configuraciones"} path={"/configuraciones"} />
                         <Submenu carrera={carrera} titulo="Cerrar sesion" open={false} />
                     </div>
                 </div>

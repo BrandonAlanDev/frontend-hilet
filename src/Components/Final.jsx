@@ -28,21 +28,21 @@ const Final = ({ carrera, materia, horarios, estadoInicial}) => {
 
   useEffect(() => {
     if (estado === "Inscripto") {
-      if (carrera === "Analista de Sistemas") {
+      if (carrera === "Analista de sistemas") {
         setEstilo("analista-inscripto-button");
       } else if (carrera === "Publicidad") {
         setEstilo("publicidad-inscripto-button");
-      } else if (carrera === "Administración") {
+      } else if (carrera === "Administracion") {
         setEstilo("analista-inscripto-button");
       } else {
         setEstilo("otro-inscripto-button");
       }
     } else {
-      if (carrera === "Analista de Sistemas") {
+      if (carrera === "Analista de sistemas") {
         setEstilo("analista-button");
       } else if (carrera === "Publicidad") {
         setEstilo("publicidad-button");
-      } else if (carrera === "Administración") {
+      } else if (carrera === "Administracion") {
         setEstilo("analista-button");
       } else {
         setEstilo("otro-button");

@@ -3,73 +3,49 @@ import { useNavigate } from 'react-router-dom';
 import InputField from '../Components/InputField';
 import Navbar from '../Components/Navbar';
 import Modal from '../Components/Modal';
+import { UpdatePassword, UpdateCorreo } from '../Services/api';
+
+const userRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9._@-]{6,20}$/;
+const passRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9._@-]{8,20}$/;
+
 const Configuraciones = () => {
+    const [id, setId] = useState(null);
+    const [usuario, setUsuario] = useState('');
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
     const [correo, setCorreo] = useState('');
-    const [user, setUsuario] = useState('');
     const [carrera, setCarrera] = useState('');
-    const [colorText, setColorText] = useState('');
-    const [colorBoton, setBoton] = useState('');
-    const [fondoOpaco, setFondoOpaco] = useState('');
-    const [fondoDegradado, setFondoDegradado] = useState('');
     const [userInput, setUserInput] = useState('');
     const [userErrorMessage, setUserErrorMessage] = useState('');
     const [passErrorMessage, setPassErrorMessage] = useState('');
     const [correoErrorMessage, setCorreoErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
-
-    const [showModalPass, setShowModalPass] = useState(false);
-    const [showModalCorreo, setShowModalCorreo] = useState(false);
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [currentCorreo, setCurrentCorreo] = useState('');
     const [newCorreo, setNewCorreo] = useState('');
     const [confirmCorreo, setConfirmCorreo] = useState('');
-
+    const [showModalPass, setShowModalPass] = useState(false);
+    const [showModalCorreo, setShowModalCorreo] = useState(false);
+    const [colorText, setColorText] = useState('');
+    const [fondoOpaco, setFondoOpaco] = useState('');
+    const [fondoDegradado, setFondoDegradado] = useState('');
+    const [boton, setBoton] = useState('');
+    const [consultando, setConsultado] = useState(false);
     const navigate = useNavigate();
 
-    const userRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9._@-]{6,20}$/;
-    const passRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9._@-]{8,20}$/;
-
-    const usuarios = [
-        { nombre: "Ramiro", apellido: "Sansinanea", usuario: "rama2024", correo: "rama2024@gmail.com", carrera: "Analista de Sistemas" },
-        { nombre: "Juan", apellido: "Pérez", usuario: "juanperez", correo: "juanperez@gmail.com", carrera: "Publicidad" },
-        { nombre: "Sandra", apellido: "Becerra", usuario: "sandra2024", correo: "sandra2024@gmail.com", carrera: "Administración" },
-        { nombre: "Luciano", apellido: "Celes", usuario: "luchito", correo: "luchito@gmail.com", carrera: "Yoga de gluteos" }
-    ];
-
     useEffect(() => {
-        const user = sessionStorage.getItem('user');
-        const apellido = sessionStorage.getItem('apellido');
-        const correo = sessionStorage.getItem('correo');
-        const usuario = sessionStorage.getItem('usuario');
-        if (!user) {
+        if (!sessionStorage.getItem('user')) {
             navigate('/login');
         } else {
-            const usuarioData = usuarios.find(u => u.usuario === user);
-            if (usuarioData) {
-                setNombre(usuarioData.nombre);
-                setApellido(usuarioData.apellido);
-                setUsuario(usuarioData.usuario);
-                setCorreo(usuarioData.correo);
-                setCarrera(usuarioData.carrera);
-            }
+            setId(sessionStorage.getItem('id'));
+            setUsuario(sessionStorage.getItem('user'));
+            setNombre(sessionStorage.getItem('nombre'));
+            setApellido(sessionStorage.getItem('apellido'));
+            setCorreo(sessionStorage.getItem('correo'));
+            setCarrera(sessionStorage.getItem('carrera'));
         }
     }, [navigate]);
-
-    useEffect(() => {
-        if (user === "rama2024") {
-            setCarrera("Analista de Sistemas");
-        } else if (user === "juanperez") {
-            setCarrera("Publicidad");
-        } else if (user === "sandra2024") {
-            setCarrera("Administración");
-        } else {
-            setCarrera("Yoga de gluteos");
-        }
-    }, [user]);
 
     useEffect(() => {
         if (carrera === "Publicidad") {
@@ -77,20 +53,16 @@ const Configuraciones = () => {
             setFondoOpaco("bg-publicidad");
             setFondoDegradado("bg-hilet-publicidad");
             setBoton("publicidad-button");
-            // setColorBorde("border-publicidad");
-        } else if (carrera === "Analista de Sistemas" || carrera === "Administración") {
+        } else if (carrera === "Analista de sistemas" || carrera === "Administracion") {
             setColorText("text-analista");
             setFondoOpaco("bg-analista");
             setFondoDegradado("bg-hilet");
             setBoton("analista-button");
-            // setColorBorde("border-analista");
-        }
-        else {
+        } else {
             setColorText("text-otro");
             setFondoOpaco("bg-otro");
             setFondoDegradado("bg-hilet-otro");
             setBoton("otro-button");
-            // setColorBorde("border-otro");
         }
     }, [carrera]);
 
@@ -102,93 +74,90 @@ const Configuraciones = () => {
         }
     };
 
-    const handleInputChangeUsuario = (e) => {
-        const value = e.target.value;
-        setUserInput(value);
-        validateInput(
-            value,
-            userRegex,
-            setUserErrorMessage,
-            'El usuario debe contener entre 6 y 20 caracteres permitidos (Letras, Números, - _ @ .)'
-        );
-    };
-
-    const handleChangePassword = (e) => {
-        e.preventDefault();
-        const storedUsers = JSON.parse(sessionStorage.getItem('users'));
-        //const storedPassword = sessionStorage.getItem('password');
-
-        if (!currentPassword || !newPassword || !confirmPassword) {
-            setPassErrorMessage('Todos los campos son obligatorios.');
-            return;
-        }
-        if (currentPassword.trim() !== storedUsers[user]?.password) {
-            setPassErrorMessage('La contraseña actual es incorrecta.');
-            return;
-        }
-        if (newPassword.trim() !== confirmPassword.trim()) {
-            setPassErrorMessage('Las contraseñas ingresadas no coinciden.');
-            return;
-        }
-        validateInput(
-            newPassword,
-            passRegex,
-            setPassErrorMessage,
-            'La contraseña debe contener entre 6 y 20 caracteres permitidos (Letras, Números, - _ @ .)'
-        );
-        if (passErrorMessage) {
-            return;
-        }
-        sessionStorage.setItem('password', newPassword);
-        setShowModalPass(false);
-        setSuccessMessage('Contraseña cambiada exitosamente.'); // Mensaje de éxito
-        setTimeout(() => setSuccessMessage(''), 3000);
-    };
-    const handleChangeCorreo = (e) => {
-        e.preventDefault();
-        const storedUsers = JSON.parse(sessionStorage.getItem('users'));
-        if (!currentCorreo || !newCorreo || !confirmCorreo) {
-            setCorreoErrorMessage('Todos los campos son obligatorios.');
-            return;
-        }
-        if (currentCorreo.trim() !== storedUsers[user]?.email) {
-            setCorreoErrorMessage('El correo actual es incorrecto.');
-            return;
-        }
-        setCorreoErrorMessage('');
-        if (newCorreo.trim() !== confirmCorreo.trim()) {
-            setCorreoErrorMessage('Los correos ingresados no coinciden.');
-            return;
-        }
-        setCorreoErrorMessage('');
-        sessionStorage.setItem('correo', newCorreo);
-        setShowModalCorreo(false);
-        setSuccessMessage('Correo cambiado exitosamente.');
-        setTimeout(() => setSuccessMessage(''), 3000);
-    }
-    const handleGuardarCambios = (e) => {
-        e.preventDefault();
-        if (userInput.trim() === '') {
-            setUserErrorMessage('El nombre de usuario no puede estar vacío.');
-            return;
-        }
-        if (userErrorMessage === '') {
-            sessionStorage.setItem('user', userInput);
-            setUsuario(userInput);
-        } else {
-            alert('Corrige los errores antes de guardar.');
-        }
-    };
+        const handleChangeCorreo = async (e) => {
+            e.preventDefault();
+            if(!consultando){
+                setConsultado(true);
+                
+                setPassErrorMessage('');
+                setSuccessMessage('');
+                
+                if (!newCorreo || !confirmCorreo) {
+                    setCorreoErrorMessage('Todos los campos son obligatorios.');
+                    setConsultado(false);
+                    return;
+                }
+                if (newCorreo.trim() !== confirmCorreo.trim()) {
+                    setCorreoErrorMessage('Los correos ingresados no coinciden.');
+                    setConsultado(false);
+                    return;
+                }
+                
+                const response = await UpdateCorreo(id, newCorreo);
+                
+                if (response.success) {
+                    setSuccessMessage(response.message);
+                    setCorreo(newCorreo);
+                    sessionStorage.setItem('correo',newCorreo);
+                    setNewCorreo('');
+                    setConfirmCorreo('');
+                    setShowModalCorreo(false);
+                } else {
+                    setCorreoErrorMessage(response.message);
+                }
+                setConsultado(false);
+            }
+        };      
+        
+        const handleChangePassword = async (e) => {
+            e.preventDefault();
+            if(!consultando){
+                setConsultado(true);
+                
+                setPassErrorMessage('');
+                setSuccessMessage('');
+                
+                if (!newPassword || !confirmPassword) {
+                    setPassErrorMessage('Todos los campos son obligatorios.');
+                    setConsultado(false);
+                    return;
+                }
+                if (newPassword !== confirmPassword) {
+                    setPassErrorMessage('Las contraseñas no coinciden.');
+                    setConsultado(false);
+                    return;
+                }
+                if (!passRegex.test(newPassword)) {
+                    setPassErrorMessage(
+                        'La contraseña debe contener entre 8 y 20 caracteres permitidos (Letras, Números, - _ @ .)'
+                    );
+                    setConsultado(false);
+                    return;
+                }
+                
+                const response = await UpdatePassword(id, newPassword);
+                
+                if (response.success) {
+                    setSuccessMessage(response.message);
+                    setNewPassword('');
+                    setConfirmPassword('');
+                    setShowModalPass(false);
+                } else {
+                    setPassErrorMessage(response.message);
+                }
+                setConsultado(false);
+            }
+        };        
 
     return (
         <>
             <div>
-                <Navbar nombre={user} carrera={carrera} />
+                <Navbar nombre={nombre+' '+apellido} carrera={carrera} />
                 <div className={`"min-h-screen max-w-[100vw] flex items-center justify-evenly ${fondoDegradado} md:py-32 gap-8`}>
                     <div className="bg-blanco p-3 md:p-5 rounded-lg flex flex-col w-[100vw] max-w-full md:w-3/5 lg:flex-row items-center lg:space-x-8 h-[100vh] md:h-[75vh] lg:min-h-[65vh] shadow-2xl shadow-black">
                         <div className=" flex flex-col m-auto justify-between items-center activo w-full">
                             <h1 className={`text-2xl font-bold mt-3 mb-3 md:mt-0 md:mb-6 text-center ${colorText} titulo`}>Configuraciones</h1>
-                            <form method="POST" className="flex flex-col justify-between items-center w-full  space-y-3" onSubmit={handleGuardarCambios}>
+                            <div className="flex flex-col justify-between items-center w-full  space-y-3">
                                 <hr className="my-4 border-t-2 border-gray-400 w-full" />
                                 <div className='flex flex-row justify-around items-center w-full m-0 p-0 gap-0'>
                                     <h2 className={colorText}><strong>Nombre</strong></h2>
@@ -216,28 +185,15 @@ const Configuraciones = () => {
                                 </div>
                                 <div className='flex flex-row justify-around items-center w-full'>
                                     <h2 className={colorText}><strong>Usuario</strong></h2>
-                                    {carrera === "Administración" ? (
-                                        <InputField
-                                            id="usuario"
-                                            label="usuario"
-                                            type="text"
-                                            placeholder={user}
-                                            value={userInput}
-                                            onChange={handleInputChangeUsuario}
-                                            errorMessage={userErrorMessage}
-                                            ancho="w-[230px] lg:w-[275px] "
-                                        />
-                                    ) : (
-                                        <InputField
-                                            id="usuario"
-                                            label="usuario"
-                                            type="text"
-                                            placeholder=""
-                                            value={user}
-                                            ancho="w-[230px] lg:w-[275px] "
-                                            disabled
-                                        />
-                                    )}
+                                    <InputField
+                                        id="usuario"
+                                        label="usuario"
+                                        type="text"
+                                        placeholder=""
+                                        value={usuario}
+                                        ancho="w-[230px] lg:w-[275px] "
+                                        disabled
+                                    />
                                 </div>
                                 <div className='flex flex-row justify-around items-center w-full'>
                                     <h2 className={colorText}><strong>Correo</strong></h2>
@@ -252,22 +208,10 @@ const Configuraciones = () => {
                                     />
                                 </div>
                                 <br />
-                                {carrera === "Administración" && (
-                                    <div className="flex flex-col items-center w-full">
-                                        <button
-                                            type="submit"
-                                            className={`${colorBoton} font-bold py-2 px-4 rounded-full w-full max-w-xs focus:outline-none focus:shadow-outline mb-4`}
-                                            onClick={handleGuardarCambios}
-                                        >
-                                            Guardar cambios
-                                        </button>
-
-                                    </div>
-                                )}
                                 <hr className="my-4 border-t-2 border-gray-400 w-full" />
                                 <div className="flex flex-col md:flex-row items-center justify-center w-full gap-5">
                                     <button
-                                        className={`${colorBoton} px-4 py-2 rounded-full select-none text-white w-48 whitespace-nowrap`}
+                                        className={`${boton} px-4 py-2 rounded-full select-none text-white w-48 whitespace-nowrap`}
                                         onClick={(e) => {
                                             e.preventDefault();
                                             setShowModalPass(true);
@@ -276,7 +220,7 @@ const Configuraciones = () => {
                                         <strong>Cambiar contraseña</strong>
                                     </button>
                                     <button
-                                        className={`${colorBoton} px-4 py-2 rounded-full select-none text-white w-48 whitespace-nowrap`}
+                                        className={`${boton} px-4 py-2 rounded-full select-none text-white w-48 whitespace-nowrap`}
                                         id='btnCorreo'
                                         onClick={(e) => {
                                             e.preventDefault();
@@ -286,20 +230,11 @@ const Configuraciones = () => {
                                         <strong>Cambiar correo</strong>
                                     </button>
                                 </div>
-                                {/* Modal para cambiar contraseña */}
+
                                 <Modal open={showModalPass} onClose={() => setShowModalPass(false)} onClick={handleChangePassword}>
-                                    <h2 className={`text-2xl font-bold mb-4 ${{ colorText }}`}>Cambiar Contraseña</h2>
+                                    <h2 className={`text-2xl font-bold mb-4 ${colorText}`}>Cambiar Contraseña</h2>
                                     <div className="mb-4">
-                                        <label className={`block text-sm font-bold ${{ colorText }}`}>Contraseña actual</label>
-                                        <InputField
-                                            id="currentPassword"
-                                            type="password"
-                                            value={currentPassword}
-                                            onChange={(e) => setCurrentPassword(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label className={`block text-sm font-bold ${{ colorText }}`}>Contraseña nueva</label>
+                                        <label className={`block text-sm font-bold ${colorText}`}>Contraseña nueva</label>
                                         <InputField
                                             id="newPassword"
                                             type="password"
@@ -308,7 +243,7 @@ const Configuraciones = () => {
                                         />
                                     </div>
                                     <div className="mb-4">
-                                        <label className={`block text-sm font-bold ${{ colorText }}`}>Contraseña nueva (repetir)</label>
+                                        <label className={`block text-sm font-bold ${colorText}`}>Contraseña nueva (repetir)</label>
                                         <InputField
                                             id="confirmPassword"
                                             type="password"
@@ -321,20 +256,10 @@ const Configuraciones = () => {
                                     )}
                                 </Modal>
 
-                                {/* Modal para cambiar correo */}
                                 <Modal open={showModalCorreo} onClose={() => setShowModalCorreo(false)} onClick={handleChangeCorreo}>
-                                    <h2 className={`text-2xl font-bold mb-4 ${{ colorText }}`}>Cambiar Correo</h2>
+                                    <h2 className={`text-2xl font-bold mb-4 ${colorText}`}>Cambiar Correo</h2>
                                     <div className="mb-4">
-                                        <label className={`block text-sm font-bold ${{ colorText }}`}>Correo actual</label>
-                                        <InputField
-                                            id="currentCorreo"
-                                            type="email"
-                                            value={currentCorreo}
-                                            onChange={(e) => setCurrentCorreo(e.target.value)}
-                                        />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label className={`block text-sm font-bold ${{ colorText }}`}>Correo nuevo</label>
+                                        <label className={`block text-sm font-bold ${colorText}`}>Correo nuevo</label>
                                         <InputField
                                             id="newCorreo"
                                             type="email"
@@ -343,7 +268,7 @@ const Configuraciones = () => {
                                         />
                                     </div>
                                     <div className="mb-4">
-                                        <label className={`block text-sm font-bold ${{ colorText }}`}>Correo nuevo (repetir)</label>
+                                        <label className={`block text-sm font-bold ${colorText}`}>Correo nuevo (repetir)</label>
                                         <InputField
                                             id="confirmCorreo"
                                             type="email"
@@ -359,7 +284,7 @@ const Configuraciones = () => {
                                 {successMessage && (
                                     <p className="text-green-500 font-bold mb-4">{successMessage}</p>
                                 )}
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -368,5 +293,4 @@ const Configuraciones = () => {
 
     );
 };
-
 export default Configuraciones;

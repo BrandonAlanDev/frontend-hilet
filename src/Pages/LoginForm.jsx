@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {jwtDecode} from 'jwt-decode';  // Asegúrate de importar jwtDecode correctamente
 import logoHilet from '../Assets/Image/HiletWEBP.webp';
 import logoUsuario from '../Assets/Image/user.png';
 import logoPassword from '../Assets/Image/password.png';
 import InputField from '../Components/InputField';
+import { POST } from '../Services/fetch';
 
 const LoginForm = () => {
     const [userInput, setUserInput] = useState('');
@@ -14,19 +16,6 @@ const LoginForm = () => {
 
     const userRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9._@-]{1,20}$/;
     const passRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9._@-]{1,20}$/;
-
-    useEffect(() => {
-        const storedUsers = sessionStorage.getItem('users');
-        if (!storedUsers) {
-            const defaultUsers = {
-                rama2024: { password: 'rama2024', email: 'rama2024@gmail.com' },
-                sandra2024: { password: 'sandra2024', email: 'sandra2024@gmail.com' },
-                juanperez: { password: 'juanperez', email: 'juanperez@gmail.com' },
-                luchito: { password: 'luchito', email: 'luchito@gmail.com' }
-            };
-            sessionStorage.setItem('users', JSON.stringify(defaultUsers));
-        }
-    }, []);
 
     const validateInput = (value, regex, setErrorMessage, errorMessage) => {
         if (regex.test(value)) {
@@ -58,7 +47,7 @@ const LoginForm = () => {
         );
     };
 
-    const Log = (e) => {
+    const Log = async (e) => {
         e.preventDefault();
 
         let valid = true;
@@ -83,20 +72,34 @@ const LoginForm = () => {
 
         if (!valid) return;
 
-        const storedUsers = JSON.parse(sessionStorage.getItem('users') || '{}'); // Ensure storedUsers isn't null
+        try {
+            const response = await POST('AuthController/Login', { dni: userInput, password: passInput });
 
-        if (storedUsers[userInput]) {
-            if (storedUsers[userInput].password === passInput) {
-                setPassErrorMessage('');
-                sessionStorage.setItem('user', userInput); // Session de usuario
-                let carreras = ["Analista de Sistemas", "Publicidad"];
+            if (response && response.message === 'JWT Creado') {
+                const token = response.data;
+                sessionStorage.setItem('jwtToken', token);
+
+                const decoded = jwtDecode(token);  // Usar jwtDecode aquí
+                sessionStorage.setItem('id', decoded.id);
+                sessionStorage.setItem('user', decoded.usuario);
+                sessionStorage.setItem('nombre', decoded.nombre);
+                sessionStorage.setItem('apellido', decoded.apellido);
+                sessionStorage.setItem('carrera', decoded.carrera);
+                sessionStorage.setItem('resolucion', decoded.resolucion);
+                sessionStorage.setItem('correo', decoded.correo);
+                sessionStorage.setItem('tipo_usuario', decoded.tipo_usuario);
+
+                // Deja lo de carreras que agrega "Analista de sistemas" y "Publicidad"
+                let carreras = ["Analista de sistemas", "Publicidad"];
                 sessionStorage.setItem('carreras', JSON.stringify(carreras));
+
                 navigate('/inicio'); // Redirige a la página de índice
             } else {
-                setPassErrorMessage('Contraseña incorrecta');
+                setPassErrorMessage('Error de autenticación');
             }
-        } else {
-            setUserErrorMessage('Usuario no encontrado');
+        } catch (error) {
+            console.error('Error en la solicitud: ', error.message);
+            setPassErrorMessage(error.message);
         }
     };
 
