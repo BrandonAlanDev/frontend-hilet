@@ -52,6 +52,31 @@ export const GetCarrera = async (id) => {
     }
 };
 
+export const GetCarrerasActivas = async () => {
+    try {
+        const response = await GET(`CarrerasController/GetCarrerasActivas`);
+        if (response.data) {
+            return response.data;
+        }
+        throw new Error("No se recibió respuesta");
+    } catch (error) {
+        console.error("Error al hacer GET a carrera:", error);
+        throw error;
+    }
+};
+export const GetResolucionesActivas = async () => {
+    try {
+        const response = await GET(`ResolucionController/GetResolucionesActivas`);
+        if (response.data) {
+            return response.data;
+        }
+        throw new Error("No se recibió respuesta");
+    } catch (error) {
+        console.error("Error al hacer GET a resolucion:", error);
+        throw error;
+    }
+};
+
 export async function DeleteCarrera(id_carrera) {
     const token = sessionStorage.getItem('jwtToken');
     const fullUrl = `${backendurl}CarrerasController/Delete?id_carrera=${id_carrera}&nombre_carrera=a&estado_carrera=1`;

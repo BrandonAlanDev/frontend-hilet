@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import Submenu from './Submenu';
 import logoUsuario from '../Assets/Image/UserWhite.webp';
 import logoHilet from '../Assets/Image/HiletWEBP.webp';
+import { Link } from 'react-router-dom';
 
 const Navbar = ({ nombre, carrera }) => {
     const location = useLocation();
@@ -107,7 +108,7 @@ const Navbar = ({ nombre, carrera }) => {
                 </div>
             </div>
             <div className="logo">
-                <a href="/"><img src={logoHilet} alt="Logo" className="h-12 w-auto" /></a>
+                <Link to="/inicio"><img src={logoHilet} alt="Logo" className="h-12 w-auto" /></Link>
             </div>
             <div className="flex items-center relative">
                 <span className="text-white mr-2">{nombre}</span>

@@ -2,90 +2,59 @@ import React, { useState, useEffect } from "react";
 import Tabla from "../Components/Tabla";
 import ModificarAlumnos from "../Layouts/ModificarAlumnos";
 import AddAlumnoModal from "./AddAlumnoModal";
-
-const ALUMNOS = [
-  {
-    carrera: "Analista de Sistemas",
-    años: 3,
-    alumnos: [
-      {
-        usuario: "ElSergi",
-        apellido: "Gonzales",
-        nombre: "Sergio",
-        dni: "44888666",
-        regular: true,
-        año: 2,
-        email: "gonzalessergio@gmail.com",
-      },
-      {
-        usuario: "Elmanolo",
-        apellido: "Pirelli",
-        nombre: "Manolo",
-        dni: "33777555",
-        regular: true,
-        año: 1,
-        email: "manolo@gmail.com",
-      },
-      {
-        usuario: "laPulga",
-        apellido: "Messi",
-        nombre: "Lionel",
-        dni: "12345678",
-        regular: true,
-        año: 3,
-        email: "leomessi@gmail.com",
-      },
-    ],
-  },
-  {
-    carrera: "Publicidad",
-    años: 3,
-    alumnos: [
-      {
-        apellido: "Splinter",
-        nombre: "Maestro",
-        dni: "21848646",
-        regular: true,
-        año: 2,
-      },
-      {
-        apellido: "Perez",
-        nombre: "Juan",
-        dni: "31231212",
-        regular: true,
-        año: 3,
-      },
-    ],
-  },
-];
+import { GetAllAlumnos } from "../Services/apiAdmin/Alumnos";
 
 const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
   const [alumnosFiltrados, setAlumnosFiltrados] = useState([]);
   const [currentCarrera, setCurrentCarrera] = useState("Analista de Sistemas");
   const [currentYear, setCurrentYear] = useState(0);
   const [selectedAlumno, setSelectedAlumno] = useState(null); // Estado para el alumno seleccionado
-  const [alumnos, setAlumnos] = useState(() => {
-    const storedAlumnos = sessionStorage.getItem("alumnos");
-    return storedAlumnos ? JSON.parse(storedAlumnos) : ALUMNOS;
-  });
+  const [alumnos, setAlumnos] = useState([]);
+
+  const fetchAlumnos = async () => {
+    try {
+      let response = await GetAllAlumnos();
+      if (response) {
+        // Convertir los datos del backend al formato esperado
+        const formattedData = response.map((carrera) => ({
+          ...carrera,
+          alumnos: carrera.alumnos.map((alumno) => ({
+            ...alumno,
+            regular: alumno.regular === 1, // Convertir 1/0 a true/false
+            email: alumno.email || "Sin correo", // Manejar la ausencia de email
+          })),
+        }));
+        setAlumnos(formattedData);
+        console.log(formattedData);
+      } else {
+        console.warn("No se encontraron datos de alumnos.");
+      }
+    } catch (error) {
+      console.error("Error al intentar obtener los alumnos: ", error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchAlumnos();
+  }, []);
 
   useEffect(() => {
     const carreraData = alumnos.find((carrera) => carrera.carrera === currentCarrera);
-    
-    if (carreraData && carreraData.años) {
+  
+    if (carreraData && carreraData.alumnos) {
       const filtro =
         estadoFiltro === "Regular"
           ? carreraData.alumnos.filter((alumno) => alumno.regular)
           : estadoFiltro === "Libre"
           ? carreraData.alumnos.filter((alumno) => !alumno.regular)
           : carreraData.alumnos;
-
+  
       const resultados = filtro.filter((alumno) => {
         const isInCurrentYear = alumno.año === currentYear + 1;
         const fullName = `${alumno.nombre} ${alumno.apellido}`.toLowerCase();
         const reverseFullName = `${alumno.apellido} ${alumno.nombre}`.toLowerCase();
         const searchTerm = busqueda.toLowerCase();
-
+  
         return (
           isInCurrentYear &&
           (fullName.includes(searchTerm) ||
@@ -93,10 +62,10 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
             alumno.dni.includes(searchTerm))
         );
       });
-
+  
       setAlumnosFiltrados(resultados);
     } else {
-
+      setAlumnosFiltrados([]);
     }
   }, [currentCarrera, currentYear, busqueda, estadoFiltro, alumnos]);
 
@@ -161,23 +130,25 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
           </div>
 
           {/* Botones de Año */}
-          <div className="flex flex-row gap-8 mb-4">
-            <p className="text-analista text-3xl select-none"><strong>Año</strong></p>
-            {[...Array(alumnos.find((a) => a.carrera === currentCarrera).años)].map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentYear(index)}
-                className={`px-4 py-2 rounded-full select-none ${
-                  currentYear === index ? `bg-${color} text-white` : "bg-white text-analista border-analista"
-                }`}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
+          {alumnos.find((a) => a.carrera === currentCarrera) && (
+            <div className="flex flex-row gap-8 mb-4">
+              <p className="text-analista text-3xl select-none"><strong>Año</strong></p>
+              {[...Array(alumnos.find((a) => a.carrera === currentCarrera).años)].map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentYear(index)}
+                  className={`px-4 py-2 rounded-full select-none ${
+                    currentYear === index ? `bg-${color} text-white` : "bg-white text-analista border-analista"
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
         <div className="flex flex-col justify-between items-end w-[48%] gap-8">
-          <AddAlumnoModal setAlumnos={setAlumnos} />
+          <AddAlumnoModal fetchAlumnos={fetchAlumnos} />
           {buscador}
         </div>
       </div>
@@ -216,5 +187,4 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
     </div>
   );
 };
-
 export default TablaAlumnos;

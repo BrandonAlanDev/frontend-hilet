@@ -79,7 +79,7 @@ const LoginForm = () => {
                 const token = response.data;
                 sessionStorage.setItem('jwtToken', token);
 
-                const decoded = jwtDecode(token);  // Usar jwtDecode aquí
+                const decoded = jwtDecode(token);  // tomo las claims
                 sessionStorage.setItem('id', decoded.id);
                 sessionStorage.setItem('user', decoded.usuario);
                 sessionStorage.setItem('nombre', decoded.nombre);
@@ -89,7 +89,7 @@ const LoginForm = () => {
                 sessionStorage.setItem('correo', decoded.correo);
                 sessionStorage.setItem('tipo_usuario', decoded.tipo_usuario);
 
-                // Deja lo de carreras que agrega "Analista de sistemas" y "Publicidad"
+                // estas estan de testeo
                 let carreras = ["Analista de sistemas", "Publicidad"];
                 sessionStorage.setItem('carreras', JSON.stringify(carreras));
 

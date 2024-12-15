@@ -1,54 +1,113 @@
-import { POST, GET, PATCH, DELETE } from "../Services/fetch";
+import { POST, GET, PATCH, DELETE } from "../../Services/fetch";
+import { backendurl } from "../../env";
 
-export const PostProfesor = async (nombre,apellido) => {
-  try {
-    const response = await POST("ProfesorController/Create", { nombre, apellido});
-    if (response) {
-      return response;
-    }
-    throw new Error("No se recibió respuesta");
-  } catch (error) {
-    console.error("Error al hacer POST a profesor:", error);
-    throw error;
-  }
-};
+export async function GetProfesores() {
+  const token = sessionStorage.getItem('jwtToken');
+  const fullUrl = `${backendurl}ProfesorController/Get`;
 
-export const GetDeTodosLosProfesores = async () => {
   try {
-    const response = await GET(`ProfesorController/GetProfesor`);
-    if (response) {
-      return response;
-    }
-    throw new Error("No se recibió respuesta");
-  } catch (error) {
-    console.error("Error al hacer GET a profesor:", error);
-    throw error;
-  }
-};
+      const response = await fetch(fullUrl, {
+          method: 'GET',
+          mode: 'cors',
+          headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+          },
+      });
 
-export const PutProfesor = async (id, nombre, apellido, correo,telefono) => {
-  try {
-    const response = await PATCH(`ProfesorController/Update/${id}`, { nombre, apellido,correo,telefono});
-    if (response) {
-      return response;
-    }
-    throw new Error("No se recibió respuesta");
-  } catch (error) {
-    console.error("Error al hacer PUT a profesor:", error);
-    throw error;
-  }
-};
+      if (!response.ok) {
+          const errorResponse = await response.json();
+          throw new Error(errorResponse.message || 'Error al obtener profesores.');
+      }
 
-/*export const DeleteProfesor = async (id) => {
-  try {
-    const response = await DELETE(`profesor/${id}`);
-    if (response) {
-      return response;
-    }
-    throw new Error("No se recibió respuesta");
-  } catch (error) {
-    console.error("Error al hacer DELETE a profesor:", error);
-    throw error;
+      const result = await response.json();
+      return result.data || [];
+  } catch (err) {
+      console.error('Error en la solicitud:', err.message);
+      throw err;
   }
-};
-*/
+}
+
+
+export async function PostProfesor(profesorData) {
+  const token = sessionStorage.getItem('jwtToken');
+  const fullUrl = `${backendurl}ProfesorController/Create`;
+
+  try {
+      const response = await fetch(fullUrl, {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(profesorData),
+      });
+
+      if (!response.ok) {
+          const errorResponse = await response.json();
+          throw new Error(errorResponse.message || 'Error al crear el profesor.');
+      }
+
+      const result = await response.json();
+      return result;
+  } catch (err) {
+      console.error('Error en la solicitud:', err.message);
+      throw err;
+  }
+}
+
+export async function UpdateProfesor(profesorData) {
+  const token = sessionStorage.getItem('jwtToken');
+  const fullUrl = `${backendurl}ProfesorController/Update`;
+
+  try {
+      const response = await fetch(fullUrl, {
+          method: 'PATCH',
+          mode: 'cors',
+          headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(profesorData),
+      });
+
+      if (!response.ok) {
+          const errorResponse = await response.json();
+          throw new Error(errorResponse.message || 'Error al actualizar el profesor.');
+      }
+
+      const result = await response.json();
+      return result;
+  } catch (err) {
+      console.error('Error en la solicitud:', err.message);
+      throw err;
+  }
+}
+
+export async function DeleteProfesor(id) {
+  const token = sessionStorage.getItem('jwtToken');
+  const fullUrl = `${backendurl}ProfesorController/Delete/${id}`;
+
+  try {
+      const response = await fetch(fullUrl, {
+          method: 'DELETE',
+          mode: 'cors',
+          headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json', 
+          },
+      });
+
+      if (!response.ok) {
+          const errorResponse = await response.json();
+          throw new Error(errorResponse.message || 'Error al eliminar el profesor.');
+      }
+
+      const result = await response.json();
+      return result;
+  } catch (err) {
+      console.error('Error en la solicitud:', err.message);
+      throw err;
+  }
+}

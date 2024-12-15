@@ -92,12 +92,12 @@ export async function PATCH(url, data) {
 
 export async function DELETE(url, data){
     const objString = '?' + new URLSearchParams(data).toString();
-
+    const token = sessionStorage.getItem('jwtToken');
     return await fetch(backendurl + url + objString, {
         method:'DELETE',
         mode:'cors',
         headers:{
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${token}`
         },
     })
     .then((res) => res.json())
@@ -106,7 +106,7 @@ export async function DELETE(url, data){
 }
 
 export async function POSTU(url, file){
-
+    const token = sessionStorage.getItem('jwtToken');
     let data = new FormData();
     data.append('file', file);
 
@@ -114,7 +114,7 @@ export async function POSTU(url, file){
         method: 'POST',
         mode: 'cors',
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${token}`
         },
         body: data
     })

@@ -7,6 +7,7 @@ import InputField from "../../Components/InputField";
 import usuarioSearch from "../../Assets/Image/user.png";
 import buscando from "../../Assets/Image/buscando.png";
 import Mosaico from "../../Components/Mosaico";
+import { GetProfesores, PostProfesor, UpdateProfesor, DeleteProfesor } from "../../Services/apiAdmin/Profesores";
 
 const AddProfesor = () => {
   const [nombre, setNombre] = useState("");
@@ -18,17 +19,33 @@ const AddProfesor = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModalModify, setShowModalModify] = useState(false);
   const [profesorSeleccionado,setProfesorSeleccionado] = useState();
+  const [newProfesorSeleccionado,setNewProfesorSeleccionado] = useState();
+  const [showModalConfirmacion, setShowModalConfirmacion] = useState(false);
+
   const navigate = useNavigate();
+
+  const refrescarProfesores = async () => {
+          try {
+              let response = await GetProfesores();
+              if (response && response.length > 0) {
+                  setProfesores(response);
+                  sessionStorage.setItem('profesores', JSON.stringify(response));
+              } else {
+                  console.warn("La respuesta fue exitosa pero no se obtuvieron profesores.");
+              }
+          } catch (error) {
+              console.error("Error al intentar obtener las carreras. Detalles:", error.message);
+          }
+      };
   
   useEffect(() => {
     const user = sessionStorage.getItem('user');
     if (!user || sessionStorage.getItem('carrera')!='Administracion') {
       navigate('/');
     } else {
+      refrescarProfesores();
       setNombre(sessionStorage.getItem('nombre')+' '+sessionStorage.getItem('apellido'));
       setCarrera("Administracion");
-      const storedProfesores = sessionStorage.getItem("profesores");
-      setProfesores(storedProfesores ? JSON.parse(storedProfesores) : []);
     }
   }, [navigate]);
 
@@ -47,28 +64,83 @@ const AddProfesor = () => {
     }
   };
 
-  const addProfesor = () => {
-    if (newProfesor.nombre.trim() === "" || newProfesor.apellido.trim() === "") return;
-
-    // Comparar nombre y apellido del profesor
-    if (profesores.some((profesor) => 
-        profesor.nombre.toLowerCase() === newProfesor.nombre.toLowerCase() && 
-        profesor.apellido.toLowerCase() === newProfesor.apellido.toLowerCase())) {
-      alert("El profesor ya existe.");
+  const addProfesor = async () => {
+    if (!newProfesor.nombre || !newProfesor.apellido || !newProfesor.email || !newProfesor.telefono) {
+      console.error("Faltan datos obligatorios");
       return;
     }
+  
+    try {
+      const response = await PostProfesor({ nombre_profesor: newProfesor.nombre, apellido_profesor: newProfesor.apellido, correo_profesor: newProfesor.email, telefono: newProfesor.telefono});
+      if (response) {
+        setShowModal(false);
+        setNewProfesor({ nombre: "", apellido: "", email: "", telefono: "" });
+        await refrescarProfesores(); // Refresca la lista tras añadir
+      } else {
+        console.error("Error al agregar profesor:", response?.message || "Error desconocido");
+      }
+    } catch (error) {
+      console.error("Error al intentar agregar un profesor:", error.message);
+    }
+  };
+  
+  const updateProfesor = async () => {
+    if (!newProfesorSeleccionado) return;
+    console.log(newProfesorSeleccionado);
+    try {
+      const response = await UpdateProfesor({ id_profesor: newProfesorSeleccionado.id, nombre_profesor: newProfesorSeleccionado.nombre, apellido_profesor: newProfesorSeleccionado.apellido, correo_profesor: newProfesorSeleccionado.email, telefono: newProfesorSeleccionado.telefono});
+      if (response) {
+        setShowModalModify(false);
+        setProfesorSeleccionado(null);
+        setNewProfesorSeleccionado(null);
+        await refrescarProfesores(); // Refresca la lista tras actualizar
+      } else {
+        console.error("Error al actualizar profesor:", response?.message || "Error desconocido");
+      }
+    } catch (error) {
+      console.error("Error al intentar actualizar un profesor:", error.message);
+    }
+  };
+  
+  // Modificar profesor al abrir el modal
+  const modificarProfesor = (pid, pnombre, papellido, pemail, ptelefono) => {
+    const profesor = { id: pid, nombre: pnombre, apellido: papellido, email: pemail, telefono: ptelefono };
+    if (profesor) {
+      setProfesorSeleccionado(profesor);
+      setNewProfesorSeleccionado(profesor);
+      setShowModalModify(true);
+    } else {
+      console.error("Profesor no encontrado.");
+    }
+  };
+  
+  const eliminarProfesor = async () => {
+    if (!profesorSeleccionado) return;
 
-    const updatedProfesores = [...profesores, newProfesor];
-    setProfesores(updatedProfesores);
-    sessionStorage.setItem("profesores", JSON.stringify(updatedProfesores));
-    setNewProfesor({ nombre: "", apellido: "", email: "", telefono: "" });
-    setShowModal(false);
+    const idProfesor = profesorSeleccionado.id;  
+  
+    try {
+      const response = await DeleteProfesor(idProfesor);
+  
+      if (response) {
+        setShowModalConfirmacion(false);
+        setShowModalModify(false);
+        setProfesorSeleccionado(null);
+        setNewProfesorSeleccionado(null);
+        await refrescarProfesores();
+      } else {
+        console.error("Error al eliminar el profesor:", response?.message || "Error desconocido");
+      }
+    } catch (error) {
+      console.error("Error al intentar eliminar un profesor:", error.message);
+    }
   };
 
-  const modificarProfesor=(id,nombre,apellido,email,telefono)=>{
-    setProfesorSeleccionado({id:id, nombre: nombre, apellido: apellido, email: email, telefono: telefono });
-    setShowModalModify(true);
-  }
+  const confirmarEliminacion = () => {
+    setShowModalConfirmacion(true);
+  };
+
+  
   return (
     <div>
       <Navbar nombre={nombre} carrera={carrera} />
@@ -100,7 +172,7 @@ const AddProfesor = () => {
               </div>
             ) : (
               profesoresEncontrados.map((p, index) => (
-                <button key={index} onClick={()=>{modificarProfesor(1,p.nombre,p.apellido,p.email,p.telefono)}} className="bg-analista p-8 rounded-lg flex flex-col items-center mosaicos-profe shadow-2xl shadow-black">
+                <button key={index} onClick={()=>{modificarProfesor(p.id,p.nombre,p.apellido,p.email,p.telefono)}} className="bg-analista p-8 rounded-lg flex flex-col items-center mosaicos-profe shadow-2xl shadow-black">
                   <div className="text-mosaico-profe">
                     <p className="text-center text-[13px] text-white">{"Nombre Completo :"}</p>
                     <p className="font-bold text-center text-mosaico-profe text-white">{`${p.apellido} ${p.nombre} `}</p>
@@ -121,7 +193,7 @@ const AddProfesor = () => {
             <>
               <Mosaico titulo={"Agregar"} ancho={"max-w-[400px]"} callback={() => setShowModal(true)} imagen={agregar} />
               {profesores.map((p, index) => (
-                <button key={index} onClick={()=>{modificarProfesor(1,p.nombre,p.apellido,p.email,p.telefono)}} className="bg-analista p-8 rounded-lg flex flex-col items-center mosaicos-profe shadow-2xl shadow-black">
+                <button key={index} onClick={()=>{modificarProfesor(p.id,p.nombre,p.apellido,p.email,p.telefono)}} className="bg-analista p-8 rounded-lg flex flex-col items-center mosaicos-profe shadow-2xl shadow-black">
                   <div className="text-mosaico-profe">
                     <p className="text-center text-[13px] text-white">{"Nombre Completo :"}</p>
                     <p className="font-bold text-center text-mosaico-profe text-white">{`${p.apellido} ${p.nombre} `}</p>
@@ -213,39 +285,45 @@ const AddProfesor = () => {
                 type="text"
                 className="w-full p-2 border border-analista rounded mb-4"
                 placeholder="Nombre del Profesor"
-                value={newProfesor.nombre}
+                value={newProfesorSeleccionado.nombre}
                 onChange={(e) => {
-                  setNewProfesor({ ...newProfesor, nombre: e.target.value });
+                  setNewProfesorSeleccionado({ ...newProfesorSeleccionado, nombre: e.target.value });
                 }}
               />
               <input
                 type="text"
                 className="w-full p-2 border border-analista rounded mb-4"
                 placeholder="Apellido"
-                value={newProfesor.apellido}
+                value={newProfesorSeleccionado.apellido}
                 onChange={(e) => {
-                  setNewProfesor({ ...newProfesor, apellido: e.target.value });
+                  setNewProfesorSeleccionado({ ...newProfesorSeleccionado, apellido: e.target.value });
                 }}
               />
               <input
                 type="text"
                 className="w-full p-2 border border-analista rounded mb-4"
                 placeholder="Correo electrónico"
-                value={newProfesor.email}
+                value={newProfesorSeleccionado.email}
                 onChange={(e) => {
-                  setNewProfesor({ ...newProfesor, email: e.target.value });
+                  setNewProfesorSeleccionado({ ...newProfesorSeleccionado, email: e.target.value });
                 }}
               />
               <input
                 type="text"
                 className="w-full p-2 border border-analista rounded mb-4"
                 placeholder="Teléfono de contacto"
-                value={newProfesor.telefono}
+                value={newProfesorSeleccionado.telefono}
                 onChange={(e) => {
-                  setNewProfesor({ ...newProfesor, telefono: e.target.value });
+                  setNewProfesorSeleccionado({ ...newProfesorSeleccionado, telefono: e.target.value });
                 }}
               />
               <div className="flex justify-end space-x-4">
+                <button
+                  className="otro-button text-white px-4 py-2 rounded"
+                  onClick={() => confirmarEliminacion(profesorSeleccionado)}
+                >
+                  Eliminar
+                </button>
                 <button
                   className="cancelar text-white px-4 py-2 rounded"
                   onClick={() => setShowModalModify(false)}
@@ -254,9 +332,33 @@ const AddProfesor = () => {
                 </button>
                 <button
                   className="aceptar text-white px-4 py-2 rounded"
-                  onClick={addProfesor}
+                  onClick={updateProfesor}
                 >
-                  Agregar
+                  Modificar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+        {showModalConfirmacion && (
+          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
+              <h2 className="text-2xl font-bold mb-4 text-red-500">
+                ¿Estás seguro de eliminar este profesor?
+              </h2>
+              <p className="text-md mb-4">Esta acción no se puede deshacer.</p>
+              <div className="flex justify-end space-x-4">
+                <button
+                  className="aceptar text-white px-4 py-2 rounded bg-red-500"
+                  onClick={eliminarProfesor}
+                >
+                  Aceptar
+                </button>
+                <button
+                  className="cancelar text-white px-4 py-2 rounded bg-gray-500"
+                  onClick={() => setShowModalConfirmacion(false)} // Cierra el modal de confirmación
+                >
+                  Cancelar
                 </button>
               </div>
             </div>

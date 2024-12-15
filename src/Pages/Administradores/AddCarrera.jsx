@@ -56,6 +56,7 @@ const AddCarrera = () => {
             setCarreras(updatedCarreras);
             sessionStorage.setItem('carreras', JSON.stringify(updatedCarreras));
             setNewCarrera('');
+            refrescarCarreras();
             setShowModal(false);
         } catch (error) {
             console.error("Error al agregar la carrera. Detalles:", error.message);
@@ -77,6 +78,7 @@ const AddCarrera = () => {
             sessionStorage.setItem('carreras', JSON.stringify(updatedCarreras));
             setModifiedCarrera('');
             setNewModifiedCarrera('');
+            refrescarCarreras();
             setShowModalModify(false);
         } catch (error) {
             console.error("Error al modificar la carrera. Detalles:", error.message);
@@ -91,6 +93,7 @@ const AddCarrera = () => {
             sessionStorage.setItem('carreras', JSON.stringify(updatedCarreras));
             setModifiedCarrera('');
             setNewModifiedCarrera('');
+            refrescarCarreras();
             setShowModalModify(false);
         } catch (error) {
             console.error("Error al eliminar la carrera. Detalles:", error.message);

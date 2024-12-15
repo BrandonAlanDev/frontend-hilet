@@ -32,6 +32,7 @@ const Programa = () => {
     }, [navigate]);
 
     useEffect(() => {
+        if (carrera === 'Administracion'){ navigate('/inicio');}
         if (carrera === "Publicidad") {
             setFondoOpaco("bg-publicidad");
             setFondoDegradado("bg-hilet-publicidad");
