@@ -93,7 +93,12 @@ const LoginForm = () => {
                 let carreras = ["Analista de sistemas", "Publicidad"];
                 sessionStorage.setItem('carreras', JSON.stringify(carreras));
 
-                navigate('/inicio'); // Redirige a la página de índice
+                if (sessionStorage.getItem('jwtToken')) {
+                    navigate('/inicio');
+                } else {
+                    console.error('El token no está disponible en sessionStorage');
+                }
+                
             } else {
                 setPassErrorMessage('Error de autenticación');
             }

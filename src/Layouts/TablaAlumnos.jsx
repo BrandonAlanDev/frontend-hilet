@@ -167,6 +167,7 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
                   alumno={alumno} // Pasar el alumno a modificar
                   onAlumnoModificado={modificarAlumno} // Función para actualizar el alumno
                   onAlumnoEliminado={eliminarAlumno}
+                  fetchAlumnos={fetchAlumnos}
                 />
               </div>
             </td>
@@ -178,10 +179,11 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
       {selectedAlumno && (
         <ModificarAlumnos
           alumno={selectedAlumno}
-          onClose={() => setSelectedAlumno(null)} // Cerrar el modal sin guardar
-          onSave={modificarAlumno} // Guardar cambios
+          onClose={() => setSelectedAlumno(null)}
+          onSave={modificarAlumno}
           onAlumnoModificado={modificarAlumno}
           onAlumnoEliminado={eliminarAlumno}
+          fetchAlumnos={fetchAlumnos}
         />
       )}
     </div>

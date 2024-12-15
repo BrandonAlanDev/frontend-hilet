@@ -5,13 +5,46 @@ import { useNavigate } from "react-router-dom";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Tooltip } from "@mui/material";
+import { GetCarrerasActivas, GetResolucionesActivas } from "../Services/apiAdmin/Carreras";
+import { UpdateAlumno } from "../Services/apiAdmin/Alumnos";
 
-const ModificarAlumnos = ({ alumno, onAlumnoModificado, onAlumnoEliminado }) => {
+const ModificarAlumnos = ({ alumno, onAlumnoModificado, onAlumnoEliminado, fetchAlumnos }) => {
     const [modalisopen, setModalIsOpen] = useState(false);
     const [initialModalOpen, setInitialModalOpen] = useState(false);
-    const [deleteModalOpen, setDeleteModalOpen] = useState(false); // New delete modal state
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false); // modal para confirmar delete
     const [alumnoData, setAlumnoData] = useState(alumno);
+    const [carreras, setCarreras] = useState([]);
+    const [resoluciones, setResoluciones] = useState([]);
+    const [filteredResoluciones, setFilteredResoluciones] = useState([]);
     const navigate = useNavigate();
+
+    const getCarreras = async () => {
+        try {
+            const response = await GetCarrerasActivas();
+            setCarreras(response);
+        } catch (error) {
+            console.error("Error al obtener carreras:", error);
+        }
+    };
+
+    const getResoluciones = async () => {
+        try {
+            const response = await GetResolucionesActivas();
+            setResoluciones(response || []);
+        } catch (error) {
+            console.error("Error al obtener resoluciones:", error);
+        }
+    };
+
+    useEffect(() => {
+        getCarreras();
+        getResoluciones();
+    }, []);
+
+    useEffect(() => {
+        setAlumnoData(alumno);
+        console.log(alumnoData);
+    }, [alumno]);
 
     // Open and close functions for modals
     const open = () => setInitialModalOpen(true);
@@ -25,48 +58,51 @@ const ModificarAlumnos = ({ alumno, onAlumnoModificado, onAlumnoEliminado }) => 
         setModalIsOpen(true); // Open modify modal
     };
 
-    useEffect(() => {
-        setAlumnoData(alumno);
-    }, [alumno]);
-
-    // Reset password to DNI
-    const resetContraseña = () => {
-        setAlumnoData((prevAlumno) => ({
-            ...prevAlumno,
-            contraseña: prevAlumno.dni,
-        }));
-        alert('Contraseña restablecida a: ' + alumnoData.dni);
+    const handleCarreraChange = (e) => {
+        const id_carrera = e.target.value;
+        setAlumnoData({ ...alumnoData, idResolucion: "" });
+        setFilteredResoluciones(resoluciones.filter((res) => res.id_carrera.toString() === id_carrera));
     };
 
     // Modify student data
-    const modificarAlumno = () => {
-        onAlumnoModificado(alumnoData);
-        const storedAlumnos = JSON.parse(sessionStorage.getItem("alumnos")) || [];
-        const updatedAlumnos = storedAlumnos.map((carrera) => {
-            if (carrera.carrera === alumnoData.carrera) {
-                return {
-                    ...carrera,
-                    alumnos: carrera.alumnos.map((alumno) =>
-                        alumno.dni === alumnoData.dni ? alumnoData : alumno
-                    ),
-                };
+    const modificarAlumno = async () => {
+        const idResolucionAEnviar = (alumnoData.idResolucion === "") ? 9999999 : alumnoData.idResolucion;
+
+        try {
+            const result = await UpdateAlumno(
+            {   id_usuario:alumnoData.id ,
+                nombre_usuario:alumnoData.nombre,
+                apellido_usuario:alumnoData.apellido,
+                dni:alumnoData.dni,
+                correo_usuario:alumnoData.email,
+                password:"abc123",
+                fechasFinales:[2525,2525],
+                idResolucion:idResolucionAEnviar
             }
-            return carrera;
-        });
-        sessionStorage.setItem("alumnos", JSON.stringify(updatedAlumnos)); // Save data
-        setModalIsOpen(false);
+            );
+            console.log(result);
+            if (result.succes) {
+                setModalIsOpen(false);
+                fetchAlumnos();
+                alert("Alumno modificado correctamente");
+            } else {
+                alert("Hubo un error al modificar el alumno.");
+            }
+        } catch (error) {
+            console.error("Error al modificar alumno:", error);
+            alert("Hubo un error al modificar el alumno.");
+        }
     };
+    const resetContraseña = () => { setAlumnoData({ ...alumnoData, password: alumnoData.dni }); };
 
     // Confirm delete user
     const confirmDeleteUser = () => {
         setDeleteModalOpen(true); // Open delete confirmation modal
     };
     const deleteUser = () => {
-        onAlumnoEliminado(alumnoData.dni); // Call the parent function to handle deletion
-        setDeleteModalOpen(false); // Close delete modal after deletion
-        setInitialModalOpen(false); // Close the initial modal if needed
+        //este no todavia no lo vamos a implementar
       };
-      
+
     return (
         <div>
             <button className="rounded-lg p-2 bg-yellow-400 hover:bg-yellow-500" onClick={open}>
@@ -188,15 +224,37 @@ const ModificarAlumnos = ({ alumno, onAlumnoModificado, onAlumnoEliminado }) => 
                         <label className="block text-sm font-bold text-analista" htmlFor="carrera">Carrera:</label>
                         <select
                             id="carrera"
-                            value={alumnoData.carrera}
-                            onChange={(e) => setAlumnoData({ ...alumnoData, carrera: e.target.value })}
+                            value={alumnoData.id_carrera}
+                            onChange={handleCarreraChange}
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                        >
-                            <option value="Analista de Sistemas">Analista de Sistemas</option>
-                            <option value="Publicidad">Publicidad</option>
-                            {/* Add more career options here */}
+                    >
+                            <option value="">Seleccionar carrera</option>
+                            {carreras && carreras.map((carrera) => (
+                                <option key={carrera.id_carrera} value={carrera.id_carrera}>
+                                    {carrera.nombre_carrera}
+                                </option>
+                            ))}
                         </select>
                     </div>
+
+                    {/* Select field for resolution */}
+                    <div className="mb-4">
+                        <label className="block text-sm font-bold text-analista" htmlFor="resolucion">Resolución:</label>
+                        <select
+                            id="resolucion"
+                            value={alumnoData.idResolucion}
+                            onChange={(e) => setAlumnoData({ ...alumnoData, idResolucion: parseInt(e.target.value, 10) })}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                        >
+                            <option value="">No quiero cambiar resolucion</option>
+                            {filteredResoluciones && filteredResoluciones.map((resolucion) => (
+                                <option key={resolucion.id_resolucion} value={resolucion.id_resolucion}>
+                                    {resolucion.nombre_resolucion}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
                 </form>
                 <div className="flex justify-end">
                     <button

@@ -5,7 +5,7 @@ const Submenu = ({ carrera, titulo, open, path}) => {
     const navigate = useNavigate();
     const Logout=()=>{
         sessionStorage.clear();
-        location.replace("/");
+        location.replace("/login");
     }
     let estilo = 'submenu';
     const direcciones=[
