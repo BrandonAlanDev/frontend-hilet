@@ -50,8 +50,8 @@ const Navbar = ({ nombre, carrera }) => {
             setDirecciones([
                 { titulo: "Inicio", path: "/inicio" },
                 { titulo: "Finales (En construccion)", path: "/finales" },
-                { titulo: "Gestion de Alumno (En construccion)", path: "/addalumno" },
-                { titulo: "Gestion de Profesor (En construccion)", path: "/addprofesor" },
+                { titulo: "Gestion de Alumno", path: "/addalumno" },
+                { titulo: "Gestion de Profesor", path: "/addprofesor" },
                 { titulo: "Gestion de Carreras", path: "/addcarrera" },
                 { titulo: "Gestion de Materias (En construccion)", path: "/addmaterias" }
             ]);
