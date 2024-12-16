@@ -11,7 +11,6 @@ export async function GetAllCarreras() {
 export async function CreateCarrera(nombreCarrera) {
     const token = sessionStorage.getItem('jwtToken');
     const fullUrl = `${backendurl}CarrerasController/Create?nombreCarrera=${encodeURIComponent(nombreCarrera)}`;
-    console.log(`Making request to: ${fullUrl}`);
 
     return await fetch(fullUrl, {
         method: 'POST',
@@ -80,7 +79,6 @@ export const GetResolucionesActivas = async () => {
 export async function DeleteCarrera(id_carrera) {
     const token = sessionStorage.getItem('jwtToken');
     const fullUrl = `${backendurl}CarrerasController/Delete?id_carrera=${id_carrera}&nombre_carrera=a&estado_carrera=1`;
-    console.log(`Making request to: ${fullUrl}`);
 
     return await fetch(fullUrl, {
         method: 'PATCH',
@@ -111,7 +109,6 @@ export async function DeleteCarrera(id_carrera) {
 export async function UpdateCarrera(id_carrera, nombre_carrera) {
     const token = sessionStorage.getItem('jwtToken');
     const fullUrl = `${backendurl}CarrerasController/Update?id_carrera=${encodeURIComponent(id_carrera)}&nombre_carrera=${encodeURIComponent(nombre_carrera)}&estado_carrera=1`;
-    console.log(`Making request to: ${fullUrl}`);
 
     return await fetch(fullUrl, {
         method: 'PATCH',

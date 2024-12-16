@@ -3,7 +3,6 @@ import { backendurl } from "../env.jsx";
 export async function POST(url, data) {
     const token = sessionStorage.getItem('jwtToken');
     const fullUrl = backendurl + url;
-    console.log(`Making request to: ${fullUrl}`);
 
     return await fetch(fullUrl, {
         method: 'POST',
@@ -35,7 +34,6 @@ export async function POST(url, data) {
 export async function GET(url) {
     const token = sessionStorage.getItem('jwtToken');
     const fullUrl = backendurl + url;
-    console.log(`Making request to: ${fullUrl}`);
 
     try {
         const response = await fetch(fullUrl, {
@@ -66,7 +64,6 @@ export async function GET(url) {
 export async function PATCH(url, data) {
     const token = sessionStorage.getItem('jwtToken');
     const fullUrl = backendurl + url;
-    console.log(`Making request to: ${fullUrl}`);
     return await fetch(fullUrl, {
         method: 'PATCH', mode: 'cors',
         headers: {

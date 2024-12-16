@@ -3,7 +3,7 @@ import Tabla from "../Components/Tabla";
 import ModificarAlumnos from "../Layouts/ModificarAlumnos";
 import AddAlumnoModal from "./AddAlumnoModal";
 import { GetAllAlumnos } from "../Services/apiAdmin/Alumnos";
-
+import { ChangeStateUsuario } from "../Services/apiAdmin/Alumnos";
 const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
   const [alumnosFiltrados, setAlumnosFiltrados] = useState([]);
   const [currentCarrera, setCurrentCarrera] = useState("Analista de Sistemas");
@@ -25,7 +25,6 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
           })),
         }));
         setAlumnos(formattedData);
-        console.log(formattedData);
       } else {
         console.warn("No se encontraron datos de alumnos.");
       }
@@ -104,6 +103,25 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
     setSelectedAlumno(null); // Close any open modals if needed
   };
 
+  // Función para cambiar el estado del alumno (Regular / Libre)
+  const toggleRegularStatus = async (idUsuario) => {
+    try {
+        const result = await ChangeStateUsuario(idUsuario);
+        if (result.succes) {
+            fetchAlumnos(); // Refrescar la lista de alumnos después de cambiar el estado
+            alert(`Estado del alumno cambiado correctamente`);
+        } else {
+            alert("Hubo un error al cambiar el estado del alumno.");
+        }
+    } catch (error) {
+        console.error("Error al cambiar el estado del alumno:", error);
+        alert("Hubo un error al cambiar el estado del alumno.");
+    }
+  };
+
+
+  
+
   const headers = ["DNI", "Apellido", "Nombre", "Correo", "Regular", "Acciones"];
 
   return (
@@ -160,7 +178,15 @@ const TablaAlumnos = ({ color, busqueda, estadoFiltro, buscador }) => {
             <td className="py-3 px-5 text-center">{alumno.apellido}</td>
             <td className="py-3 px-5 text-center">{alumno.nombre}</td>
             <td className="py-3 px-5 text-center">{alumno.email}</td>
-            <td className="py-3 px-5 text-center">{alumno.regular ? "Regular" : "Libre"}</td>
+            <td className="py-3 px-5 text-center">
+              <button 
+                  onClick={() => toggleRegularStatus(alumno.id)}
+                  className={`px-4 py-2 rounded-full ${alumno.regular ? "aceptar" : "otro-button"}`}
+              >
+                  {alumno.regular ? "Regular" : "Libre"}
+              </button>
+          </td>
+
             <td className="py-3 px-5">
               <div className="flex justify-center">
                 <ModificarAlumnos

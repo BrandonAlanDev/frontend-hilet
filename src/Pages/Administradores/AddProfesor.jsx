@@ -86,7 +86,6 @@ const AddProfesor = () => {
   
   const updateProfesor = async () => {
     if (!newProfesorSeleccionado) return;
-    console.log(newProfesorSeleccionado);
     try {
       const response = await UpdateProfesor({ id_profesor: newProfesorSeleccionado.id, nombre_profesor: newProfesorSeleccionado.nombre, apellido_profesor: newProfesorSeleccionado.apellido, correo_profesor: newProfesorSeleccionado.email, telefono: newProfesorSeleccionado.telefono});
       if (response) {

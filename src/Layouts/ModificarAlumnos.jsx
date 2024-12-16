@@ -7,6 +7,8 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Tooltip } from "@mui/material";
 import { GetCarrerasActivas, GetResolucionesActivas } from "../Services/apiAdmin/Carreras";
 import { UpdateAlumno } from "../Services/apiAdmin/Alumnos";
+import { EliminarUsuarioHard, ChangeStateUsuario } from "../Services/apiAdmin/Alumnos";
+import { GetSituacionAcademica } from "../Services/apiAdmin/Alumnos";
 
 const ModificarAlumnos = ({ alumno, onAlumnoModificado, onAlumnoEliminado, fetchAlumnos }) => {
     const [modalisopen, setModalIsOpen] = useState(false);
@@ -43,7 +45,6 @@ const ModificarAlumnos = ({ alumno, onAlumnoModificado, onAlumnoEliminado, fetch
 
     useEffect(() => {
         setAlumnoData(alumno);
-        console.log(alumnoData);
     }, [alumno]);
 
     // Open and close functions for modals
@@ -80,7 +81,6 @@ const ModificarAlumnos = ({ alumno, onAlumnoModificado, onAlumnoEliminado, fetch
                 idResolucion:idResolucionAEnviar
             }
             );
-            console.log(result);
             if (result.succes) {
                 setModalIsOpen(false);
                 fetchAlumnos();
@@ -99,9 +99,30 @@ const ModificarAlumnos = ({ alumno, onAlumnoModificado, onAlumnoEliminado, fetch
     const confirmDeleteUser = () => {
         setDeleteModalOpen(true); // Open delete confirmation modal
     };
-    const deleteUser = () => {
-        //este no todavia no lo vamos a implementar
-      };
+    const deleteUser = async () => {
+        try {
+            // Llamar a la función de fetch para eliminar usuario
+            const response = await EliminarUsuarioHard(alumnoData.id);
+    
+            if (response.succes) {
+
+                setInitialModalOpen(false);
+                setModalIsOpen(false);
+                setDeleteModalOpen(false);
+                fetchAlumnos();
+                window.alert('Usuario eliminado exitosamente.');
+            } else {
+                // Manejar casos donde success sea false
+                console.error('Error al eliminar usuario:', response.message);
+                window.alert(`Error al eliminar usuario: ${response.message}`);
+            }
+        } catch (error) {
+            // Manejar errores en la solicitud
+            console.error('Error en deleteUser:', error.message);
+            window.alert(`Error en la solicitud: ${error.message}`);
+        }
+    };
+    
 
     return (
         <div>
@@ -122,7 +143,7 @@ const ModificarAlumnos = ({ alumno, onAlumnoModificado, onAlumnoEliminado, fetch
                         Modificar Alumno
                     </button>
                     <button
-                        onClick={() => navigate(`/alumno/${alumnoData.dni}/status`)}
+                        onClick={()=>{window.alert('Opcion no disponible, pague la membresia para acceder mi alias de mercado pago es brandon.carabajal');}}
                         className="analista-button text-white px-4 py-2 rounded-lg"
                     >
                         Situación Académica
@@ -142,6 +163,7 @@ const ModificarAlumnos = ({ alumno, onAlumnoModificado, onAlumnoEliminado, fetch
                     Confirmar Eliminación
                 </h2>
                 <p className="text-center mb-6">¿Estás seguro de que quieres eliminar a {alumnoData.nombre}?</p>
+                <p className="text-center mb-6">La accion es irreversible y se eliminaran los datos asociados</p>
             </Modal>
 
             {/* Existing "Modificar Alumno" Modal */}

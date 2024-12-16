@@ -114,3 +114,113 @@ export async function UpdateAlumno(alumnoData) {
     });
 }
 
+export async function ChangeStateUsuario(idUsuario) {
+    const token = sessionStorage.getItem('jwtToken'); // Obtener el token JWT del almacenamiento
+    const fullUrl = `${backendurl}UsuarioController/ChangeState`;
+
+    // Crear el cuerpo de la solicitud con id_usuario
+    const requestBody = { id_usuario: idUsuario };
+
+    try {
+        const response = await fetch(fullUrl, {
+            method: 'PATCH',
+            mode: 'cors',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error('La respuesta no es un JSON válido');
+        }
+
+        const result = await response.json();
+        if (result.succes != true) {
+            throw new Error(result.message || 'Error al cambiar el estado del usuario');
+        }
+
+        return result; // Retorna la respuesta exitosa
+    } catch (err) {
+        console.error('Error en ChangeStateUsuario: ', err.message);
+        window.alert(err.message);
+        throw err; // Re-lanza el error para manejo posterior
+    }
+}
+
+export async function EliminarUsuarioHard(idUsuario) {
+    const token = sessionStorage.getItem('jwtToken'); // Obtener el token JWT del almacenamiento
+    const fullUrl = `${backendurl}UsuarioController/EliminarUsuarioHard`;
+
+    // Crear el cuerpo de la solicitud con id_usuario
+    const requestBody = { id_usuario: idUsuario };
+
+    try {
+        const response = await fetch(fullUrl, {
+            method: 'PATCH',
+            mode: 'cors',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error('La respuesta no es un JSON válido');
+        }
+
+        const result = await response.json();
+        if (result.succes != true) {
+            throw new Error(result.message || 'Error al eliminar el usuario');
+        }
+
+        return result; // Retorna la respuesta exitosa
+    } catch (err) {
+        console.error('Error en EliminarUsuarioHard: ', err.message);
+        window.alert(err.message);
+        throw err; // Re-lanza el error para manejo posterior
+    }
+}
+
+export async function GetSituacionAcademica(id_usuario) {
+    const token = sessionStorage.getItem('jwtToken'); // Obtener el token JWT
+    const fullUrl = `${backendurl}UsuarioController/ObtenerSituacionAcademica?id_usuario=${id_usuario}`; // URL del endpoint con el parámetro
+
+    try {
+        const response = await fetch(fullUrl, {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        });
+
+        // Verificar si la respuesta fue exitosa
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            throw new Error(errorResponse.message || 'Error al obtener la situación académica.');
+        }
+
+        // Parsear la respuesta JSON
+        const result = await response.json();
+
+        // Verificar si la respuesta contiene éxito
+        if (!result.succes) {
+            throw new Error(result.message || 'Error al obtener la situación académica.');
+        }
+
+        // Devolver los datos de la situación académica
+        return result.data;
+
+    } catch (err) {
+        console.error('Error en la solicitud:', err.message);
+        throw err;
+    }
+}
+
+
