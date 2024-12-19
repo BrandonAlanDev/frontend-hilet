@@ -45,7 +45,6 @@ const AddAlumnos = () => {
                 />
                 </div>
             </div>
-
         </div>
     )
 }

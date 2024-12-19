@@ -3,6 +3,8 @@ import Navbar from '../../Components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import TablaAlumnos from '../../Layouts/TablaAlumnos';
 import BuscadorAlumnos from '../../Components/BuscadorAlumnos';
+import TablaFinalesAdministracion from '../../Layouts/TablaFinalesAdministracion';
+import BuscadorFinalesAdmin from '../../Components/BuscadorFinalesAdmin';
 
 const AddFinales = () => {
     const [nombre, setNombre] = useState('');
@@ -35,13 +37,14 @@ const AddFinales = () => {
             <Navbar nombre={nombre} carrera={carrera} />
             <div className={`min-h-screen select-none flex flex-col items-center justify-evenly ${fondoDegradado} py-20 lg:py-32 gap-8`}>
                 <p className='text-white font-bold text-5xl select-none'>Gestion de Finales</p>
+                <p className='text-white font-bold text-xl select-none'>{"(Seccion en construccion)"}</p>
                 <div className=''>
-                <TablaAlumnos
+                <TablaFinalesAdministracion
                     carrera={carrera}
                     color={color}
                     busqueda={busqueda}
                     estadoFiltro={estadoFiltro}
-                    buscador={<BuscadorAlumnos setBusqueda={setBusqueda} setEstadoFiltro={setEstadoFiltro} />}
+                    buscador={<BuscadorFinalesAdmin setBusqueda={setBusqueda} setEstadoFiltro={setEstadoFiltro} />}
                 />
                 </div>
             </div>

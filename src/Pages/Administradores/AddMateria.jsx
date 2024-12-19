@@ -4,7 +4,7 @@ import Navbar from "../../Components/Navbar";
 import agregar from "../../Assets/Image/signomas.png";
 import Mosaico from "../../Components/Mosaico";
 import { WindowSharp } from "@mui/icons-material";
-
+{/* TODO */}
 const AddMateria = () => {
     const [nombre, setNombre] = useState('');
     const [carrera, setCarrera] = useState('');
@@ -129,10 +129,11 @@ const AddMateria = () => {
                     <div className='flex flex-col mt-5 gap-8 lg:mt-0'>
                         <h1 className="text-2xl select-none font-bold mb-6 text-center text-titular gap-5">Gestion de Materias</h1>
                         <h2 className="text-4xl select-none font-bold text-center text-white gap-5 mb-8">Resoluciones actuales</h2>
+                        <p className="text-xl select-none font-bold text-center text-white gap-5 mb-8">(Seccion en construccion)</p>
                     </div>
                     {(carrera === "Administracion") && (
                         <div className="flex flex-row flex-wrap gap-8 items-start justify-center lg:max-w-6xl">
-                            <Mosaico titulo={"Agregar"}  ancho="aspect-w-1 aspect-h-2 w-[48vw] hover:w-[55vw] h-[59vw] hover:h-[62vw] max-w-[60vw] md:w-[17vw] md:hover:w-[20vw] md:max-w-[22vw] md:h-[30vw] md:hover:h-[32vw]"  texto={"Nueva Resolucion"} callback={() => setShowModalAdd(true)} imagen={agregar} />
+                            <Mosaico titulo={"Agregar"}  ancho="aspect-w-1 aspect-h-2 w-[48vw] hover:w-[55vw] h-[59vw] hover:h-[62vw] max-w-[60vw] md:w-[17vw] md:hover:w-[20vw] md:max-w-[22vw] md:h-[30vw] md:hover:h-[32vw]"  texto={"Nueva Resolucion"} callback={() =>{ /*setShowModalAdd(true);*/}} imagen={agregar} />
                             {resolucionesActuales.map((c) => (
                                 <Mosaico 
                                     key={c.id} 
@@ -140,11 +141,13 @@ const AddMateria = () => {
                                     html={`<div className="flex flex-row justify-between items-center gap-8"><p>Resolucion: ${c.resolucion}</p><p>Año: ${c.anio}</p></div>`}
                                     ancho="aspect-w-1 aspect-h-2 w-[48vw] hover:w-[55vw] h-[59vw] hover:h-[62vw] max-w-[60vw] md:w-[17vw] md:hover:w-[20vw] md:max-w-[22vw] md:h-[30vw] md:hover:h-[32vw]"
                                     callback={() => {
+                                        /*
                                         setResolucionToModify(c);
                                         setNewResolucionId(c.id);
                                         setNewResolucion(c.resolucion);
                                         setNewResolucionAnio(c.anio);
                                         setShowModalModify(true);
+                                        */
                                     }} 
                                     imagen={(c.carrera=="Analista de sistemas")?"src/Assets/Image/LOGO-AS.png":(c.carrera=="Publicidad")?"src/Assets/Image/LOGO-PUBLI.png":"src/Assets/Image/school.png"}
                                 />

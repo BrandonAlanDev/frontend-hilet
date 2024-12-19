@@ -147,12 +147,6 @@ const LoginForm = () => {
                             >
                                 Login
                             </button>
-                            <a
-                                href="/sendcode"
-                                className="inline-block align-baseline font-bold text-sm text-gray-500 hover:text-gray-700"
-                            >
-                                ¿Has olvidado tu contraseña?
-                            </a>
                         </div>
                     </form>
                 </div>
